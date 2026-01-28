@@ -81,7 +81,7 @@
 }
 
 .gradient-green {
-  background: linear-gradient(135deg, #7b00ff, #FFA500) !important;
+  background: linear-gradient(135deg, #00ffbb, #FFA500) !important;
 }
 
 /* Емодзі */
@@ -325,12 +325,12 @@
 /* Критерії */
 .criteria-list {
   text-align: left;
-  max-width: 1100px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
 .criteria-list li {
-  font-size: 1.3em;
+  font-size: 1.2em;
   margin: 15px 0;
   list-style: none;
 }

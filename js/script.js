@@ -47,13 +47,19 @@ function startTimer() {
     
     display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     
+    if (timeLeft === 120) {
+      playSound();
+    }
+
     // Зміна кольору при залишку < 30 сек
     if (timeLeft < 30) {
       display.classList.add('warning');
     } else {
       display.classList.remove('warning');
     }
-    
+    if (timeLeft < 3) {
+      playSound();
+    }
     if (timeLeft === 0) {
       clearInterval(countdown);
       display.textContent = "🎉Час вийшов!🎉";
@@ -62,7 +68,7 @@ function startTimer() {
     }
     
     timeLeft--;
-  }, 100);
+  }, 1000);
 }
 
 function stopTimer() {
