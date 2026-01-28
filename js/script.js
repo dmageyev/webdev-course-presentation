@@ -56,13 +56,13 @@ function startTimer() {
     
     if (timeLeft === 0) {
       clearInterval(countdown);
-      display.textContent = "Час вийшов! 🎉";
+      display.textContent = "🎉Час вийшов!🎉";
       playSound();
       timerStarted = false;
     }
     
     timeLeft--;
-  }, 1000);
+  }, 100);
 }
 
 function stopTimer() {
