@@ -1,0 +1,590 @@
+/* ================================================
+   Кастомні стилі для презентації HTML курсу
+   ================================================ */
+
+/* Імпорт шрифтів Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap');
+
+/* Кольорова схема Google */
+:root {
+  --google-blue: #4285F4;
+  --google-green: #34A853;
+  --google-yellow: #FBBC04;
+  --google-red: #EA4335;
+  --white: #FFFFFF;
+  --dark-gray: #202124;
+  --light-gray: #F8F9FA;
+}
+
+/* Базові стилі для презентації */
+.reveal {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.reveal h1 {
+  font-size: 3em;
+  color: var(--dark-gray);
+}
+
+.reveal h2 {
+  font-size: 2em;
+  color: var(--dark-gray);
+}
+
+.reveal h3 {
+  font-size: 1.5em;
+  color: var(--dark-gray);
+}
+
+.reveal p, .reveal li {
+  font-size: 1.2em;
+  line-height: 1.6;
+}
+
+.reveal code, .reveal pre {
+  font-family: 'Roboto Mono', monospace;
+}
+
+/* Градієнтні фони */
+.gradient-blue-purple {
+  background: linear-gradient(135deg, #4285F4, #9C27B0) !important;
+  color: var(--white) !important;
+}
+
+.gradient-blue-purple h1,
+.gradient-blue-purple h2,
+.gradient-blue-purple h3,
+.gradient-blue-purple p {
+  color: var(--white) !important;
+}
+
+.gradient-green-blue {
+  background: linear-gradient(135deg, #34A853, #4285F4) !important;
+  color: var(--white) !important;
+}
+
+.gradient-green-blue h1,
+.gradient-green-blue h2,
+.gradient-green-blue h3,
+.gradient-green-blue p {
+  color: var(--white) !important;
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, #FFD700, #FFA500) !important;
+}
+
+/* Емодзі */
+.emoji {
+  font-size: 3em;
+  display: inline-block;
+}
+
+/* Блоки коду */
+.code-block {
+  background: var(--light-gray);
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 5px solid var(--google-blue);
+  text-align: left;
+  margin: 20px auto;
+}
+
+.code-block code {
+  font-size: 1em;
+  color: var(--dark-gray);
+}
+
+/* Підсвітка */
+.highlight {
+  background: var(--google-yellow);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--dark-gray);
+}
+
+/* Рамка */
+.box {
+  border: 3px solid var(--google-blue);
+  padding: 20px;
+  border-radius: 15px;
+  margin: 20px auto;
+  background: var(--white);
+}
+
+/* Сітка 3 колонки */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  text-align: center;
+}
+
+.grid-3 > div {
+  padding: 15px;
+  border: 2px solid var(--light-gray);
+  border-radius: 10px;
+}
+
+/* Split screen (50/50) */
+.split-screen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  text-align: left;
+}
+
+.split-screen .code-side {
+  background: var(--light-gray);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.split-screen .result-side {
+  padding: 20px;
+  border: 2px solid var(--light-gray);
+  border-radius: 10px;
+}
+
+/* Порядок денний */
+.agenda {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.agenda-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  margin: 10px 0;
+  background: var(--light-gray);
+  border-radius: 10px;
+  border-left: 5px solid var(--google-blue);
+  font-size: 1.2em;
+}
+
+.agenda-item span {
+  font-weight: 600;
+  color: var(--google-blue);
+}
+
+/* HTML-шари (будинок) */
+.html-layers {
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.layer {
+  padding: 25px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 3px solid;
+  text-align: center;
+  font-weight: 600;
+}
+
+.layer-js {
+  background: #FFF9C4;
+  border-color: var(--google-yellow);
+}
+
+.layer-css {
+  background: #C8E6C9;
+  border-color: var(--google-green);
+}
+
+.layer-html {
+  background: #BBDEFB;
+  border-color: var(--google-blue);
+}
+
+/* Таблиця тегів */
+.tags-table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.tags-table th,
+.tags-table td {
+  border: 2px solid var(--light-gray);
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.tags-table th {
+  background: var(--google-blue);
+  color: var(--white);
+  font-weight: 700;
+}
+
+.tags-table code {
+  background: var(--light-gray);
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+/* Вікторина */
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.quiz-option {
+  padding: 20px;
+  background: var(--white);
+  border: 3px solid var(--google-blue);
+  border-radius: 10px;
+  font-size: 1.3em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.quiz-option:hover {
+  background: var(--google-blue);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+.quiz-slide {
+  background: #FFF9E6 !important;
+}
+
+.answer-slide {
+  background: #E8F5E9 !important;
+}
+
+/* Таймер перерви */
+.break-slide {
+  background: linear-gradient(135deg, #81C784, #4DB6AC) !important;
+  color: var(--white) !important;
+}
+
+.break-slide h2,
+.break-slide h3,
+.break-slide p {
+  color: var(--white) !important;
+}
+
+.timer-container {
+  margin: 40px 0;
+}
+
+.timer {
+  font-size: 6em;
+  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  background: var(--white);
+  color: var(--google-blue);
+  padding: 40px 60px;
+  border-radius: 20px;
+  display: inline-block;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.timer.warning {
+  color: var(--google-red);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.exercises {
+  margin-top: 30px;
+}
+
+.exercises p {
+  font-size: 1.3em;
+  margin: 15px 0;
+}
+
+/* Критерії */
+.criteria-list {
+  text-align: left;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.criteria-list li {
+  font-size: 1.3em;
+  margin: 15px 0;
+  list-style: none;
+}
+
+/* Confetti slide */
+.confetti-slide {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: var(--white) !important;
+}
+
+.confetti-slide h2,
+.confetti-slide h3,
+.confetti-slide p,
+.confetti-slide li {
+  color: var(--white) !important;
+}
+
+/* Структура CodePen */
+.codepen-layout {
+  border: 3px solid var(--dark-gray);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.codepen-top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--light-gray);
+}
+
+.codepen-tab {
+  padding: 15px;
+  text-align: center;
+  border-right: 1px solid var(--dark-gray);
+  font-weight: 600;
+}
+
+.codepen-tab:last-child {
+  border-right: none;
+}
+
+.codepen-tab.active {
+  background: var(--google-blue);
+  color: var(--white);
+}
+
+.codepen-bottom {
+  padding: 20px;
+  background: var(--white);
+  text-align: center;
+  border-top: 3px solid var(--dark-gray);
+}
+
+/* Правила */
+.rules-list {
+  text-align: left;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.rule-item {
+  padding: 15px 20px;
+  margin: 10px 0;
+  background: var(--light-gray);
+  border-radius: 10px;
+  border-left: 5px solid var(--google-green);
+  font-size: 1.2em;
+}
+
+/* Кроки */
+.steps-list {
+  text-align: left;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.step-item {
+  padding: 15px 20px;
+  margin: 15px 0;
+  background: var(--light-gray);
+  border-radius: 10px;
+  border-left: 5px solid var(--google-blue);
+  font-size: 1.2em;
+}
+
+.step-number {
+  display: inline-block;
+  background: var(--google-blue);
+  color: var(--white);
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-weight: 700;
+}
+
+/* Домашнє завдання */
+.homework-requirements {
+  text-align: left;
+  max-width: 700px;
+  margin: 20px auto;
+}
+
+.homework-requirements li {
+  margin: 10px 0;
+}
+
+/* Адаптивність для малих екранів */
+@media (max-width: 768px) {
+  .reveal h1 {
+    font-size: 2em;
+  }
+
+  .reveal h2 {
+    font-size: 1.5em;
+  }
+
+  .reveal h3 {
+    font-size: 1.2em;
+  }
+
+  .reveal p, .reveal li {
+    font-size: 1em;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .split-screen {
+    grid-template-columns: 1fr;
+  }
+
+  .timer {
+    font-size: 4em;
+    padding: 30px 40px;
+  }
+}
+
+/* Спеціальні ефекти */
+.reveal .slides section {
+  text-align: center;
+}
+
+.reveal ul {
+  display: block;
+}
+
+.reveal ol {
+  display: block;
+}
+
+/* Покращена підсвітка коду */
+.reveal pre {
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.reveal pre code {
+  max-height: 500px;
+  padding: 20px;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+/* Візуальне порівняння заголовків */
+.heading-comparison {
+  text-align: left;
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+.heading-example {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+.heading-example h1 {
+  font-size: 48pt;
+  margin: 10px 0;
+}
+
+.heading-example h2 {
+  font-size: 36pt;
+  margin: 10px 0;
+}
+
+.heading-example h3 {
+  font-size: 28pt;
+  margin: 10px 0;
+}
+
+.heading-example h4 {
+  font-size: 24pt;
+  margin: 10px 0;
+}
+
+.heading-example h5 {
+  font-size: 20pt;
+  margin: 10px 0;
+}
+
+.heading-example h6 {
+  font-size: 16pt;
+  margin: 10px 0;
+}
+
+.heading-example p {
+  font-size: 16pt;
+  margin: 10px 0;
+}
+
+/* Аналогія HTML = Людина */
+.human-analogy {
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.human-part {
+  padding: 30px;
+  margin: 15px 0;
+  border-radius: 15px;
+  border: 4px solid;
+}
+
+.human-head {
+  background: #E1BEE7;
+  border-color: #9C27B0;
+}
+
+.human-body {
+  background: #BBDEFB;
+  border-color: var(--google-blue);
+}
+
+/* Схема роботи HTML */
+.html-workflow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin: 30px auto;
+  font-size: 1.5em;
+}
+
+.workflow-step {
+  padding: 20px;
+  border: 3px solid var(--google-blue);
+  border-radius: 15px;
+  background: var(--light-gray);
+  min-width: 150px;
+}
+
+.workflow-arrow {
+  font-size: 2em;
+  color: var(--google-blue);
+}
