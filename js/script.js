@@ -11,6 +11,11 @@ Reveal.initialize({
   transition: 'slide',
   slideNumber: true,
   
+  // Розмір презентації для 1920x1080
+  width: 1920,
+  height: 1080,
+  margin: 0.04,
+  
   // Плагіни
   plugins: [RevealHighlight]
 });

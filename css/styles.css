@@ -28,22 +28,22 @@
 }
 
 .reveal h1 {
-  font-size: 3em;
+  font-size: 2.5em;
   color: var(--dark-gray);
 }
 
 .reveal h2 {
-  font-size: 2em;
+  font-size: 1.8em;
   color: var(--dark-gray);
 }
 
 .reveal h3 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   color: var(--dark-gray);
 }
 
 .reveal p, .reveal li {
-  font-size: 1.2em;
+  font-size: 1.1em;
   line-height: 1.6;
 }
 
@@ -82,7 +82,7 @@
 
 /* Емодзі */
 .emoji {
-  font-size: 3em;
+  font-size: 2.5em;
   display: inline-block;
 }
 
@@ -284,12 +284,12 @@
 }
 
 .timer {
-  font-size: 6em;
+  font-size: 4.5em;
   font-weight: 800;
   font-family: 'Montserrat', sans-serif;
   background: var(--white);
   color: var(--google-blue);
-  padding: 40px 60px;
+  padding: 30px 50px;
   border-radius: 20px;
   display: inline-block;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -500,47 +500,47 @@
 .heading-comparison {
   text-align: left;
   max-width: 800px;
-  margin: 30px auto;
+  margin: 20px auto;
 }
 
 .heading-example {
-  margin: 15px 0;
+  margin: 8px 0;
   padding-left: 20px;
 }
 
 .heading-example h1 {
-  font-size: 48pt;
-  margin: 10px 0;
+  font-size: 32pt;
+  margin: 5px 0;
 }
 
 .heading-example h2 {
-  font-size: 36pt;
-  margin: 10px 0;
+  font-size: 26pt;
+  margin: 5px 0;
 }
 
 .heading-example h3 {
-  font-size: 28pt;
-  margin: 10px 0;
+  font-size: 22pt;
+  margin: 5px 0;
 }
 
 .heading-example h4 {
-  font-size: 24pt;
-  margin: 10px 0;
+  font-size: 19pt;
+  margin: 5px 0;
 }
 
 .heading-example h5 {
-  font-size: 20pt;
-  margin: 10px 0;
+  font-size: 17pt;
+  margin: 5px 0;
 }
 
 .heading-example h6 {
-  font-size: 16pt;
-  margin: 10px 0;
+  font-size: 15pt;
+  margin: 5px 0;
 }
 
 .heading-example p {
-  font-size: 16pt;
-  margin: 10px 0;
+  font-size: 15pt;
+  margin: 5px 0;
 }
 
 /* Аналогія HTML = Людина */
