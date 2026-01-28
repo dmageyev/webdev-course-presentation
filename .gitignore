@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Node (якщо в майбутньому)
+node_modules/
+
+# Тимчасові файли
+*.tmp
+*~
