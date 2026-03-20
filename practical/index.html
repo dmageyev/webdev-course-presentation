@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Методичні вказівки: Практична робота "HTML &amp; CSS"</title>
+  <meta name="description" content="Методичні вказівки до практичної роботи з HTML та CSS. Демонстрація блокових схем, динаміки та анімацій.">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- Стилі — тільки HTML + CSS, без JavaScript! -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       ШАПКА СТОРІНКИ (анімований градієнтний фон)
+       ============================================================ -->
+  <header class="page-header">
+    <!-- Декоративні анімовані кола у фоні (чистий CSS) -->
+    <div class="header-blobs" aria-hidden="true">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <div class="header-inner">
+      <div class="badge">Практична робота №2</div>
+      <h1 class="header-title">HTML &amp; CSS</h1>
+      <p class="header-sub">Методичні вказівки до практичної роботи</p>
+
+      <div class="header-meta">
+        <span class="meta-pill">⏱️ 45–60 хвилин</span>
+        <span class="meta-pill">📚 Заняття 2</span>
+        <span class="meta-pill">🎯 Рівень: початковий</span>
+        <span class="meta-pill">👩‍💻 Вік: 11–13 років</span>
+      </div>
+
+      <div class="tech-row">
+        <span class="tech-pill pill-html">HTML5</span>
+        <span class="tech-pill pill-css">CSS3</span>
+        <span class="tech-pill pill-nojs">⛔ Без JavaScript</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       НАВІГАЦІЯ — ЗМІСТ (sticky)
+       ============================================================ -->
+  <nav class="toc-nav" aria-label="Зміст">
+    <ol>
+      <li><a href="#goals">🎯 Цілі</a></li>
+      <li><a href="#theory">📚 Теорія</a></li>
+      <li><a href="#diagrams">🔷 Схеми</a></li>
+      <li><a href="#effects">✨ Ефекти</a></li>
+      <li><a href="#task">💻 Завдання</a></li>
+      <li><a href="#criteria">🏆 Оцінювання</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============================================================
+       ОСНОВНИЙ ВМІСТ
+       ============================================================ -->
+  <main class="page-main">
+
+    <!-- ==========================================================
+         РОЗДІЛ 1: ЦІЛІ РОБОТИ
+         ========================================================== -->
+    <section id="goals" class="section">
+      <div class="container">
+        <h2 class="section-title">🎯 Цілі роботи</h2>
+
+        <div class="goals-grid">
+          <div class="goal-card">
+            <span class="goal-icon">📝</span>
+            <h3>Знати</h3>
+            <ul>
+              <li>Синтаксис CSS-правил</li>
+              <li>Основні CSS-властивості</li>
+              <li>Типи CSS-селекторів</li>
+              <li>Блокову модель (Box Model)</li>
+            </ul>
+          </div>
+
+          <div class="goal-card">
+            <span class="goal-icon">🛠️</span>
+            <h3>Вміти</h3>
+            <ul>
+              <li>Підключати CSS до HTML</li>
+              <li>Стилізувати елементи сторінки</li>
+              <li>Створювати CSS-анімації</li>
+              <li>Застосовувати ефекти hover</li>
+            </ul>
+          </div>
+
+          <div class="goal-card">
+            <span class="goal-icon">🎨</span>
+            <h3>Створити</h3>
+            <ul>
+              <li>Красиву стилізовану сторінку</li>
+              <li>Анімовані CSS-елементи</li>
+              <li>Інтерактивні кнопки та блоки</li>
+              <li>Оригінальний дизайн</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         РОЗДІЛ 2: ТЕОРЕТИЧНА ЧАСТИНА
+         ========================================================== -->
+    <section id="theory" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">📚 Теоретична частина</h2>
+
+        <!-- 2.1 Що таке CSS -->
+        <div class="theory-block">
+          <h3 class="theory-h3">2.1 Що таке CSS?</h3>
+          <div class="info-box">
+            <p>
+              <strong>CSS</strong> (Cascading Style Sheets — каскадні таблиці стилів) — це
+              мова для <em>оформлення</em> HTML-документів.
+            </p>
+            <p>
+              CSS відповідає за <strong>кольори, шрифти, розміри, відступи,
+              анімації</strong> та все, що робить сторінку красивою.
+            </p>
+            <p>
+              HTML = <strong>структура</strong> сторінки &nbsp;|&nbsp;
+              CSS = <strong>зовнішній вигляд</strong> сторінки.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2.2 Синтаксис CSS -->
+        <div class="theory-block">
+          <h3 class="theory-h3">2.2 Синтаксис CSS-правила</h3>
+
+          <div class="syntax-diagram" aria-label="Схема синтаксису CSS">
+            <span class="syn-selector">h1</span>
+            <span class="syn-brace">{</span>
+            <div class="syn-decls">
+              <div class="syn-decl">
+                <span class="syn-prop">color</span>
+                <span class="syn-colon">:</span>
+                <span class="syn-val">blue</span>
+                <span class="syn-semi">;</span>
+              </div>
+              <div class="syn-decl">
+                <span class="syn-prop">font-size</span>
+                <span class="syn-colon">:</span>
+                <span class="syn-val">24px</span>
+                <span class="syn-semi">;</span>
+              </div>
+            </div>
+            <span class="syn-brace">}</span>
+          </div>
+
+          <div class="syntax-legend">
+            <div class="leg-item">
+              <span class="leg-arrow">↑</span>
+              <span class="leg-label">Селектор<br>(кого стилізуємо)</span>
+            </div>
+            <div class="leg-item">
+              <span class="leg-arrow">↑</span>
+              <span class="leg-label">Властивість<br>(що змінюємо)</span>
+            </div>
+            <div class="leg-item">
+              <span class="leg-arrow">↑</span>
+              <span class="leg-label">Значення<br>(на що змінюємо)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2.3 Способи підключення -->
+        <div class="theory-block">
+          <h3 class="theory-h3">2.3 Способи підключення CSS</h3>
+          <div class="methods-grid">
+            <div class="method-card">
+              <div class="method-num">1</div>
+              <h4>Вбудований стиль</h4>
+              <pre class="code-snippet">&lt;h1 style="color: red;"&gt;
+  Текст
+&lt;/h1&gt;</pre>
+              <p class="method-note">⚠️ Лише для одного елемента</p>
+            </div>
+
+            <div class="method-card">
+              <div class="method-num">2</div>
+              <h4>Внутрішній &lt;style&gt;</h4>
+              <pre class="code-snippet">&lt;style&gt;
+  h1 { color: red; }
+&lt;/style&gt;</pre>
+              <p class="method-note">✅ Для невеликих проєктів</p>
+            </div>
+
+            <div class="method-card best-method">
+              <div class="method-num">3</div>
+              <h4>Зовнішній файл ⭐</h4>
+              <pre class="code-snippet">&lt;link rel="stylesheet"
+  href="style.css"&gt;</pre>
+              <p class="method-note">⭐ Найкращий спосіб!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2.4 Основні властивості -->
+        <div class="theory-block">
+          <h3 class="theory-h3">2.4 Основні CSS-властивості</h3>
+          <div class="props-wrap">
+            <table class="props-table">
+              <thead>
+                <tr>
+                  <th>Властивість</th>
+                  <th>Що робить</th>
+                  <th>Приклад</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>color</code></td><td>Колір тексту</td><td><code>color: blue;</code></td></tr>
+                <tr><td><code>background-color</code></td><td>Колір фону</td><td><code>background-color: #fff;</code></td></tr>
+                <tr><td><code>font-size</code></td><td>Розмір шрифту</td><td><code>font-size: 18px;</code></td></tr>
+                <tr><td><code>font-weight</code></td><td>Жирність</td><td><code>font-weight: bold;</code></td></tr>
+                <tr><td><code>font-family</code></td><td>Шрифт</td><td><code>font-family: Arial;</code></td></tr>
+                <tr><td><code>text-align</code></td><td>Вирівнювання тексту</td><td><code>text-align: center;</code></td></tr>
+                <tr><td><code>border</code></td><td>Рамка</td><td><code>border: 2px solid red;</code></td></tr>
+                <tr><td><code>border-radius</code></td><td>Закруглення кутів</td><td><code>border-radius: 10px;</code></td></tr>
+                <tr><td><code>padding</code></td><td>Внутрішній відступ</td><td><code>padding: 20px;</code></td></tr>
+                <tr><td><code>margin</code></td><td>Зовнішній відступ</td><td><code>margin: 10px auto;</code></td></tr>
+                <tr><td><code>width / height</code></td><td>Ширина / Висота</td><td><code>width: 300px;</code></td></tr>
+                <tr><td><code>box-shadow</code></td><td>Тінь блоку</td><td><code>box-shadow: 0 4px 10px rgba(0,0,0,0.2);</code></td></tr>
+                <tr><td><code>transition</code></td><td>Плавний перехід (hover)</td><td><code>transition: all 0.3s ease;</code></td></tr>
+                <tr><td><code>animation</code></td><td>CSS-анімація</td><td><code>animation: spin 2s infinite;</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         РОЗДІЛ 3: БЛОКОВІ СХЕМИ
+         ========================================================== -->
+    <section id="diagrams" class="section">
+      <div class="container">
+        <h2 class="section-title">🔷 Блокові схеми</h2>
+
+        <!-- Схема 1: Процесний flowchart HTML → CSS → Browser → Page -->
+        <div class="diagram-card">
+          <h3 class="diagram-h3">Схема 1: Як браузер будує веб-сторінку</h3>
+          <div class="flowchart" role="img" aria-label="Схема: HTML → CSS → Браузер → Сторінка">
+            <div class="fc-item">
+              <div class="fc-box fc-html">
+                <span class="fc-icon">📝</span>
+                <div class="fc-name">HTML файл</div>
+                <div class="fc-desc">Структура сторінки</div>
+              </div>
+              <div class="fc-arrow" aria-hidden="true">→</div>
+            </div>
+
+            <div class="fc-item">
+              <div class="fc-box fc-css">
+                <span class="fc-icon">🎨</span>
+                <div class="fc-name">CSS файл</div>
+                <div class="fc-desc">Стилі та оформлення</div>
+              </div>
+              <div class="fc-arrow" aria-hidden="true">→</div>
+            </div>
+
+            <div class="fc-item">
+              <div class="fc-box fc-browser">
+                <span class="fc-icon">🌐</span>
+                <div class="fc-name">Браузер</div>
+                <div class="fc-desc">Читає та поєднує</div>
+              </div>
+              <div class="fc-arrow" aria-hidden="true">→</div>
+            </div>
+
+            <div class="fc-item">
+              <div class="fc-box fc-result">
+                <span class="fc-icon">✨</span>
+                <div class="fc-name">Веб-сторінка</div>
+                <div class="fc-desc">Красивий результат!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Схема 2: CSS Box Model (вкладені блоки) -->
+        <div class="diagram-card">
+          <h3 class="diagram-h3">Схема 2: CSS Блокова модель (Box Model)</h3>
+          <div class="box-model-wrap" role="img" aria-label="CSS Box Model: margin, border, padding, content">
+            <div class="bm-root">
+              <div class="bm-layer bm-margin">
+                <span class="bm-tag">margin (зовнішній відступ)</span>
+
+                <div class="bm-layer bm-border">
+                  <span class="bm-tag">border (рамка)</span>
+
+                  <div class="bm-layer bm-padding">
+                    <span class="bm-tag">padding (внутрішній відступ)</span>
+
+                    <div class="bm-content">
+                      <span class="bm-content-en">content</span>
+                      <span class="bm-content-uk">(контент)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Схема 3: Типи CSS-селекторів -->
+        <div class="diagram-card">
+          <h3 class="diagram-h3">Схема 3: Типи CSS-селекторів</h3>
+          <div class="selectors-grid">
+            <div class="sel-box sel-tag">
+              <div class="sel-title">Тег-селектор</div>
+              <code class="sel-code">h1 { }</code>
+              <div class="sel-desc">Стилізує всі теги h1 на сторінці</div>
+            </div>
+
+            <div class="sel-box sel-class">
+              <div class="sel-title">Клас (.class)</div>
+              <code class="sel-code">.red { }</code>
+              <div class="sel-desc">Елементи з <code>class="red"</code></div>
+            </div>
+
+            <div class="sel-box sel-id">
+              <div class="sel-title">Ідентифікатор (#id)</div>
+              <code class="sel-code">#header { }</code>
+              <div class="sel-desc">Один елемент з <code>id="header"</code></div>
+            </div>
+
+            <div class="sel-box sel-pseudo">
+              <div class="sel-title">Псевдоклас (:hover)</div>
+              <code class="sel-code">a:hover { }</code>
+              <div class="sel-desc">При наведенні курсора миші</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         РОЗДІЛ 4: ДЕМОНСТРАЦІЯ ЕФЕКТІВ
+         ========================================================== -->
+    <section id="effects" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">✨ Демонстрація CSS-ефектів</h2>
+
+        <!-- 4.1 Hover-ефекти -->
+        <div class="demo-block">
+          <h3 class="demo-h3">4.1 Динаміка: ефекти при наведенні (:hover)</h3>
+          <p class="demo-hint">👆 Наведіть мишу на кожну картку, щоб побачити ефект</p>
+
+          <div class="hover-grid">
+            <div class="hcard hc-lift">
+              <span class="hcard-icon">🚀</span>
+              <h4>Підйом</h4>
+              <p><code>transform: translateY(-12px)</code></p>
+            </div>
+
+            <div class="hcard hc-glow">
+              <span class="hcard-icon">✨</span>
+              <h4>Світіння</h4>
+              <p><code>box-shadow: 0 0 28px blue</code></p>
+            </div>
+
+            <div class="hcard hc-color">
+              <span class="hcard-icon">🎨</span>
+              <h4>Зміна кольору</h4>
+              <p><code>background-color: blue</code></p>
+            </div>
+
+            <div class="hcard hc-scale">
+              <span class="hcard-icon">🔍</span>
+              <h4>Масштаб</h4>
+              <p><code>transform: scale(1.10)</code></p>
+            </div>
+
+            <div class="hcard hc-rotate">
+              <span class="hcard-icon">🌀</span>
+              <h4>Поворот</h4>
+              <p><code>transform: rotate(6deg)</code></p>
+            </div>
+
+            <div class="hcard hc-border">
+              <span class="hcard-icon">🖼️</span>
+              <h4>Рамка</h4>
+              <p><code>border: 4px solid yellow</code></p>
+            </div>
+          </div>
+
+          <!-- Кнопки з transition -->
+          <h3 class="demo-h3" style="margin-top: 36px;">Кнопки з CSS transition</h3>
+          <p class="demo-hint">👆 Наведіть мишу на кнопки щоб побачити плавні переходи</p>
+          <div class="btn-row">
+            <button class="dbtn dbtn-slide">Slide Effect</button>
+            <button class="dbtn dbtn-push">Push Effect</button>
+            <button class="dbtn dbtn-line">Underline Effect</button>
+            <button class="dbtn dbtn-border">Border Effect</button>
+            <button class="dbtn dbtn-shadow">Shadow Effect</button>
+          </div>
+        </div>
+
+        <!-- 4.2 CSS Анімації (@keyframes) -->
+        <div class="demo-block">
+          <h3 class="demo-h3">4.2 CSS Анімації (@keyframes)</h3>
+          <p class="demo-hint">🎬 Усі ефекти нижче створені виключно за допомогою CSS — без жодного рядка JavaScript!</p>
+
+          <div class="anim-grid">
+            <div class="anim-card">
+              <div class="anim-stage"><span class="a-spin">🌟</span></div>
+              <div class="anim-label">Обертання</div>
+              <code class="anim-code">animation: spin 3s linear infinite</code>
+            </div>
+
+            <div class="anim-card">
+              <div class="anim-stage"><span class="a-bounce">🏀</span></div>
+              <div class="anim-label">Відскок</div>
+              <code class="anim-code">animation: bounce 1s ease infinite</code>
+            </div>
+
+            <div class="anim-card">
+              <div class="anim-stage"><span class="a-pulse">❤️</span></div>
+              <div class="anim-label">Пульсація</div>
+              <code class="anim-code">animation: pulse 1.5s ease infinite</code>
+            </div>
+
+            <div class="anim-card">
+              <div class="anim-stage"><span class="a-fade">🌈</span></div>
+              <div class="anim-label">Мерехтіння</div>
+              <code class="anim-code">animation: fade 2s ease infinite</code>
+            </div>
+
+            <div class="anim-card">
+              <div class="anim-stage"><span class="a-slide">🚂</span></div>
+              <div class="anim-label">Рух</div>
+              <code class="anim-code">animation: slide 2s ease-in-out infinite</code>
+            </div>
+
+            <div class="anim-card">
+              <div class="anim-stage"><span class="a-shake">🎲</span></div>
+              <div class="anim-label">Тремтіння</div>
+              <code class="anim-code">animation: shake 0.6s ease infinite</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4.3 Прогрес-бари та CSS-лоадери -->
+        <div class="demo-block">
+          <h3 class="demo-h3">4.3 Анімовані прогрес-бари та лоадери (тільки CSS)</h3>
+
+          <div class="progress-list">
+            <div class="prog-row">
+              <span class="prog-name">HTML</span>
+              <div class="prog-track"><div class="prog-fill prog-html"></div></div>
+              <span class="prog-val">90%</span>
+            </div>
+            <div class="prog-row">
+              <span class="prog-name">CSS</span>
+              <div class="prog-track"><div class="prog-fill prog-css"></div></div>
+              <span class="prog-val">75%</span>
+            </div>
+            <div class="prog-row">
+              <span class="prog-name">JavaScript</span>
+              <div class="prog-track"><div class="prog-fill prog-js"></div></div>
+              <span class="prog-val">50%</span>
+            </div>
+          </div>
+
+          <div class="loaders-row">
+            <div class="loader-item">
+              <div class="ld-spinner"></div>
+              <span>CSS Спіннер</span>
+            </div>
+            <div class="loader-item">
+              <div class="ld-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span>CSS Крапки</span>
+            </div>
+            <div class="loader-item">
+              <div class="ld-bar"><div class="ld-bar-fill"></div></div>
+              <span>CSS Смуга</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4.4 Анімовані градієнти -->
+        <div class="demo-block">
+          <h3 class="demo-h3">4.4 Анімовані градієнти (background-size + @keyframes)</h3>
+
+          <div class="grad-row">
+            <div class="grad-box grad-rainbow">Веселка 🌈</div>
+            <div class="grad-box grad-wave">Хвиля 🌊</div>
+            <div class="grad-box grad-pulse">Пульсація ❤️</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         РОЗДІЛ 5: ПРАКТИЧНЕ ЗАВДАННЯ
+         ========================================================== -->
+    <section id="task" class="section">
+      <div class="container">
+        <h2 class="section-title">💻 Практичне завдання</h2>
+
+        <!-- Банер завдання -->
+        <div class="task-banner">
+          <div class="task-badge-label">Завдання</div>
+          <h3 class="task-title">🎨 "Моя стилізована сторінка"</h3>
+          <p class="task-desc">
+            Візьми свою HTML-візитку з попереднього заняття і зроби її
+            <strong>красивою</strong> за допомогою CSS!
+          </p>
+          <div class="task-pills">
+            <span class="task-pill">⏱️ Час: 20–30 хвилин</span>
+            <span class="task-pill">🛠️ Тільки HTML + CSS</span>
+            <span class="task-pill">📍 Платформа: CodePen</span>
+          </div>
+        </div>
+
+        <!-- Вимоги -->
+        <div class="req-grid">
+          <div class="req-card req-min">
+            <h3>✅ Мінімальні вимоги</h3>
+            <ul>
+              <li>Змінити колір тексту (<code>color</code>)</li>
+              <li>Додати фоновий колір сторінки (<code>background-color</code>)</li>
+              <li>Змінити шрифт або розмір тексту</li>
+              <li>Додати рамку до одного блоку (<code>border</code>)</li>
+              <li>Вирівняти заголовок по центру</li>
+              <li>Додати відступи (<code>padding</code>)</li>
+            </ul>
+          </div>
+
+          <div class="req-card req-bonus">
+            <h3>⭐ Бонусні вимоги</h3>
+            <ul>
+              <li>Hover-ефект на заголовок або кнопку</li>
+              <li>CSS <code>transition</code> для плавності</li>
+              <li>Хоча б одна <code>@keyframes</code> анімація</li>
+              <li>Тінь блоку (<code>box-shadow</code>)</li>
+              <li>Градієнтний фон (<code>linear-gradient</code>)</li>
+              <li>Закруглені кути (<code>border-radius</code>)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Приклад коду + живий результат -->
+        <div class="example-split">
+          <div class="ex-col">
+            <h4>🖊️ Приклад CSS-коду (вкладка CSS у CodePen):</h4>
+            <pre class="code-block">/* Загальні стилі сторінки */
+body {
+  background-color: #f0f8ff;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+/* Головний заголовок */
+h1 {
+  color: #4285F4;
+  text-align: center;
+  border-bottom: 3px solid #4285F4;
+  padding-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+/* Ефект при наведенні на h1 */
+h1:hover {
+  color: #EA4335;
+}
+
+/* Розділи */
+h2 {
+  color: #34A853;
+  animation: slideIn 0.5s ease;
+}
+
+/* Анімація для h2 */
+@keyframes slideIn {
+  from {
+    transform: translateX(-40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Параграфи */
+p {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 5px solid #34A853;
+  margin: 10px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}</pre>
+          </div>
+
+          <div class="ex-col">
+            <h4>👀 Живий результат (CSS застосовано!):</h4>
+            <div class="live-preview">
+              <h1 class="lp-h1">Привіт! Я Марія 🌸</h1>
+
+              <h2 class="lp-h2">Про мене</h2>
+              <p class="lp-p">Мені 11 років, живу в Києві.</p>
+              <p class="lp-p">Навчаюсь у 5-А класі.</p>
+
+              <h2 class="lp-h2">Мої хобі</h2>
+              <p class="lp-p">Я люблю малювати 🎨</p>
+              <p class="lp-p">Займаюсь плаванням 🏊</p>
+
+              <h2 class="lp-h2">Моя мрія</h2>
+              <p class="lp-p">Стати художником! ✨</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Покрокова інструкція -->
+        <div class="steps-card">
+          <h3>📋 Покрокова інструкція</h3>
+
+          <div class="steps-flow">
+            <div class="step">
+              <div class="step-num">1</div>
+              <h4>Відкрий CodePen</h4>
+              <p>Відкрий свою попередню роботу або створи нову</p>
+            </div>
+
+            <div class="step-conn"></div>
+
+            <div class="step">
+              <div class="step-num">2</div>
+              <h4>Перейди на вкладку CSS</h4>
+              <p>Натисни на вкладку "CSS" у редакторі</p>
+            </div>
+
+            <div class="step-conn"></div>
+
+            <div class="step">
+              <div class="step-num">3</div>
+              <h4>Напиши базові стилі</h4>
+              <p>Починай з <code>body</code> та заголовків</p>
+            </div>
+
+            <div class="step-conn"></div>
+
+            <div class="step">
+              <div class="step-num">4</div>
+              <h4>Додай :hover та @keyframes</h4>
+              <p>Зроби сторінку інтерактивною!</p>
+            </div>
+
+            <div class="step-conn"></div>
+
+            <div class="step">
+              <div class="step-num">5</div>
+              <h4>Перевір результат</h4>
+              <p>Подивись на Preview і доопрацюй дизайн</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         РОЗДІЛ 6: КРИТЕРІЇ ОЦІНЮВАННЯ
+         ========================================================== -->
+    <section id="criteria" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">🏆 Критерії оцінювання</h2>
+
+        <div class="crit-grid">
+          <div class="crit-card grade-5">
+            <div class="grade-circle">5</div>
+            <h3>Відмінно</h3>
+            <ul>
+              <li>✅ Всі мінімальні вимоги</li>
+              <li>✅ 3+ бонусні вимоги</li>
+              <li>✅ Є @keyframes анімація</li>
+              <li>✅ Є :hover ефекти</li>
+              <li>✅ Якісний дизайн</li>
+              <li>✅ Оригінальне оформлення</li>
+            </ul>
+          </div>
+
+          <div class="crit-card grade-4">
+            <div class="grade-circle">4</div>
+            <h3>Добре</h3>
+            <ul>
+              <li>✅ Всі мінімальні вимоги</li>
+              <li>✅ 1–2 бонусні вимоги</li>
+              <li>✅ Є CSS transition</li>
+              <li>✅ Хороший дизайн</li>
+              <li>⚠️ Анімація відсутня або проста</li>
+            </ul>
+          </div>
+
+          <div class="crit-card grade-3">
+            <div class="grade-circle">3</div>
+            <h3>Задовільно</h3>
+            <ul>
+              <li>✅ Базові стилі присутні</li>
+              <li>✅ Кольори та шрифти змінені</li>
+              <li>✅ Структура HTML збережена</li>
+              <li>⚠️ Без анімацій та hover</li>
+              <li>⚠️ Мінімальне оформлення</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tip-panel">
+          <div class="tip-ico">💡</div>
+          <div class="tip-body">
+            <h3>Порада!</h3>
+            <p>
+              Головне — <strong>не кількість</strong> властивостей, а
+              <strong>якість оформлення</strong>. Краще зробити менше, але
+              акуратно й красиво, ніж багато і хаотично! Якщо застрягли —
+              пишіть у чат 💬
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       ПІДВАЛ
+       ============================================================ -->
+  <footer class="page-footer">
+    <div class="footer-inner">
+      <p>📚 Курс "Розробка вебсайтів" — для дітей 11–13 років</p>
+      <p>💻 Практична робота №2: HTML &amp; CSS</p>
+
+      <div class="footer-pills">
+        <span class="tech-pill pill-html">HTML5</span>
+        <span class="tech-pill pill-css">CSS3</span>
+        <span class="no-js-pill">⛔ Без JavaScript</span>
+      </div>
+
+      <p class="footer-note">💙💛 Зроблено з любов'ю для маленьких веброзробників! 🚀</p>
+    </div>
+  </footer>
+
+</body>
+</html>
