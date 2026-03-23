@@ -21,3 +21,4 @@ node_modules/
 # Тимчасові файли
 *.tmp
 *~
+nohup.out
