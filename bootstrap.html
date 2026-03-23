@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лекція: Адаптивна верстка, Bootstrap | Веб-розробка</title>
+  <meta name="description" content="Презентація лекції «Адаптивна верстка, Bootstrap» для студентів ВНЗ не ІТ напрямку">
+  <meta name="author" content="Курс веб-розробки">
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- Кастомні стилі (спільні) -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* ---- Стилі специфічні для цієї лекції ---- */
+
+    /* Breakpoint badge */
+    .bp-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85em;
+      margin: 4px;
+    }
+    .bp-xs  { background: #E3F2FD; color: #1565C0; border: 2px solid #1565C0; }
+    .bp-sm  { background: #E8F5E9; color: #2E7D32; border: 2px solid #2E7D32; }
+    .bp-md  { background: #FFF8E1; color: #F57F17; border: 2px solid #F57F17; }
+    .bp-lg  { background: #FCE4EC; color: #C62828; border: 2px solid #C62828; }
+    .bp-xl  { background: #F3E5F5; color: #6A1B9A; border: 2px solid #6A1B9A; }
+
+    /* Grid visual */
+    .grid-demo {
+      display: grid;
+      gap: 8px;
+      margin: 20px auto;
+      max-width: 900px;
+    }
+    .grid-demo .col {
+      padding: 16px 8px;
+      background: #4285F4;
+      color: #fff;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9em;
+      text-align: center;
+    }
+    .grid-demo .col-empty {
+      background: #e8eaf6;
+      color: #9fa8da;
+    }
+    .grid-row-12 { grid-template-columns: repeat(12, 1fr); }
+    .grid-row-3  { grid-template-columns: repeat(3, 1fr); }
+    .grid-row-4  { grid-template-columns: repeat(4, 1fr); }
+    .grid-row-2  { grid-template-columns: repeat(2, 1fr); }
+    .col-span-4  { grid-column: span 4; }
+    .col-span-3  { grid-column: span 3; }
+    .col-span-6  { grid-column: span 6; }
+    .col-span-12 { grid-column: span 12; }
+
+    /* Device frame */
+    .devices-row {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 40px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+    .device {
+      border: 4px solid #444;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      position: relative;
+    }
+    .device .screen-content {
+      background: linear-gradient(180deg, #e3f2fd 0%, #bbdefb 100%);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px;
+    }
+    .device .screen-bar {
+      width: 100%;
+      height: 10px;
+      background: #4285F4;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+    .device .screen-block {
+      width: 90%;
+      height: 12px;
+      background: #90CAF9;
+      border-radius: 3px;
+    }
+    .device-phone {
+      width: 90px;
+      height: 160px;
+      border-radius: 16px;
+    }
+    .device-tablet {
+      width: 150px;
+      height: 200px;
+      border-radius: 12px;
+    }
+    .device-desktop {
+      width: 300px;
+      height: 180px;
+      border-radius: 8px;
+    }
+    .device-label {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 0.85em;
+      color: #555;
+      font-weight: 600;
+    }
+
+    /* Comparison: adaptive vs not */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1100px;
+      margin: 20px auto;
+    }
+    .compare-box {
+      border: 3px solid;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .compare-box.bad  { border-color: #EA4335; background: #FFEBEE; }
+    .compare-box.good { border-color: #34A853; background: #E8F5E9; }
+    .compare-box h3 { margin-bottom: 12px; }
+
+    /* Advantage card */
+    .adv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1100px;
+      margin: 20px auto;
+    }
+    .adv-card {
+      background: #F8F9FA;
+      border-radius: 16px;
+      padding: 24px 16px;
+      border-top: 5px solid;
+      text-align: center;
+    }
+    .adv-card .icon { font-size: 2.2em; }
+    .adv-card p { font-size: 0.9em; margin-top: 8px; }
+
+    /* Component showcase */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 1100px;
+      margin: 20px auto;
+    }
+    .component-card {
+      border: 2px solid #E0E0E0;
+      border-radius: 12px;
+      padding: 20px 14px;
+      text-align: center;
+      background: #fff;
+    }
+    .component-card .c-icon { font-size: 2em; }
+    .component-card .c-name { font-weight: 700; font-size: 1em; margin: 8px 0 4px; }
+    .component-card .c-desc { font-size: 0.8em; color: #666; }
+
+    /* Usage path */
+    .usage-paths {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1100px;
+      margin: 20px auto;
+    }
+    .path-card {
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
+      color: #fff;
+    }
+    .path-card.p1 { background: linear-gradient(135deg, #4285F4, #1976D2); }
+    .path-card.p2 { background: linear-gradient(135deg, #34A853, #1B5E20); }
+    .path-card.p3 { background: linear-gradient(135deg, #9C27B0, #4A148C); }
+    .path-card .path-icon { font-size: 2.5em; }
+    .path-card h3 { color: #fff !important; margin: 12px 0 8px; }
+    .path-card p { font-size: 0.85em; opacity: 0.9; }
+
+    /* Site examples */
+    .site-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 1100px;
+      margin: 20px auto;
+    }
+    .site-card {
+      background: #F8F9FA;
+      border-radius: 12px;
+      padding: 20px 10px;
+      text-align: center;
+      border: 2px solid #E0E0E0;
+    }
+    .site-card .s-icon { font-size: 2.2em; }
+    .site-card .s-name { font-weight: 700; margin-top: 8px; font-size: 0.95em; }
+    .site-card .s-cat { font-size: 0.75em; color: #777; margin-top: 4px; }
+
+    /* Framework comparison */
+    .fw-table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1000px;
+      margin: 20px auto;
+      font-size: 0.95em;
+    }
+    .fw-table th {
+      background: #4285F4;
+      color: #fff;
+      padding: 14px 16px;
+      text-align: left;
+    }
+    .fw-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #E0E0E0;
+    }
+    .fw-table tr:nth-child(even) td { background: #F8F9FA; }
+    .check { color: #34A853; font-weight: 700; }
+    .cross { color: #EA4335; }
+    .neutral { color: #FBBC04; font-weight: 700; }
+
+    /* Summary list */
+    .summary-list {
+      text-align: left;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .summary-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 20px;
+      margin: 10px 0;
+      background: #F8F9FA;
+      border-radius: 12px;
+      border-left: 5px solid #4285F4;
+      font-size: 1.1em;
+    }
+    .summary-item .s-num {
+      background: #4285F4;
+      color: #fff;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    /* Quiz */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+    .q-item {
+      background: #F8F9FA;
+      border-radius: 12px;
+      padding: 16px 20px;
+      border-left: 5px solid #FBBC04;
+      font-size: 1em;
+      text-align: left;
+    }
+
+    /* Gradient bootstrap */
+    .gradient-bootstrap {
+      background: linear-gradient(135deg, #7952B3, #563D7C) !important;
+      color: #fff !important;
+    }
+    .gradient-bootstrap h1,
+    .gradient-bootstrap h2,
+    .gradient-bootstrap h3,
+    .gradient-bootstrap p {
+      color: #fff !important;
+    }
+
+    .gradient-adaptive {
+      background: linear-gradient(135deg, #4285F4, #34A853) !important;
+      color: #fff !important;
+    }
+    .gradient-adaptive h1,
+    .gradient-adaptive h2,
+    .gradient-adaptive h3,
+    .gradient-adaptive p {
+      color: #fff !important;
+    }
+
+    /* Principle card */
+    .principle-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 24px auto;
+    }
+    .principle-card {
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
+    }
+    .principle-card .p-icon { font-size: 2.5em; }
+    .principle-card h3 { margin: 12px 0 8px; }
+    .principle-card p { font-size: 0.9em; }
+    .pc-blue   { background: #E3F2FD; border: 3px solid #4285F4; }
+    .pc-green  { background: #E8F5E9; border: 3px solid #34A853; }
+    .pc-orange { background: #FFF3E0; border: 3px solid #FB8C00; }
+
+    /* Stat number */
+    .stat-row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin: 30px 0;
+    }
+    .stat-box {
+      background: #F8F9FA;
+      border-radius: 16px;
+      padding: 24px 30px;
+      text-align: center;
+      min-width: 180px;
+      border-top: 5px solid;
+    }
+    .stat-box .stat-num {
+      font-size: 2.8em;
+      font-weight: 800;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .stat-box .stat-label {
+      font-size: 0.9em;
+      color: #555;
+      margin-top: 4px;
+    }
+    .s-blue   { border-color: #4285F4; }
+    .s-blue .stat-num   { color: #4285F4; }
+    .s-green  { border-color: #34A853; }
+    .s-green .stat-num  { color: #34A853; }
+    .s-red    { border-color: #EA4335; }
+    .s-red .stat-num    { color: #EA4335; }
+    .s-yellow { border-color: #FBBC04; }
+    .s-yellow .stat-num { color: #F57F17; }
+
+    /* Breakpoint visual */
+    .bp-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+    .bp-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .bp-device-icon { font-size: 1.8em; min-width: 50px; text-align: center; }
+    .bp-bar {
+      flex: 1;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9em;
+    }
+    .bp-info { min-width: 130px; font-size: 0.85em; color: #555; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ========================================
+         СЛАЙД 1: Титульний
+         ======================================== -->
+    <section class="gradient-bootstrap">
+      <h1 style="font-size:2.3em;">📱💻🖥️</h1>
+      <h1 style="font-size:2em; margin-top:10px;">АДАПТИВНА ВЕРСТКА<br>ТА BOOTSTRAP</h1>
+      <p style="font-size:1.2em; margin-top:30px; opacity:0.9;">Лекція для студентів ВНЗ</p>
+      <p style="font-size:1em; margin-top:40px; opacity:0.75;">
+        <small>Курс "Веб-розробка" • 2026 • Аудиторне заняття</small>
+      </p>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 2: ПЛАН ЛЕКЦІЇ
+         ======================================== -->
+    <section>
+      <h2>📋 ПЛАН ЛЕКЦІЇ</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:1100px; margin:24px auto; text-align:left;">
+        <div>
+          <div class="agenda-item">📱 Проблема: різні екрани</div>
+          <div class="agenda-item">📐 Що таке адаптивна верстка?</div>
+          <div class="agenda-item">🎯 Принцип Mobile First</div>
+          <div class="agenda-item">🔧 Три принципи адаптивності</div>
+          <div class="agenda-item">📊 Точки зламу (breakpoints)</div>
+        </div>
+        <div>
+          <div class="agenda-item" style="border-left-color:#7952B3;">🟣 Що таке Bootstrap?</div>
+          <div class="agenda-item" style="border-left-color:#7952B3;">⚡ Переваги Bootstrap</div>
+          <div class="agenda-item" style="border-left-color:#7952B3;">🧩 Компоненти Bootstrap</div>
+          <div class="agenda-item" style="border-left-color:#7952B3;">🚀 Способи використання</div>
+          <div class="agenda-item" style="border-left-color:#34A853;">✅ Підсумки</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 3: Проблема — різні пристрої
+         ======================================== -->
+    <section>
+      <h2>🤔 ПРОБЛЕМА: САЙТ НА РІЗНИХ ПРИСТРОЯХ</h2>
+      <p>Один і той самий сайт відкривають на екранах дуже різних розмірів</p>
+      <div class="devices-row">
+        <div>
+          <div class="device device-phone">
+            <div class="screen-content">
+              <div class="screen-bar"></div>
+              <div class="screen-block"></div>
+              <div class="screen-block" style="width:70%;"></div>
+              <div class="screen-block"></div>
+              <div class="screen-block" style="width:80%;"></div>
+            </div>
+          </div>
+          <div class="device-label">📱 Смартфон<br><small>360×800px</small></div>
+        </div>
+        <div>
+          <div class="device device-tablet">
+            <div class="screen-content">
+              <div class="screen-bar"></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:90%;">
+                <div class="screen-block" style="height:40px;"></div>
+                <div class="screen-block" style="height:40px;"></div>
+              </div>
+              <div class="screen-block" style="width:90%;"></div>
+              <div class="screen-block" style="width:70%;"></div>
+            </div>
+          </div>
+          <div class="device-label">📟 Планшет<br><small>768×1024px</small></div>
+        </div>
+        <div>
+          <div class="device device-desktop">
+            <div class="screen-content">
+              <div class="screen-bar"></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:95%;">
+                <div class="screen-block" style="height:40px;"></div>
+                <div class="screen-block" style="height:40px;"></div>
+                <div class="screen-block" style="height:40px;"></div>
+              </div>
+              <div class="screen-block" style="width:95%;"></div>
+              <div class="screen-block" style="width:60%;"></div>
+            </div>
+          </div>
+          <div class="device-label">🖥️ Ноутбук/Монітор<br><small>1920×1080px</small></div>
+        </div>
+      </div>
+      <p style="margin-top:10px;"><strong>Як зробити, щоб сайт добре виглядав скрізь? 🤔</strong></p>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 4: Статистика
+         ======================================== -->
+    <section>
+      <h2>📊 СТАТИСТИКА ВИКОРИСТАННЯ ІНТЕРНЕТУ</h2>
+      <p>Сьогодні більшість відвідувань сайтів — з мобільних пристроїв</p>
+      <div class="stat-row">
+        <div class="stat-box s-blue">
+          <div class="stat-num">60%+</div>
+          <div class="stat-label">Трафіку в світі<br>з мобільних пристроїв</div>
+        </div>
+        <div class="stat-box s-green">
+          <div class="stat-num">7 млрд</div>
+          <div class="stat-label">Смартфонів<br>у світі (2025)</div>
+        </div>
+        <div class="stat-box s-red">
+          <div class="stat-num">57%</div>
+          <div class="stat-label">Користувачів не<br>рекомендують погані<br>мобільні сайти</div>
+        </div>
+        <div class="stat-box s-yellow">
+          <div class="stat-num">3 сек</div>
+          <div class="stat-label">Максимум чекає<br>користувач на<br>завантаження</div>
+        </div>
+      </div>
+      <p><strong>Висновок: мобільна адаптація — це не опція, а необхідність 📌</strong></p>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 5: Що таке адаптивна верстка?
+         ======================================== -->
+    <section class="gradient-adaptive">
+      <div style="font-size:4em;">📐</div>
+      <h1 style="font-size:1.8em; margin-top:16px;">ЧАСТИНА 1</h1>
+      <h2>АДАПТИВНА ВЕРСТКА</h2>
+      <p style="font-size:1.1em; margin-top:20px; opacity:0.9;">Принципи та підходи</p>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 6: Визначення адаптивної верстки
+         ======================================== -->
+    <section>
+      <h2>📐 ЩО ТАКЕ АДАПТИВНА ВЕРСТКА?</h2>
+      <div class="box" style="max-width:1000px; margin:24px auto;">
+        <p style="font-size:1.3em;">
+          <strong>Адаптивна верстка</strong> (Responsive Web Design) — підхід до створення сайтів,
+          при якому сторінка <span class="highlight">автоматично підлаштовує</span> свій вигляд
+          під розмір та можливості пристрою користувача.
+        </p>
+      </div>
+      <div class="compare-grid" style="margin-top:16px;">
+        <div class="compare-box bad">
+          <h3>❌ Без адаптивності</h3>
+          <ul style="text-align:left; font-size:0.95em;">
+            <li>Сайт «зламаний» на телефоні</li>
+            <li>Потрібно горизонтально скролити</li>
+            <li>Текст занадто маленький</li>
+            <li>Кнопки не потрапляє пальцем</li>
+          </ul>
+        </div>
+        <div class="compare-box good">
+          <h3>✅ З адаптивністю</h3>
+          <ul style="text-align:left; font-size:0.95em;">
+            <li>Зручний вигляд на будь-якому екрані</li>
+            <li>Елементи перебудовуються автоматично</li>
+            <li>Великий текст і кнопки на телефоні</li>
+            <li>Оптимальний UX для кожного пристрою</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 7: Принцип Mobile First
+         ======================================== -->
+    <section>
+      <h2>🎯 ПРИНЦИП «MOBILE FIRST»</h2>
+      <div class="box" style="max-width:900px; margin:20px auto;">
+        <p style="font-size:1.2em;">
+          <strong>Mobile First</strong> — спочатку проектуємо для <span class="highlight">найменшого екрану</span>,
+          потім розширюємо для більших.
+        </p>
+      </div>
+      <div style="display:flex; justify-content:center; align-items:center; gap:30px; margin:24px 0; flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-size:3em;">📱</div>
+          <div style="font-weight:700; margin-top:8px;">Спочатку<br>телефон</div>
+          <div style="font-size:1.5em; margin-top:6px; color:#34A853;">①</div>
+        </div>
+        <div style="font-size:2.5em; color:#4285F4;">→</div>
+        <div style="text-align:center;">
+          <div style="font-size:3em;">📟</div>
+          <div style="font-weight:700; margin-top:8px;">Потім<br>планшет</div>
+          <div style="font-size:1.5em; margin-top:6px; color:#4285F4;">②</div>
+        </div>
+        <div style="font-size:2.5em; color:#4285F4;">→</div>
+        <div style="text-align:center;">
+          <div style="font-size:3em;">🖥️</div>
+          <div style="font-weight:700; margin-top:8px;">Нарешті<br>монітор</div>
+          <div style="font-size:1.5em; margin-top:6px; color:#9C27B0;">③</div>
+        </div>
+      </div>
+      <p style="font-size:1.05em;">
+        💡 Чому так? Обмеження мобільного змушують залишати <strong>тільки найважливіше</strong>.
+        Ширший екран — поступово додаємо більше деталей.
+      </p>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 8: Три принципи адаптивності
+         ======================================== -->
+    <section>
+      <h2>🔧 ТРИ ПРИНЦИПИ АДАПТИВНОСТІ</h2>
+      <p>Засновник Ітан Маркотт (2010) виділив три ключові техніки:</p>
+      <div class="principle-row">
+        <div class="principle-card pc-blue">
+          <div class="p-icon">🔲</div>
+          <h3>Гнучка сітка<br>(Fluid Grid)</h3>
+          <p>Розміри колонок задаються у <em>відсотках</em>, а не в пікселях.
+             При звуженні вікна елементи пропорційно стискаються.</p>
+        </div>
+        <div class="principle-card pc-green">
+          <div class="p-icon">🖼️</div>
+          <h3>Гнучкі медіа<br>(Flexible Media)</h3>
+          <p>Зображення та відео автоматично масштабуються,
+             щоб не виходити за межі контейнера.</p>
+        </div>
+        <div class="principle-card pc-orange">
+          <div class="p-icon">📏</div>
+          <h3>Медіа-запити<br>(Media Queries)</h3>
+          <p>Правила стилів, що застосовуються лише при певних
+             умовах: ширина екрану, орієнтація, тип пристрою.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 9: Гнучка сітка
+         ======================================== -->
+    <section>
+      <h2>🔲 ГНУЧКА СІТКА (FLUID GRID)</h2>
+      <p>Розміри задаються відсотками від ширини батьківського елемента</p>
+
+      <div style="max-width:900px; margin:24px auto;">
+        <p style="text-align:left; font-weight:700; margin-bottom:8px;">🖥️ Широкий екран — три колонки:</p>
+        <div class="grid-demo grid-row-3">
+          <div class="col">Стаття 1<br><small>~33%</small></div>
+          <div class="col">Стаття 2<br><small>~33%</small></div>
+          <div class="col">Стаття 3<br><small>~33%</small></div>
+        </div>
+
+        <p style="text-align:left; font-weight:700; margin:16px 0 8px;">📟 Планшет — дві колонки:</p>
+        <div class="grid-demo grid-row-2">
+          <div class="col">Стаття 1<br><small>~50%</small></div>
+          <div class="col">Стаття 2<br><small>~50%</small></div>
+        </div>
+
+        <p style="text-align:left; font-weight:700; margin:16px 0 8px;">📱 Телефон — одна колонка:</p>
+        <div class="grid-demo" style="grid-template-columns:1fr;">
+          <div class="col">Стаття 1<br><small>100%</small></div>
+        </div>
+      </div>
+      <p><strong>Той самий HTML — різне розташування залежно від ширини! ✨</strong></p>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 10: Точки зламу (breakpoints)
+         ======================================== -->
+    <section>
+      <h2>📏 ТОЧКИ ЗЛАМУ (BREAKPOINTS)</h2>
+      <p>Конкретні ширини екрану, при досягненні яких змінюється макет сторінки</p>
+
+      <div class="bp-visual">
+        <div class="bp-row">
+          <div class="bp-device-icon">📱</div>
+          <div class="bp-bar" style="background:#EA4335; max-width:20%;">< 576px</div>
+          <div class="bp-info"><strong>xs</strong> — смартфон</div>
+        </div>
+        <div class="bp-row">
+          <div class="bp-device-icon">📱</div>
+          <div class="bp-bar" style="background:#FF7043; max-width:35%;">576px</div>
+          <div class="bp-info"><strong>sm</strong> — великий телефон</div>
+        </div>
+        <div class="bp-row">
+          <div class="bp-device-icon">📟</div>
+          <div class="bp-bar" style="background:#FBBC04; max-width:50%;">768px</div>
+          <div class="bp-info"><strong>md</strong> — планшет</div>
+        </div>
+        <div class="bp-row">
+          <div class="bp-device-icon">💻</div>
+          <div class="bp-bar" style="background:#34A853; max-width:70%;">992px</div>
+          <div class="bp-info"><strong>lg</strong> — ноутбук</div>
+        </div>
+        <div class="bp-row">
+          <div class="bp-device-icon">🖥️</div>
+          <div class="bp-bar" style="background:#4285F4; max-width:90%;">1200px</div>
+          <div class="bp-info"><strong>xl</strong> — монітор</div>
+        </div>
+        <div class="bp-row">
+          <div class="bp-device-icon">📺</div>
+          <div class="bp-bar" style="background:#7952B3; max-width:100%;">1400px</div>
+          <div class="bp-info"><strong>xxl</strong> — великий монітор</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 11: Перехід до Bootstrap
+         ======================================== -->
+    <section class="gradient-bootstrap">
+      <div style="font-size:4em;">🟣</div>
+      <h1 style="font-size:1.8em; margin-top:16px;">ЧАСТИНА 2</h1>
+      <h2>BOOTSTRAP</h2>
+      <p style="font-size:1.1em; margin-top:20px; opacity:0.9;">Фреймворк для швидкої адаптивної верстки</p>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 12: Що таке Bootstrap?
+         ======================================== -->
+    <section>
+      <h2>🟣 ЩО ТАКЕ BOOTSTRAP?</h2>
+      <div class="box" style="max-width:1050px; margin:20px auto;">
+        <p style="font-size:1.2em;">
+          <strong>Bootstrap</strong> — безкоштовний відкритий CSS-фреймворк з
+          <span class="highlight">готовими стилями та компонентами</span>
+          для швидкого створення адаптивних вебсайтів.
+        </p>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; max-width:1100px; margin:20px auto;">
+        <div class="box" style="padding:16px; margin:0;">
+          <div style="font-size:2em;">📅</div>
+          <strong>Створений у 2011</strong>
+          <p style="font-size:0.85em;">Розробники Twitter Mark Otto і Jacob Thornton відкрили для всіх</p>
+        </div>
+        <div class="box" style="padding:16px; margin:0;">
+          <div style="font-size:2em;">⭐</div>
+          <strong>Найпопулярніший</strong>
+          <p style="font-size:0.85em;">170 000+ зірок на GitHub — один з найбільш завантажуваних CSS-фреймворків</p>
+        </div>
+        <div class="box" style="padding:16px; margin:0;">
+          <div style="font-size:2em;">🆓</div>
+          <strong>Абсолютно безкоштовний</strong>
+          <p style="font-size:0.85em;">MIT-ліцензія — можна використовувати в будь-яких проєктах</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 13: Переваги Bootstrap
+         ======================================== -->
+    <section>
+      <h2>⚡ ЧОМУ BOOTSTRAP? КЛЮЧОВІ ПЕРЕВАГИ</h2>
+      <div class="adv-grid">
+        <div class="adv-card" style="border-color:#4285F4;">
+          <div class="icon">⚡</div>
+          <strong>Швидкість розробки</strong>
+          <p>Замість написання стилів «з нуля» — підключаєте готові рішення. Сайт готовий вдвічі-втричі швидше.</p>
+        </div>
+        <div class="adv-card" style="border-color:#34A853;">
+          <div class="icon">📱</div>
+          <strong>Адаптивність «з коробки»</strong>
+          <p>Вся система сітки Bootstrap спочатку адаптивна. Не потрібно писати медіа-запити вручну.</p>
+        </div>
+        <div class="adv-card" style="border-color:#7952B3;">
+          <div class="icon">🧩</div>
+          <strong>Готові компоненти</strong>
+          <p>Кнопки, форми, навігація, картки, модальні вікна — все вже стилізовано та перевірено.</p>
+        </div>
+        <div class="adv-card" style="border-color:#FBBC04;">
+          <div class="icon">🌐</div>
+          <strong>Крос-браузерність</strong>
+          <p>Bootstrap перевірений у всіх популярних браузерах. Не треба виправляти помилки сумісності.</p>
+        </div>
+        <div class="adv-card" style="border-color:#EA4335;">
+          <div class="icon">📚</div>
+          <strong>Велика спільнота</strong>
+          <p>Мільйони розробників, тисячі безкоштовних шаблонів, безліч підручників та відповідей.</p>
+        </div>
+        <div class="adv-card" style="border-color:#00BCD4;">
+          <div class="icon">🎨</div>
+          <strong>Легка кастомізація</strong>
+          <p>Колірна схема, шрифти, відступи — все гнучко налаштовується під ваш дизайн.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 14: Сітка Bootstrap
+         ======================================== -->
+    <section>
+      <h2>🔲 СІТКА BOOTSTRAP (GRID SYSTEM)</h2>
+      <p>Сторінка ділиться на <strong>12 рівних колонок</strong>. Елементи займають потрібну кількість колонок.</p>
+
+      <div style="max-width:950px; margin:20px auto;">
+        <!-- 12 колонок -->
+        <p style="text-align:left; font-weight:700; margin-bottom:6px; font-size:0.9em;">12 рівних колонок:</p>
+        <div class="grid-demo grid-row-12" style="gap:4px;">
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">1</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">2</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">3</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">4</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">5</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">6</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">7</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">8</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">9</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">10</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">11</div>
+          <div class="col" style="padding:10px 4px; font-size:0.7em;">12</div>
+        </div>
+
+        <!-- Приклад 3 по 4 колонки -->
+        <p style="text-align:left; font-weight:700; margin:14px 0 6px; font-size:0.9em;">3 блоки × 4 колонки = 12:</p>
+        <div class="grid-demo grid-row-12" style="gap:4px;">
+          <div class="col col-span-4" style="background:#34A853;">Блок 1 (4 кол.)</div>
+          <div class="col col-span-4" style="background:#34A853;">Блок 2 (4 кол.)</div>
+          <div class="col col-span-4" style="background:#34A853;">Блок 3 (4 кол.)</div>
+        </div>
+
+        <!-- Приклад сайдбар + контент -->
+        <p style="text-align:left; font-weight:700; margin:14px 0 6px; font-size:0.9em;">Бічна панель (3) + Контент (9):</p>
+        <div class="grid-demo grid-row-12" style="gap:4px;">
+          <div class="col col-span-3" style="background:#EA4335;">Меню (3)</div>
+          <div class="col col-span-6">Основний контент (6)</div>
+          <div class="col col-span-3" style="background:#FBBC04; color:#333;">Реклама (3)</div>
+        </div>
+      </div>
+
+      <p style="font-size:0.95em;">
+        💡 На телефоні — всі блоки автоматично стають по 12 колонок (повна ширина)
+      </p>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 15: Компоненти Bootstrap
+         ======================================== -->
+    <section>
+      <h2>🧩 ГОТОВІ КОМПОНЕНТИ BOOTSTRAP</h2>
+      <p>Bootstrap містить понад 30 готових UI-компонентів</p>
+      <div class="component-grid">
+        <div class="component-card">
+          <div class="c-icon">🔝</div>
+          <div class="c-name">Навігаційна панель</div>
+          <div class="c-desc">Адаптивне меню з логотипом, посиланнями, бургер-кнопкою для телефону</div>
+        </div>
+        <div class="component-card">
+          <div class="c-icon">🃏</div>
+          <div class="c-name">Картки (Cards)</div>
+          <div class="c-desc">Блоки для показу товарів, статей, профілів із зображенням і кнопками</div>
+        </div>
+        <div class="component-card">
+          <div class="c-icon">🖼️</div>
+          <div class="c-name">Карусель</div>
+          <div class="c-desc">Слайдер зображень з автоматичною зміною та навігацією</div>
+        </div>
+        <div class="component-card">
+          <div class="c-icon">🔔</div>
+          <div class="c-name">Сповіщення (Alerts)</div>
+          <div class="c-desc">Кольорові блоки для успіху, помилки, попередження, інформації</div>
+        </div>
+        <div class="component-card">
+          <div class="c-icon">📋</div>
+          <div class="c-name">Форми</div>
+          <div class="c-desc">Поля вводу, чекбокси, радіо-кнопки, селекти — стилізовані й адаптивні</div>
+        </div>
+        <div class="component-card">
+          <div class="c-icon">🪟</div>
+          <div class="c-name">Модальні вікна</div>
+          <div class="c-desc">Спливаючі діалоги для підтверджень, форм, деталей без переходу на нову сторінку</div>
+        </div>
+        <div class="component-card">
+          <div class="c-icon">🔵</div>
+          <div class="c-name">Кнопки</div>
+          <div class="c-desc">10+ варіантів кольорів і розмірів, звичайні та контурні</div>
+        </div>
+        <div class="component-card">
+          <div class="c-icon">📑</div>
+          <div class="c-name">Вкладки (Tabs)</div>
+          <div class="c-desc">Перемикач між секціями контенту без перезавантаження сторінки</div>
+        </div>
+        <div class="component-card">
+          <div class="c-icon">📊</div>
+          <div class="c-name">Таблиці</div>
+          <div class="c-desc">Стилізовані таблиці зі смугастими рядками, ховером, горизонтальним скролом</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 16: Утиліти Bootstrap
+         ======================================== -->
+    <section>
+      <h2>🛠️ УТИЛІТИ BOOTSTRAP</h2>
+      <p>Окрім компонентів, Bootstrap надає сотні <strong>утилітарних класів</strong> — дрібних правил для швидкого налаштування</p>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:1100px; margin:24px auto;">
+        <div class="box" style="margin:0; padding:20px;">
+          <h3 style="color:#4285F4;">🎨 Кольори та фони</h3>
+          <ul style="text-align:left; font-size:0.95em;">
+            <li>Колір тексту: синій, зелений, червоний, сірий…</li>
+            <li>Колір фону: будь-який з палітри Bootstrap</li>
+            <li>Однострочне написання без CSS-файлу</li>
+          </ul>
+        </div>
+        <div class="box" style="margin:0; padding:20px;">
+          <h3 style="color:#34A853;">📐 Відступи та розміри</h3>
+          <ul style="text-align:left; font-size:0.95em;">
+            <li>Зовнішні та внутрішні відступи: xs / sm / md / lg / xl</li>
+            <li>Ширина та висота у відсотках або фіксована</li>
+            <li>Маштабування під екран автоматично</li>
+          </ul>
+        </div>
+        <div class="box" style="margin:0; padding:20px;">
+          <h3 style="color:#7952B3;">👁️ Видимість</h3>
+          <ul style="text-align:left; font-size:0.95em;">
+            <li>Приховати елемент на телефоні</li>
+            <li>Показати тільки на великому екрані</li>
+            <li>Адаптивне приховування без коду</li>
+          </ul>
+        </div>
+        <div class="box" style="margin:0; padding:20px;">
+          <h3 style="color:#EA4335;">🔤 Типографіка</h3>
+          <ul style="text-align:left; font-size:0.95em;">
+            <li>Жирний, курсив, підкреслення</li>
+            <li>Вирівнювання: ліво, центр, право</li>
+            <li>Різні розміри тексту одним класом</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 17: Способи використання Bootstrap
+         ======================================== -->
+    <section>
+      <h2>🚀 ЯК ВИКОРИСТОВУВАТИ BOOTSTRAP?</h2>
+      <p>Є кілька підходів — від простого до складного</p>
+      <div class="usage-paths">
+        <div class="path-card p1">
+          <div class="path-icon">🔗</div>
+          <h3>1. CDN-підключення</h3>
+          <p>Одне посилання у HTML-файлі — і Bootstrap готовий. Найпростіший спосіб для початківців та невеликих проєктів.</p>
+          <p style="margin-top:14px;"><strong>✅ Плюси:</strong> просто, швидко<br>
+          <strong>⚠️ Мінуси:</strong> потрібен інтернет</p>
+        </div>
+        <div class="path-card p2">
+          <div class="path-icon">🎨</div>
+          <h3>2. Візуальні конструктори</h3>
+          <p>Bootstrap Studio, Pinegrow та інші — drag&amp;drop інтерфейс для складання сторінок без написання коду.</p>
+          <p style="margin-top:14px;"><strong>✅ Плюси:</strong> без коду<br>
+          <strong>⚠️ Мінуси:</strong> платні інструменти</p>
+        </div>
+        <div class="path-card p3">
+          <div class="path-icon">📄</div>
+          <h3>3. Готові шаблони</h3>
+          <p>Тисячі безкоштовних та платних HTML-шаблонів на Bootstrap — змінюєте лише текст і зображення.</p>
+          <p style="margin-top:14px;"><strong>✅ Плюси:</strong> максимально швидко<br>
+          <strong>⚠️ Мінуси:</strong> потребує налаштування</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 18: Джерела шаблонів та ресурсів
+         ======================================== -->
+    <section>
+      <h2>📦 РЕСУРСИ ДЛЯ РОБОТИ З BOOTSTRAP</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:1100px; margin:20px auto;">
+        <div class="box" style="margin:0; padding:20px;">
+          <h3 style="color:#4285F4;">📖 Офіційна документація</h3>
+          <p style="font-size:0.95em;"><strong>getbootstrap.com</strong></p>
+          <p style="font-size:0.9em;">Усі компоненти з живими прикладами, копіюйте готовий HTML</p>
+        </div>
+        <div class="box" style="margin:0; padding:20px;">
+          <h3 style="color:#7952B3;">🎨 Безкоштовні шаблони</h3>
+          <p style="font-size:0.9em;">
+            <strong>StartBootstrap.com</strong> — десятки безкоштовних тем<br>
+            <strong>Bootsnipp.com</strong> — готові фрагменти UI<br>
+            <strong>Bootswatch.com</strong> — безкоштовні колірні теми
+          </p>
+        </div>
+        <div class="box" style="margin:0; padding:20px;">
+          <h3 style="color:#34A853;">🛠️ Візуальні конструктори</h3>
+          <p style="font-size:0.9em;">
+            <strong>Bootstrap Studio</strong> — drag&amp;drop редактор<br>
+            <strong>Pinegrow</strong> — редактор з Bootstrap-підтримкою<br>
+            <strong>Shuffle.dev</strong> — онлайн конструктор
+          </p>
+        </div>
+        <div class="box" style="margin:0; padding:20px;">
+          <h3 style="color:#EA4335;">🎓 Навчання</h3>
+          <p style="font-size:0.9em;">
+            <strong>W3Schools Bootstrap</strong> — інтерактивні уроки<br>
+            <strong>FreeCodeCamp</strong> — безкоштовний курс<br>
+            <strong>YouTube</strong> — відеоуроки українською
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 19: Приклади сайтів на Bootstrap
+         ======================================== -->
+    <section>
+      <h2>🌐 ВІДОМІ САЙТИ НА BOOTSTRAP</h2>
+      <p>Bootstrap використовують мільйони сайтів по всьому світу</p>
+      <div class="site-grid">
+        <div class="site-card">
+          <div class="s-icon">🐙</div>
+          <div class="s-name">GitHub</div>
+          <div class="s-cat">Розробка</div>
+        </div>
+        <div class="site-card">
+          <div class="s-icon">📰</div>
+          <div class="s-name">Reuters</div>
+          <div class="s-cat">Новини</div>
+        </div>
+        <div class="site-card">
+          <div class="s-icon">🏛️</div>
+          <div class="s-name">Держ. портали</div>
+          <div class="s-cat">Уряди 60+ країн</div>
+        </div>
+        <div class="site-card">
+          <div class="s-icon">🎓</div>
+          <div class="s-name">Coursera</div>
+          <div class="s-cat">Освіта</div>
+        </div>
+        <div class="site-card">
+          <div class="s-icon">🛒</div>
+          <div class="s-name">Малий бізнес</div>
+          <div class="s-cat">Інтернет-магазини</div>
+        </div>
+        <div class="site-card">
+          <div class="s-icon">🏥</div>
+          <div class="s-name">Медичні сайти</div>
+          <div class="s-cat">Охорона здоров'я</div>
+        </div>
+        <div class="site-card">
+          <div class="s-icon">📊</div>
+          <div class="s-name">Дашборди</div>
+          <div class="s-cat">Аналітика й CRM</div>
+        </div>
+        <div class="site-card">
+          <div class="s-icon">🎨</div>
+          <div class="s-name">Портфоліо</div>
+          <div class="s-cat">Творчі проєкти</div>
+        </div>
+      </div>
+      <p style="margin-top:10px; font-size:0.95em;">
+        <strong>За даними W3Techs, Bootstrap використовують ~22% усіх вебсайтів у світі 🔥</strong>
+      </p>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 20: Bootstrap vs. інші підходи
+         ======================================== -->
+    <section>
+      <h2>⚖️ BOOTSTRAP VS АЛЬТЕРНАТИВИ</h2>
+      <table class="fw-table">
+        <thead>
+          <tr>
+            <th>Критерій</th>
+            <th>🟣 Bootstrap</th>
+            <th>✍️ Власний CSS</th>
+            <th>🌊 Tailwind CSS</th>
+            <th>🎨 WordPress теми</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Швидкість старту</td>
+            <td><span class="check">✅ Висока</span></td>
+            <td><span class="cross">❌ Низька</span></td>
+            <td><span class="neutral">⚠️ Середня</span></td>
+            <td><span class="check">✅ Дуже висока</span></td>
+          </tr>
+          <tr>
+            <td>Потрібен код</td>
+            <td><span class="neutral">⚠️ Трохи HTML</span></td>
+            <td><span class="cross">❌ Багато CSS+HTML</span></td>
+            <td><span class="cross">❌ Потрібен JS/Node</span></td>
+            <td><span class="check">✅ Майже без коду</span></td>
+          </tr>
+          <tr>
+            <td>Гнучкість дизайну</td>
+            <td><span class="check">✅ Висока</span></td>
+            <td><span class="check">✅ Максимальна</span></td>
+            <td><span class="check">✅ Висока</span></td>
+            <td><span class="neutral">⚠️ Обмежена темою</span></td>
+          </tr>
+          <tr>
+            <td>Розмір файлів</td>
+            <td><span class="neutral">⚠️ Середній</span></td>
+            <td><span class="check">✅ Мінімальний</span></td>
+            <td><span class="check">✅ Малий (оптимізується)</span></td>
+            <td><span class="cross">❌ Великий</span></td>
+          </tr>
+          <tr>
+            <td>Ідеально для</td>
+            <td>Прототипів, MVP, навчання</td>
+            <td>Унікальний дизайн</td>
+            <td>Складні UI-системи</td>
+            <td>Блоги, лендінги</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 21: Практичний приклад: лендінг
+         ======================================== -->
+    <section>
+      <h2>💡 ПРАКТИЧНИЙ ПРИКЛАД: ЛЕНДІНГ-СТОРІНКА</h2>
+      <p>Типова структура адаптивного лендінгу на Bootstrap</p>
+      <div style="max-width:1000px; margin:20px auto; text-align:left;">
+        <div style="border:3px solid #4285F4; border-radius:12px; overflow:hidden;">
+          <!-- Header -->
+          <div style="background:#4285F4; color:#fff; padding:12px 20px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:700;">🏢 Назва компанії</span>
+            <span style="font-size:0.85em;">Головна &nbsp;|&nbsp; Послуги &nbsp;|&nbsp; Контакти &nbsp; <span style="background:#fff; color:#4285F4; padding:4px 12px; border-radius:4px; font-weight:700;">Написати нам</span></span>
+          </div>
+          <!-- Hero -->
+          <div style="background:linear-gradient(135deg,#E3F2FD,#F3E5F5); padding:28px 20px; text-align:center;">
+            <p style="font-size:1.4em; font-weight:700; margin:0 0 8px;">Заголовок з цінністю для клієнта</p>
+            <p style="color:#555; margin:0 0 14px;">Підзаголовок з описом переваг вашого продукту чи послуги</p>
+            <span style="background:#4285F4; color:#fff; padding:10px 24px; border-radius:6px; font-weight:700;">Замовити зараз</span>
+          </div>
+          <!-- Cards row -->
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:16px 20px; background:#F8F9FA;">
+            <div style="background:#fff; border-radius:8px; padding:14px; border:2px solid #E0E0E0; text-align:center;"><div style="font-size:1.6em;">✅</div><strong style="font-size:0.9em;">Перевага 1</strong></div>
+            <div style="background:#fff; border-radius:8px; padding:14px; border:2px solid #E0E0E0; text-align:center;"><div style="font-size:1.6em;">🚀</div><strong style="font-size:0.9em;">Перевага 2</strong></div>
+            <div style="background:#fff; border-radius:8px; padding:14px; border:2px solid #E0E0E0; text-align:center;"><div style="font-size:1.6em;">💎</div><strong style="font-size:0.9em;">Перевага 3</strong></div>
+          </div>
+          <!-- Footer -->
+          <div style="background:#333; color:#aaa; padding:10px 20px; text-align:center; font-size:0.8em;">
+            © 2026 Назва компанії &nbsp;|&nbsp; Усі права захищено
+          </div>
+        </div>
+        <p style="margin-top:12px; font-size:0.9em; color:#555;">
+          📱 На телефоні: навігація складається у бургер-меню, три картки стають одна під одною
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 22: Підсумки
+         ======================================== -->
+    <section>
+      <h2>✅ ПІДСУМКИ ЛЕКЦІЇ</h2>
+      <div class="summary-list">
+        <div class="summary-item">
+          <div class="s-num">1</div>
+          <div><strong>Адаптивна верстка</strong> — сайт автоматично підлаштовується під будь-який екран: телефон, планшет, монітор.</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-num">2</div>
+          <div>Три принципи: <strong>гнучка сітка</strong> (відсотки), <strong>гнучкі медіа</strong> (масштабування), <strong>медіа-запити</strong> (умовні стилі).</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-num">3</div>
+          <div>Підхід <strong>Mobile First</strong>: спочатку проектуємо для телефону, потім розширюємо.</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-num">4</div>
+          <div><strong>Bootstrap</strong> — безкоштовний фреймворк з готовою сіткою, компонентами та стилями для швидкої адаптивної верстки.</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-num">5</div>
+          <div>Використовуйте <strong>CDN-підключення</strong>, <strong>готові шаблони</strong> або <strong>візуальні конструктори</strong> — вибір залежить від задачі.</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-num">6</div>
+          <div>Bootstrap використовує <strong>~22% сайтів у світі</strong> — це стандарт галузі, що варто знати кожному, хто працює з вебом.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 23: Питання для самоперевірки
+         ======================================== -->
+    <section>
+      <h2>🧠 ПИТАННЯ ДЛЯ САМОПЕРЕВІРКИ</h2>
+      <div class="quiz-grid">
+        <div class="q-item">
+          <strong>1.</strong> Що означає поняття «адаптивна верстка» і навіщо вона потрібна?
+        </div>
+        <div class="q-item">
+          <strong>2.</strong> Що таке «точки зламу» (breakpoints)? Наведіть приклади.
+        </div>
+        <div class="q-item">
+          <strong>3.</strong> Яка різниця між підходами «Mobile First» і «Desktop First»?
+        </div>
+        <div class="q-item">
+          <strong>4.</strong> Назвіть три ключові принципи адаптивного дизайну.
+        </div>
+        <div class="q-item">
+          <strong>5.</strong> Що таке Bootstrap і для чого він призначений?
+        </div>
+        <div class="q-item">
+          <strong>6.</strong> Як влаштована 12-колонкова сітка Bootstrap?
+        </div>
+        <div class="q-item">
+          <strong>7.</strong> Назвіть три способи підключити Bootstrap до проєкту.
+        </div>
+        <div class="q-item">
+          <strong>8.</strong> Які компоненти Bootstrap можна використати для лендінгу?
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 24: Завдання
+         ======================================== -->
+    <section>
+      <h2>📝 ПРАКТИЧНЕ ЗАВДАННЯ</h2>
+      <div class="box" style="max-width:950px; margin:20px auto;">
+        <h3 style="color:#7952B3;">🟣 Завдання: Лендінг-сторінка на Bootstrap</h3>
+        <p style="margin-top:10px;">Використовуючи готовий Bootstrap-шаблон або конструктор, створіть просту лендінг-сторінку:</p>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:950px; margin:16px auto; text-align:left;">
+        <div class="box" style="margin:0; padding:16px; border-color:#34A853;">
+          <h3 style="color:#34A853;">✅ Обов'язкові елементи</h3>
+          <ul style="font-size:0.95em;">
+            <li>Навігаційна панель з назвою</li>
+            <li>Секція-hero із заголовком та кнопкою</li>
+            <li>Блок із 3 картками (переваги/послуги)</li>
+            <li>Підвал (footer)</li>
+          </ul>
+        </div>
+        <div class="box" style="margin:0; padding:16px; border-color:#4285F4;">
+          <h3 style="color:#4285F4;">⭐ Додаткові бали</h3>
+          <ul style="font-size:0.95em;">
+            <li>Коректне відображення на телефоні</li>
+            <li>Форма зворотного зв'язку</li>
+            <li>Карусель зображень</li>
+            <li>Власна колірна схема</li>
+          </ul>
+        </div>
+      </div>
+      <div style="display:flex; gap:20px; justify-content:center; margin-top:14px; flex-wrap:wrap;">
+        <span class="bp-badge bp-sm">📦 Ресурс: getbootstrap.com</span>
+        <span class="bp-badge bp-md">🎨 Шаблони: startbootstrap.com</span>
+        <span class="bp-badge bp-lg">🛠️ Конструктор: shuffle.dev</span>
+      </div>
+    </section>
+
+    <!-- ========================================
+         СЛАЙД 25: Завершення
+         ======================================== -->
+    <section class="confetti-slide">
+      <div style="font-size:3.5em;">🎉</div>
+      <h1 style="font-size:2em; margin-top:16px;">ДЯКУЮ ЗА УВАГУ!</h1>
+      <h2 style="font-size:1.3em; margin-top:16px;">Лекція «Адаптивна верстка, Bootstrap»</h2>
+      <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:30px;">
+        <span class="bp-badge" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5); font-size:1em;">📱 Mobile First</span>
+        <span class="bp-badge" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5); font-size:1em;">🔲 Fluid Grid</span>
+        <span class="bp-badge" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5); font-size:1em;">📏 Breakpoints</span>
+        <span class="bp-badge" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5); font-size:1em;">🟣 Bootstrap</span>
+        <span class="bp-badge" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5); font-size:1em;">🧩 Components</span>
+      </div>
+      <p style="margin-top:40px; opacity:0.85;">
+        <em>Запитання? Обговорення? 💬</em>
+      </p>
+      <p style="margin-top:14px; opacity:0.7;">
+        <small>Наступна тема: JavaScript — інтерактивність на сторінках</small>
+      </p>
+    </section>
+
+  </div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+<!-- Reveal.js та плагіни -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    center: true,
+    hash: true,
+    transition: 'slide',
+    slideNumber: true,
+    width: 1920,
+    height: 1080,
+    margin: 0.04,
+    plugins: [RevealHighlight]
+  });
+
+  // Конфеті на фінальному слайді (індекс 24)
+  Reveal.on('slidechanged', event => {
+    if (event.indexh === 24 && typeof confetti === 'function') {
+      confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 },
+        colors: ['#7952B3', '#4285F4', '#34A853', '#FBBC04', '#EA4335'] });
+      setTimeout(() => confetti({ particleCount: 60, angle: 60, spread: 55, origin: { x: 0 } }), 300);
+      setTimeout(() => confetti({ particleCount: 60, angle: 120, spread: 55, origin: { x: 1 } }), 500);
+    }
+  });
+
+  console.log('🟣 Презентація «Адаптивна верстка, Bootstrap» завантажена!');
+  console.log('📍 Стрілки ←/→ для навігації | F — повноекранний режим | S — режим доповідача');
+</script>
+</body>
+</html>
