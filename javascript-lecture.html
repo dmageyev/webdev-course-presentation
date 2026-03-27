@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лекція: Мова програмування JavaScript | Веброзробка</title>
+  <meta name="description" content="Інтерактивна презентація лекції «Мова програмування JavaScript» для студентів ВНЗ не ІТ-напрямку">
+  <meta name="author" content="Курс розробки вебсайтів">
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+
+  <!-- Highlight.js для підсвітки коду -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- Кастомні стилі -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* Додаткові стилі специфічні для цієї лекції */
+    .js-yellow {
+      background: linear-gradient(135deg, #F7DF1E, #F0A500) !important;
+    }
+    .js-yellow h1, .js-yellow h2, .js-yellow h3, .js-yellow p {
+      color: #202124 !important;
+    }
+
+    .gradient-dark {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      color: #fff !important;
+    }
+    .gradient-dark h1, .gradient-dark h2, .gradient-dark h3, .gradient-dark p, .gradient-dark li {
+      color: #fff !important;
+    }
+
+    .concept-card {
+      background: var(--light-gray);
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 6px solid var(--google-blue);
+    }
+
+    .concept-card.yellow { border-left-color: #F7DF1E; background: #FFFDE7; }
+    .concept-card.green  { border-left-color: var(--google-green); background: #E8F5E9; }
+    .concept-card.red    { border-left-color: var(--google-red); background: #FFEBEE; }
+    .concept-card.blue   { border-left-color: var(--google-blue); background: #E3F2FD; }
+
+    .uses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1400px;
+      margin: 20px auto;
+    }
+    .use-card {
+      padding: 20px 15px;
+      border-radius: 14px;
+      border: 2px solid var(--light-gray);
+      background: var(--white);
+      text-align: center;
+    }
+    .use-card .icon { font-size: 2.2em; display: block; margin-bottom: 10px; }
+    .use-card strong { font-size: 1em; display: block; margin-bottom: 6px; }
+    .use-card span { font-size: 0.82em; color: #555; }
+
+    .analogy-row {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 15px;
+      align-items: center;
+      max-width: 1300px;
+      margin: 15px auto;
+    }
+    .analogy-row .arrow { text-align: center; font-size: 2em; }
+
+    .step-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px auto;
+    }
+    .step-box {
+      background: var(--light-gray);
+      border-radius: 10px;
+      padding: 15px 20px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95em;
+      min-width: 140px;
+    }
+    .step-arrow { font-size: 1.8em; color: var(--google-blue); }
+
+    .example-live {
+      background: #fff;
+      border: 3px solid var(--google-blue);
+      border-radius: 14px;
+      padding: 25px;
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+    .example-live button {
+      background: var(--google-blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 30px;
+      font-size: 1.1em;
+      font-family: 'Open Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin: 5px;
+    }
+    .example-live button:hover { background: #1a73e8; }
+    .example-live output {
+      display: block;
+      margin-top: 15px;
+      font-size: 1.2em;
+      min-height: 1.4em;
+      font-weight: 600;
+      color: var(--google-green);
+    }
+
+    .input-demo input {
+      padding: 10px 15px;
+      font-size: 1.1em;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Open Sans', sans-serif;
+      width: 260px;
+    }
+    .input-demo input.valid   { border-color: var(--google-green); }
+    .input-demo input.invalid { border-color: var(--google-red); }
+    .input-demo .msg { margin-top: 10px; font-size: 1em; font-weight: 600; min-height: 1.4em; }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1300px;
+      margin: 20px auto;
+    }
+    .fw-card {
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--light-gray);
+      text-align: center;
+      border: 2px solid transparent;
+    }
+    .fw-card .fw-icon { font-size: 2.5em; display: block; margin-bottom: 8px; }
+    .fw-card strong { display: block; font-size: 1.1em; margin-bottom: 6px; }
+    .fw-card span { font-size: 0.85em; color: #555; }
+    .fw-card.react { border-color: #61DAFB; }
+    .fw-card.vue   { border-color: #41B883; }
+    .fw-card.angular { border-color: #DD0031; }
+    .fw-card.node  { border-color: #339933; }
+    .fw-card.rn    { border-color: #61DAFB; }
+    .fw-card.next  { border-color: #000; }
+
+    .timeline {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin: 15px 0;
+    }
+    .timeline-year {
+      background: var(--google-blue);
+      color: #fff;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 1em;
+      min-width: 80px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .timeline-text {
+      background: var(--light-gray);
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 1em;
+      flex: 1;
+    }
+
+    .summary-list {
+      list-style: none;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    .summary-list li {
+      padding: 14px 20px;
+      margin: 10px 0;
+      background: var(--light-gray);
+      border-radius: 10px;
+      border-left: 5px solid var(--google-green);
+      font-size: 1.15em;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ========================================
+           СЛАЙД 1: Титульний
+           ======================================== -->
+      <section class="js-yellow">
+        <div class="emoji" style="font-size: 4em;">⚡</div>
+        <h1 style="margin-top: 20px; font-size: 2.8em;">JavaScript</h1>
+        <h2 style="font-size: 1.6em;">Мова програмування Інтернету</h2>
+        <p style="font-size: 1.2em; margin-top: 40px;">Лекція для студентів, які хочуть розуміти, як влаштовано цифровий світ 🌐</p>
+        <p style="font-size: 1em; margin-top: 40px;"><small>📅 2026 • Курс «Веброзробка»</small></p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 2: План лекції
+           ======================================== -->
+      <section>
+        <h2>📋 ПЛАН ЛЕКЦІЇ</h2>
+        <div class="agenda" style="max-width: 1200px;">
+          <div class="agenda-item">1️⃣ Що таке JavaScript і навіщо він потрібен <span>Мета</span></div>
+          <div class="agenda-item">2️⃣ Коротка історія та місце у вебі <span>Контекст</span></div>
+          <div class="agenda-item">3️⃣ Як JS працює — загальні принципи <span>Механізм</span></div>
+          <div class="agenda-item">4️⃣ Ключові концепції мови <span>Основи</span></div>
+          <div class="agenda-item">5️⃣ Шляхи використання з прикладами <span>Практика</span></div>
+          <div class="agenda-item">6️⃣ JS поза браузером: серверна сторона і мобільні додатки <span>Можливості</span></div>
+          <div class="agenda-item">7️⃣ Підсумки та ресурси для навчання <span>Висновки</span></div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 3: Розділ — «ЩО ТАКЕ JS»
+           ======================================== -->
+      <section class="gradient-blue-purple">
+        <div class="emoji" style="font-size: 4em;">❓</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 1</h1>
+        <h2>ЩО ТАКЕ JAVASCRIPT І НАВІЩО ВІН ПОТРІБЕН?</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 4: Три складові вебу
+           ======================================== -->
+      <section>
+        <h2>🏠 ВЕБСТОРІНКА = БУДИНОК</h2>
+        <p>Кожен вебсайт складається з трьох шарів — кожен виконує свою роль:</p>
+        <div class="html-layers" style="max-width: 700px;">
+          <div class="layer layer-js">
+            <strong>⚡ JavaScript</strong><br>
+            <span>Інтерактивність — кнопки, анімації, реакція на дії користувача</span><br>
+            <span style="font-size: 1.2em; color: #b37e00;">← СЬОГОДНІШНЯ ТЕМА!</span>
+          </div>
+          <div class="layer layer-css">
+            <strong>🎨 CSS</strong><br>
+            <span>Дизайн — кольори, шрифти, розташування елементів</span>
+          </div>
+          <div class="layer layer-html">
+            <strong>🏗️ HTML</strong><br>
+            <span>Структура — текст, заголовки, посилання, зображення</span>
+          </div>
+        </div>
+        <p style="margin-top: 20px; font-size: 1.05em;">
+          <strong>HTML — фундамент, CSS — інтер'єр, JavaScript — «розумна начинка»</strong>
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 5: Аналогія — JS як душа будинку
+           ======================================== -->
+      <section>
+        <h2>💡 АНАЛОГІЯ: JS — ЦЕ «МІЗКИ» САЙТУ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1300px; margin: 20px auto;">
+          <div class="concept-card blue">
+            <p style="font-size: 1.1em;"><strong>🏠 Звичайний будинок</strong></p>
+            <ul style="font-size: 0.95em; margin-top: 10px;">
+              <li>Натискаєш вимикач → вмикається світло</li>
+              <li>Стукаєш у двері → охоронець відчиняє</li>
+              <li>Ставиш термостат → регулюється температура</li>
+            </ul>
+          </div>
+          <div class="concept-card yellow">
+            <p style="font-size: 1.1em;"><strong>🌐 Вебсайт із JavaScript</strong></p>
+            <ul style="font-size: 0.95em; margin-top: 10px;">
+              <li>Натискаєш кнопку → з'являється меню</li>
+              <li>Вводиш дані → перевіряється форма</li>
+              <li>Прокручуєш → підвантажується контент</li>
+            </ul>
+          </div>
+        </div>
+        <div class="box" style="max-width: 1100px; margin-top: 20px;">
+          <p style="font-size: 1.2em;">
+            <strong>JavaScript</strong> — це мова програмування, яка дозволяє сайтам <span class="highlight">реагувати на дії користувача</span> та змінюватися в реальному часі, без перезавантаження сторінки.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 6: Де ми зустрічаємо JS щодня
+           ======================================== -->
+      <section>
+        <h2>📱 ДЕ МИ ЗУСТРІЧАЄМО JS ЩОДНЯ?</h2>
+        <div class="uses-grid">
+          <div class="use-card">
+            <span class="icon">🛒</span>
+            <strong>Інтернет-магазини</strong>
+            <span>Кошик покупок, фільтри товарів, слайдери фото</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🏦</span>
+            <strong>Банківські сервіси</strong>
+            <span>Онлайн-оплата, перевірка картки, калькулятори</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">📺</span>
+            <strong>YouTube / Netflix</strong>
+            <span>Відеоплеєр, рекомендації, пошук</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">📍</span>
+            <strong>Google Maps</strong>
+            <span>Інтерактивні карти, маршрути, позначки</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">💬</span>
+            <strong>Чати та месенджери</strong>
+            <span>Telegram Web, WhatsApp Web — миттєві повідомлення</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">📊</span>
+            <strong>Таблиці та дашборди</strong>
+            <span>Google Sheets, графіки аналітики, звіти</span>
+          </div>
+        </div>
+        <p style="margin-top: 10px; font-size: 1em;">
+          <strong>97% усіх вебсайтів у світі використовують JavaScript! 🌍</strong>
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 7: Коротка історія
+           ======================================== -->
+      <section>
+        <h2>📜 КОРОТКА ІСТОРІЯ JAVASCRIPT</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1995</div>
+            <div class="timeline-text">
+              Бренден Ейх (Netscape) створив мову всього за <strong>10 днів</strong>.
+              Спочатку називалась <em>Mocha</em>, потім <em>LiveScript</em>, і нарешті — <strong>JavaScript</strong>.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1997</div>
+            <div class="timeline-text">
+              Стандартизація: з'явився стандарт <strong>ECMAScript</strong> — офіційна специфікація мови.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2008</div>
+            <div class="timeline-text">
+              Google випустив браузер Chrome із <strong>V8-двигуном</strong> — JS став у десятки разів швидшим.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2009</div>
+            <div class="timeline-text">
+              Народився <strong>Node.js</strong> — тепер JS можна запускати на сервері, а не лише у браузері.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">Сьогодні</div>
+            <div class="timeline-text">
+              JavaScript — <strong>найпопулярніша мова програмування у світі</strong> (рейтинг Stack Overflow 2023–2024).
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 8: Розділ — «ПРИНЦИПИ РЕАЛІЗАЦІЇ»
+           ======================================== -->
+      <section class="gradient-green-blue">
+        <div class="emoji" style="font-size: 4em;">⚙️</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 2</h1>
+        <h2>ЗАГАЛЬНІ ПРИНЦИПИ РЕАЛІЗАЦІЇ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 9: Як JS виконується у браузері
+           ======================================== -->
+      <section>
+        <h2>🔄 ЯК JAVASCRIPT ВИКОНУЄТЬСЯ?</h2>
+        <div class="step-flow">
+          <div class="step-box">✍️ Розробник<br>пише код JS</div>
+          <div class="step-arrow">→</div>
+          <div class="step-box">📄 Браузер<br>завантажує файл</div>
+          <div class="step-arrow">→</div>
+          <div class="step-box">⚙️ JS-двигун<br>читає код</div>
+          <div class="step-arrow">→</div>
+          <div class="step-box">⚡ Двигун<br>виконує команди</div>
+          <div class="step-arrow">→</div>
+          <div class="step-box">🖥️ Сторінка<br>змінюється</div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1300px; margin: 20px auto;">
+          <div class="concept-card blue">
+            <p><strong>🔍 JS-двигун — «перекладач»</strong></p>
+            <p style="font-size: 0.9em; margin-top: 10px;">
+              Переводить JavaScript-код у машинні команди, які розуміє процесор.<br>
+              <em>Chrome</em> → <strong>V8</strong> | <em>Firefox</em> → <strong>SpiderMonkey</strong> | <em>Safari</em> → <strong>JavaScriptCore</strong>
+            </p>
+          </div>
+          <div class="concept-card green">
+            <p><strong>⚡ Інтерпретована мова</strong></p>
+            <p style="font-size: 0.9em; margin-top: 10px;">
+              JS не потребує компіляції перед запуском — він виконується рядок за рядком у реальному часі.
+              Це спрощує розробку та налагодження.
+            </p>
+          </div>
+        </div>
+
+        <div class="box" style="max-width: 1100px; margin-top: 10px;">
+          <p style="font-size: 1em;">💡 <strong>Аналогія:</strong> JS-двигун — як синхронний перекладач на міжнародній конференції: читає вашу мову й одразу «говорить» нею до комп'ютера.</p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 10: DOM — міст між JS і сторінкою
+           ======================================== -->
+      <section>
+        <h2>🌳 DOM — «МОДЕЛЬ СТОРІНКИ»</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 15px;">
+              <p><strong>DOM = Document Object Model</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Браузер «перетворює» HTML-сторінку на <strong>дерево об'єктів</strong>.
+                JS може знаходити будь-який елемент цього дерева й змінювати його.
+              </p>
+            </div>
+            <div class="concept-card yellow">
+              <p><strong>💡 Аналогія</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                DOM — це як <strong>схема будівлі</strong>. JS — це будівельник, який за цією схемою може відкрити двері, пофарбувати стіну або прибудувати кімнату — прямо під час вашого перебування всередині.
+              </p>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// Знайти елемент на сторінці
+const кнопка = document.getElementById('myBtn');
+
+// Змінити текст заголовку
+const заголовок = document.querySelector('h1');
+заголовок.textContent = 'Новий текст!';
+
+// Змінити колір фону
+document.body.style.backgroundColor = 'lightblue';
+
+// Приховати елемент
+кнопка.style.display = 'none';</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 11: Розділ — «КЛЮЧОВІ КОНЦЕПЦІЇ»
+           ======================================== -->
+      <section class="js-yellow">
+        <div class="emoji" style="font-size: 4em;">📚</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 3</h1>
+        <h2>КЛЮЧОВІ КОНЦЕПЦІЇ МОВИ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 12: Змінні
+           ======================================== -->
+      <section>
+        <h2>📦 ЗМІННІ — ЗБЕРІГАННЯ ДАНИХ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 15px;">
+              <p><strong>Змінна = іменована «коробка» для даних</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Уявіть шафу з підписаними ящиками. У кожному ящику зберігається якесь значення. Ви можете покласти щось нове або забрати з будь-якого ящика.
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Типи даних у JS:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🔢 Числа: <code>42</code>, <code>3.14</code></li>
+                <li>📝 Рядки: <code>"Привіт, світе!"</code></li>
+                <li>✅ Булеві: <code>true</code> / <code>false</code></li>
+                <li>📋 Масиви: <code>["яблуко", "груша"]</code></li>
+                <li>🗂️ Об'єкти: <code>{ ім'я: "Іван", вік: 20 }</code></li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// let — змінна, яку можна змінити
+let ім'я = "Оксана";
+let вік = 21;
+let студент = true;
+
+// const — константа (не змінюється)
+const університет = "КПІ";
+
+// Використання
+console.log("Привіт, " + ім'я + "!");
+// → "Привіт, Оксана!"
+
+вік = 22; // змінили значення
+console.log(вік); // → 22</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 13: Функції
+           ======================================== -->
+      <section>
+        <h2>🔧 ФУНКЦІЇ — НАБОРИ КОМАНД</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card yellow" style="margin-bottom: 15px;">
+              <p><strong>Функція = «рецепт» або «інструкція»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Набір команд, який можна виконати скільки завгодно разів, просто назвавши його.<br>
+                Як рецепт: <em>написав один раз → готуєш щоразу</em>.
+              </p>
+            </div>
+            <div class="concept-card blue">
+              <p><strong>Навіщо функції?</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>♻️ Повторне використання коду</li>
+                <li>📦 Організація логіки</li>
+                <li>🔍 Легше знаходити помилки</li>
+                <li>🤝 Командна розробка</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// Оголошення функції
+function привітати(ім'я) {
+  return "Привіт, " + ім'я + "! 👋";
+}
+
+// Виклик функції
+console.log(привітати("Марія"));
+// → "Привіт, Марія! 👋"
+
+console.log(привітати("Андрій"));
+// → "Привіт, Андрій! 👋"
+
+// Функція з обчисленням
+function площаКімнати(ширина, довжина) {
+  return ширина * довжина;
+}
+
+console.log(площаКімнати(4, 5)); // → 20</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 14: Умови та цикли
+           ======================================== -->
+      <section>
+        <h2>🔀 УМОВИ ТА 🔁 ЦИКЛИ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 15px auto; align-items: start;">
+          <div>
+            <p style="font-weight: 700; font-size: 1.1em; margin-bottom: 10px;">🔀 Умови (if / else)</p>
+            <div class="code-block" style="font-size: 1em; margin-bottom: 15px;">
+              <pre><code class="language-javascript">let оцінка = 85;
+
+if (оцінка >= 90) {
+  console.log("Відмінно! 🌟");
+} else if (оцінка >= 75) {
+  console.log("Добре! 👍");
+} else {
+  console.log("Треба підтягнутись 📚");
+}
+// → "Добре! 👍"</code></pre>
+            </div>
+            <div class="concept-card blue">
+              <p style="font-size: 0.9em;">💡 Аналогія: «Якщо температура &gt; 25°C — йдемо на пляж, інакше — залишаємося вдома»</p>
+            </div>
+          </div>
+          <div>
+            <p style="font-weight: 700; font-size: 1.1em; margin-bottom: 10px;">🔁 Цикли (for)</p>
+            <div class="code-block" style="font-size: 1em; margin-bottom: 15px;">
+              <pre><code class="language-javascript">// Надрукувати числа від 1 до 5
+for (let i = 1; i <= 5; i++) {
+  console.log("Крок " + i);
+}
+// → Крок 1
+// → Крок 2
+// → ... Крок 5
+
+// Обробка списку студентів
+let студенти = ["Оля", "Іван", "Юля"];
+for (let студент of студенти) {
+  console.log("Привіт, " + студент + "!");
+}</code></pre>
+            </div>
+            <div class="concept-card green">
+              <p style="font-size: 0.9em;">💡 Аналогія: «Пройти всю чергу та привітатися з кожною людиною»</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 15: Події (Events)
+           ======================================== -->
+      <section>
+        <h2>🖱️ ПОДІЇ (EVENTS) — «РЕАКЦІЯ» НА ДІЇ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card red" style="margin-bottom: 15px;">
+              <p><strong>Подія — це сигнал: «щось сталося»</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🖱️ Клік мишкою на кнопку</li>
+                <li>⌨️ Натискання клавіші</li>
+                <li>📝 Введення тексту у поле</li>
+                <li>📜 Прокручування сторінки</li>
+                <li>🖼️ Завантаження зображення</li>
+                <li>⏱️ Таймер спрацював</li>
+              </ul>
+            </div>
+            <div class="concept-card blue">
+              <p style="font-size: 0.9em;">💡 JS «слухає» події та запускає потрібний код у відповідь — без перезавантаження сторінки!</p>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// Знаходимо кнопку на сторінці
+const кнопка = document.getElementById('myBtn');
+
+// Призначаємо реакцію на клік
+кнопка.addEventListener('click', function() {
+  alert('Кнопку натиснуто! 🎉');
+});
+
+// Реакція на введення тексту
+const поле = document.getElementById('input');
+поле.addEventListener('input', function() {
+  console.log('Ви ввели: ' + поле.value);
+});
+
+// Реакція на прокручування
+window.addEventListener('scroll', function() {
+  console.log('Позиція: ' + window.scrollY);
+});</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 16: Розділ — «ШЛЯХИ ВИКОРИСТАННЯ»
+           ======================================== -->
+      <section class="gradient-green-blue">
+        <div class="emoji" style="font-size: 4em;">🚀</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 4</h1>
+        <h2>ШЛЯХИ ВИКОРИСТАННЯ З ПРИКЛАДАМИ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 17: Приклад 1 — Інтерактивна кнопка
+           ======================================== -->
+      <section>
+        <h2>🎯 ПРИКЛАД 1: ІНТЕРАКТИВНІСТЬ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div class="code-block" style="font-size: 1.05em;">
+            <p style="margin-bottom: 10px;"><strong>Код JavaScript:</strong></p>
+            <pre><code class="language-javascript">let лічильник = 0;
+
+function натиснути() {
+  лічильник++;
+  document.getElementById('count').textContent =
+    'Натиснуто: ' + лічильник + ' разів';
+}
+
+function скинути() {
+  лічильник = 0;
+  document.getElementById('count').textContent =
+    'Натиснуто: 0 разів';
+}</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 15px;">Живий приклад:</p>
+            <div class="example-live">
+              <button onclick="jsDemo1Click()">👆 Натисни мене!</button>
+              <button onclick="jsDemo1Reset()" style="background: var(--google-red);">🔄 Скинути</button>
+              <output id="demo1-output">Натиснуто: 0 разів</output>
+            </div>
+            <div class="concept-card green" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>Де це застосовується?</strong><br>
+                Лічильники лайків, кількість товарів у кошику, прогрес виконання завдань.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 18: Приклад 2 — Валідація форми
+           ======================================== -->
+      <section>
+        <h2>📝 ПРИКЛАД 2: ПЕРЕВІРКА ФОРМИ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div class="code-block" style="font-size: 1.05em;">
+            <p style="margin-bottom: 10px;"><strong>Код JavaScript:</strong></p>
+            <pre><code class="language-javascript">function перевіритиEmail(email) {
+  // Шаблон правильного email
+  const шаблон = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (шаблон.test(email)) {
+    показатиПовідомлення('✅ Email коректний!', 'green');
+  } else {
+    показатиПовідомлення('❌ Невірний формат!', 'red');
+  }
+}
+
+// Перевіряємо при кожному введенні
+emailПоле.addEventListener('input', function() {
+  перевіритиEmail(this.value);
+});</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 15px;">Живий приклад:</p>
+            <div class="example-live input-demo">
+              <input type="text" id="demo2-email" placeholder="Введіть email адресу..." oninput="jsDemo2Check(this)">
+              <div class="msg" id="demo2-msg"></div>
+            </div>
+            <div class="concept-card yellow" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>Де це застосовується?</strong><br>
+                Форми реєстрації, оформлення замовлення, входу в систему — перевірка на стороні клієнта без звернення до сервера.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 19: Приклад 3 — Динамічне оновлення
+           ======================================== -->
+      <section>
+        <h2>⏱️ ПРИКЛАД 3: ДИНАМІЧНЕ ОНОВЛЕННЯ ДАНИХ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div class="code-block" style="font-size: 1.05em;">
+            <p style="margin-bottom: 10px;"><strong>Годинник, що оновлюється кожну секунду:</strong></p>
+            <pre><code class="language-javascript">function оновитиЧас() {
+  const зараз = new Date();
+
+  const години = зараз.getHours()
+    .toString().padStart(2, '0');
+  const хвилини = зараз.getMinutes()
+    .toString().padStart(2, '0');
+  const секунди = зараз.getSeconds()
+    .toString().padStart(2, '0');
+
+  document.getElementById('clock').textContent =
+    `${години}:${хвилини}:${секунди}`;
+}
+
+// Виклик кожну секунду (1000 мс)
+setInterval(оновитиЧас, 1000);</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 15px;">Живий приклад:</p>
+            <div class="example-live" style="text-align: center;">
+              <div style="font-size: 3em; font-family: 'Roboto Mono', monospace; font-weight: 700; color: var(--google-blue);" id="demo3-clock">00:00:00</div>
+              <p style="margin-top: 15px; font-size: 0.9em; color: #555;">Оновлюється автоматично кожну секунду</p>
+            </div>
+            <div class="concept-card red" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>Де це застосовується?</strong><br>
+                Відлік часу до події, live-оновлення курсів валют, відображення статусу доставки, онлайн-моніторинг.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 20: Приклад 4 — Завантаження даних (API)
+           ======================================== -->
+      <section>
+        <h2>🌐 ПРИКЛАД 4: ОТРИМАННЯ ДАНИХ З ІНТЕРНЕТУ (API)</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 15px;">
+              <p><strong>Що таке API?</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                API (Application Programming Interface) — це «меню» сервісу, де описано, які дані можна замовити.<br><br>
+                💡 <em>Аналогія: офіціант передає ваше замовлення на кухню (сервер) і повертає страву (дані).</em>
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Реальні приклади API-запитів:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🌤️ Погода на сайті</li>
+                <li>💱 Курс валют</li>
+                <li>🗺️ Дані для карт</li>
+                <li>📰 Стрічка новин</li>
+                <li>🎵 Інформація про треки</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.05em;">
+            <p style="margin-bottom: 10px;"><strong>Запит до API погоди:</strong></p>
+            <pre><code class="language-javascript">// fetch — вбудована функція JS для запитів
+async function отриматиПогоду(місто) {
+  const відповідь = await fetch(
+    `https://api.weather.com?city=${місто}`
+  );
+
+  const дані = await відповідь.json();
+
+  document.getElementById('weather').innerHTML = `
+    <h3>${дані.city}</h3>
+    <p>🌡️ ${дані.temperature}°C</p>
+    <p>💧 Вологість: ${дані.humidity}%</p>
+    <p>${дані.description}</p>
+  `;
+}
+
+отриматиПогоду('Kyiv');</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 21: JS у реальних сферах
+           ======================================== -->
+      <section>
+        <h2>🏛️ JS У РІЗНИХ СФЕРАХ ДІЯЛЬНОСТІ</h2>
+        <div class="uses-grid">
+          <div class="use-card">
+            <span class="icon">🏥</span>
+            <strong>Медицина</strong>
+            <span>Онлайн-запис до лікаря, медичні калькулятори, телемедицина, відображення результатів аналізів</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🎓</span>
+            <strong>Освіта</strong>
+            <span>Платформи Coursera, Duolingo, Google Classroom — інтерактивні тести, прогрес навчання</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">💼</span>
+            <strong>Бізнес</strong>
+            <span>CRM-системи, звіти та аналітика, автоматизація документообігу</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🏛️</span>
+            <strong>Державні послуги</strong>
+            <span>Портал Дія, e-Податкова, подання декларацій, онлайн-реєстри</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🎮</span>
+            <strong>Ігри та розваги</strong>
+            <span>Браузерні ігри, відеоплеєри, потокове відео (Netflix, YouTube)</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🚗</span>
+            <strong>Транспорт та логістика</strong>
+            <span>Uber, Bolt, онлайн-відстеження посилок, розкладу транспорту</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 22: Розділ — «JS ПОЗА БРАУЗЕРОМ»
+           ======================================== -->
+      <section class="gradient-dark">
+        <div class="emoji" style="font-size: 4em;">🖥️</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 5</h1>
+        <h2>JS ПОЗА БРАУЗЕРОМ:<br>СЕРВЕР, МОБІЛЬНІ ДОДАТКИ ТА БІЛЬШЕ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 23: Node.js
+           ======================================== -->
+      <section>
+        <h2>⚙️ NODE.JS — JAVASCRIPT НА СЕРВЕРІ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card green" style="margin-bottom: 15px;">
+              <p><strong>До 2009 року:</strong> JS тільки у браузері</p>
+              <p><strong>Після Node.js:</strong> JS скрізь 🌍</p>
+              <p style="font-size: 0.9em; margin-top: 10px;">
+                Node.js дозволяє запускати JavaScript-код на сервері — там, де раніше використовувалися Java, Python або PHP.
+              </p>
+            </div>
+            <div class="concept-card blue">
+              <p><strong>Що будують на Node.js:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🌐 REST API та веб-сервери</li>
+                <li>💬 Чати у реальному часі</li>
+                <li>🔐 Системи авторизації</li>
+                <li>📊 Обробка великих даних</li>
+                <li>🤖 Боти для Telegram / Discord</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.05em;">
+            <p style="margin-bottom: 10px;"><strong>Простий веб-сервер на Node.js:</strong></p>
+            <pre><code class="language-javascript">const http = require('http');
+
+const сервер = http.createServer((запит, відповідь) => {
+  відповідь.writeHead(200, {
+    'Content-Type': 'text/html; charset=utf-8'
+  });
+
+  відповідь.end('<h1>Привіт з Node.js!</h1>');
+});
+
+// Запускаємо сервер на порту 3000
+сервер.listen(3000, () => {
+  console.log('Сервер запущено! 🚀');
+  console.log('Відкрийте http://localhost:3000');
+});</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 24: Популярні фреймворки та бібліотеки
+           ======================================== -->
+      <section>
+        <h2>📦 ПОПУЛЯРНІ БІБЛІОТЕКИ ТА ФРЕЙМВОРКИ</h2>
+        <p style="margin-bottom: 15px; font-size: 1em;">Готові набори інструментів, що прискорюють розробку:</p>
+        <div class="framework-grid">
+          <div class="fw-card react">
+            <span class="fw-icon">⚛️</span>
+            <strong>React</strong>
+            <span>Бібліотека від Facebook для інтерфейсів. Використовують Instagram, Airbnb, Netflix.</span>
+          </div>
+          <div class="fw-card vue">
+            <span class="fw-icon">💚</span>
+            <strong>Vue.js</strong>
+            <span>Простий та гнучкий фреймворк. Популярний у стартапах та середньому бізнесі.</span>
+          </div>
+          <div class="fw-card angular">
+            <span class="fw-icon">🔴</span>
+            <strong>Angular</strong>
+            <span>Потужний фреймворк від Google. Корпоративні додатки, CRM-системи.</span>
+          </div>
+          <div class="fw-card node">
+            <span class="fw-icon">🟢</span>
+            <strong>Node.js + Express</strong>
+            <span>Серверна розробка. API для мобільних та веб-додатків.</span>
+          </div>
+          <div class="fw-card rn">
+            <span class="fw-icon">📱</span>
+            <strong>React Native</strong>
+            <span>Мобільні додатки для iOS та Android на одній кодовій базі JavaScript.</span>
+          </div>
+          <div class="fw-card next">
+            <span class="fw-icon">▲</span>
+            <strong>Next.js</strong>
+            <span>Повноцінні веб-додатки (фронтенд + бекенд). Використовують TikTok, Twitch.</span>
+          </div>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9em;">
+          💡 <strong>Один розробник з JS може створити: вебсайт, мобільний застосунок, серверний API та навіть десктопну програму.</strong>
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 25: Порівняння JS з іншими мовами
+           ======================================== -->
+      <section>
+        <h2>⚖️ JAVASCRIPT СЕРЕД ІНШИХ МОВ</h2>
+        <table class="tags-table" style="margin: 20px auto; font-size: 0.88em; max-width: 1300px;">
+          <thead>
+            <tr>
+              <th>Мова</th>
+              <th>Основне застосування</th>
+              <th>Де виконується</th>
+              <th>Складність</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: #FFF9E6;">
+              <td><strong>⚡ JavaScript</strong></td>
+              <td>Веб, мобільні, сервер</td>
+              <td>Браузер + сервер</td>
+              <td>⭐⭐⭐ Середня</td>
+            </tr>
+            <tr>
+              <td>🐍 Python</td>
+              <td>Data Science, ШІ, скрипти</td>
+              <td>Сервер, локально</td>
+              <td>⭐⭐ Легка</td>
+            </tr>
+            <tr>
+              <td>☕ Java</td>
+              <td>Корпоративні системи, Android</td>
+              <td>JVM (сервер)</td>
+              <td>⭐⭐⭐⭐ Складна</td>
+            </tr>
+            <tr>
+              <td>🦋 C#</td>
+              <td>Windows, ігри (Unity)</td>
+              <td>ОС / .NET</td>
+              <td>⭐⭐⭐⭐ Складна</td>
+            </tr>
+            <tr>
+              <td>🦀 Swift</td>
+              <td>Тільки iOS/macOS додатки</td>
+              <td>Apple пристрої</td>
+              <td>⭐⭐⭐ Середня</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="box" style="max-width: 1100px; margin-top: 10px;">
+          <p style="font-size: 1em;">
+            💡 <strong>Унікальність JavaScript:</strong> єдина мова, що виконується безпосередньо у браузері та може охопити всі рівні розробки — від кнопки на сайті до серверної логіки та мобільного додатку.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 26: Де і як навчитись
+           ======================================== -->
+      <section>
+        <h2>📖 ЯК І ДЕ НАВЧИТИСЯ JAVASCRIPT?</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto;">
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">🆓 Безкоштовні ресурси (українською/англійською):</p>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <ul style="font-size: 0.92em; margin: 0; padding-left: 20px;">
+                <li><strong>MDN Web Docs</strong> — офіційна документація Mozilla</li>
+                <li><strong>The Odin Project</strong> — безкоштовний повний курс</li>
+                <li><strong>freeCodeCamp</strong> — інтерактивні завдання</li>
+                <li><strong>javascript.info</strong> — підручник є українською</li>
+                <li><strong>YouTube</strong> — канали Traversy Media, Fireship</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">🎯 Платні та структуровані курси:</p>
+            <div class="concept-card green" style="margin-bottom: 10px;">
+              <ul style="font-size: 0.92em; margin: 0; padding-left: 20px;">
+                <li><strong>Coursera / edX</strong> — курси від університетів</li>
+                <li><strong>Udemy</strong> — доступна ціна, великий вибір</li>
+                <li><strong>Hillel / GOIT / Beetroot</strong> — українські школи</li>
+                <li><strong>Codecademy</strong> — інтерактивне навчання у браузері</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="box" style="max-width: 1200px; margin-top: 10px;">
+          <p style="font-size: 1em;">
+            🛠️ <strong>Порада:</strong> найкращий спосіб вивчити JS — це практика. Починайте з малого: зробіть просту сторінку з кнопками, калькулятор, список завдань (todo-list). <strong>Код + практика + терпіння = результат!</strong>
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 27: Підсумки
+           ======================================== -->
+      <section class="confetti-slide">
+        <h2>✅ ПІДСУМКИ ЛЕКЦІЇ</h2>
+        <ul class="summary-list" style="margin-top: 20px;">
+          <li>⚡ <strong>JavaScript</strong> — мова програмування, що оживляє вебсторінки та додає їм інтерактивність</li>
+          <li>🌍 <strong>97% сайтів</strong> використовують JS — ви взаємодієте з ним щодня</li>
+          <li>⚙️ JS виконується у <strong>браузері</strong> через вбудований JS-двигун (V8, SpiderMonkey)</li>
+          <li>📚 Ключові концепції: <strong>змінні, функції, умови, цикли, DOM, події</strong></li>
+          <li>🛒 Застосовується у <strong>торгівлі, медицині, освіті, держсервісах</strong> і тисячах інших галузей</li>
+          <li>🖥️ Завдяки <strong>Node.js</strong> JS вийшов за межі браузера — сервери, мобільні додатки</li>
+          <li>🏆 <strong>Найпопулярніша мова програмування</strong> у світі (2024)</li>
+        </ul>
+        <p style="margin-top: 30px; font-size: 1.2em;"><strong>🙋 Питання? Коментарі? Давайте обговоримо! 💬</strong></p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js та плагіни -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+
+  <!-- Ініціалізація Reveal.js -->
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'slide',
+      slideNumber: true,
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      plugins: [RevealHighlight]
+    });
+
+    // ================================================
+    // ПРИКЛАД 1: Лічильник кнопки
+    // ================================================
+    let demo1Count = 0;
+    function jsDemo1Click() {
+      demo1Count++;
+      const out = document.getElementById('demo1-output');
+      if (out) out.textContent = 'Натиснуто: ' + demo1Count + ' разів' + (demo1Count >= 5 ? ' 🎉' : '');
+    }
+    function jsDemo1Reset() {
+      demo1Count = 0;
+      const out = document.getElementById('demo1-output');
+      if (out) out.textContent = 'Натиснуто: 0 разів';
+    }
+
+    // ================================================
+    // ПРИКЛАД 2: Перевірка email
+    // ================================================
+    function jsDemo2Check(input) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const msg = document.getElementById('demo2-msg');
+      if (!input.value) {
+        input.className = '';
+        if (msg) msg.textContent = '';
+        return;
+      }
+      if (emailRegex.test(input.value)) {
+        input.className = 'valid';
+        if (msg) { msg.textContent = '✅ Email коректний!'; msg.style.color = '#34A853'; }
+      } else {
+        input.className = 'invalid';
+        if (msg) { msg.textContent = '❌ Невірний формат email'; msg.style.color = '#EA4335'; }
+      }
+    }
+
+    // ================================================
+    // ПРИКЛАД 3: Годинник
+    // ================================================
+    function updateClock() {
+      const el = document.getElementById('demo3-clock');
+      if (!el) return;
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      el.textContent = h + ':' + m + ':' + s;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    console.log('⚡ Презентація «JavaScript» завантажена!');
+    console.log('📍 Використовуйте стрілки для навігації між слайдами');
+  </script>
+</body>
+</html>
