@@ -544,7 +544,7 @@
             <li>Сайт «зламаний» на телефоні</li>
             <li>Потрібно горизонтально скролити</li>
             <li>Текст занадто маленький</li>
-            <li>Кнопки не потрапляє пальцем</li>
+            <li>По кнопках складно потрапити пальцем</li>
           </ul>
         </div>
         <div class="compare-box good">
@@ -662,7 +662,7 @@
       <div class="bp-visual">
         <div class="bp-row">
           <div class="bp-device-icon">📱</div>
-          <div class="bp-bar" style="background:#EA4335; max-width:20%;">< 576px</div>
+          <div class="bp-bar" style="background:#EA4335; max-width:20%;">&lt; 576px</div>
           <div class="bp-info"><strong>xs</strong> — смартфон</div>
         </div>
         <div class="bp-row">
@@ -807,7 +807,7 @@
         </div>
 
         <!-- Приклад сайдбар + контент -->
-        <p style="text-align:left; font-weight:700; margin:14px 0 6px; font-size:0.9em;">Бічна панель (3) + Контент (9):</p>
+        <p style="text-align:left; font-weight:700; margin:14px 0 6px; font-size:0.9em;">Бічна панель (3) + Контент (6) + Реклама (3):</p>
         <div class="grid-demo grid-row-12" style="gap:4px;">
           <div class="col col-span-3" style="background:#EA4335;">Меню (3)</div>
           <div class="col col-span-6">Основний контент (6)</div>
@@ -894,9 +894,9 @@
         <div class="box" style="margin:0; padding:20px;">
           <h3 style="color:#34A853;">📐 Відступи та розміри</h3>
           <ul style="text-align:left; font-size:0.95em;">
-            <li>Зовнішні та внутрішні відступи: xs / sm / md / lg / xl</li>
+            <li>Зовнішні та внутрішні відступи з гнучкою шкалою (класи типу <code>m-0…m-5</code>, <code>p-0…p-5</code>)</li>
             <li>Ширина та висота у відсотках або фіксована</li>
-            <li>Маштабування під екран автоматично</li>
+            <li>Масштабування під екран автоматично</li>
           </ul>
         </div>
         <div class="box" style="margin:0; padding:20px;">
@@ -1276,9 +1276,9 @@
     plugins: []
   });
 
-  // Конфеті на фінальному слайді (індекс 24)
+  // Конфеті на фінальному слайді (клас confetti-slide)
   Reveal.on('slidechanged', event => {
-    if (event.indexh === 24 && typeof confetti === 'function') {
+    if (event.currentSlide.classList.contains('confetti-slide') && typeof confetti === 'function') {
       confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 },
         colors: ['#7952B3', '#4285F4', '#34A853', '#FBBC04', '#EA4335'] });
       setTimeout(() => confetti({ particleCount: 60, angle: 60, spread: 55, origin: { x: 0 } }), 300);
