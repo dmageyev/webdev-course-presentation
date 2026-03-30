@@ -2257,10 +2257,9 @@ document.addEventListener('DOMContentLoaded', function() {
       plugins: [RevealHighlight]
     });
 
-    // Конфеті на фінальних слайдах
+    // Конфеті на слайдах з класом confetti-slide
     Reveal.on('slidechanged', event => {
-      // Слайд 27 Лекції 1 (індекс 26) та Слайд 26 Лекції 2 (індекс 49)
-      if (event.indexh === 26 || event.indexh === 49) {
+      if (event.currentSlide && event.currentSlide.classList.contains('confetti-slide')) {
         setTimeout(() => {
           if (typeof confetti === 'function') {
             confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 },
