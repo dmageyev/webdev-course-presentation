@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лекція 2: JavaScript — Практика та Глибше | Веброзробка</title>
+  <meta name="description" content="Інтерактивна презентація лекції 2 «JavaScript» для студентів ВНЗ не ІТ-напрямку: об'єкти, асинхронність, DOM, localStorage, міні-проект">
+  <meta name="author" content="Курс розробки вебсайтів">
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+
+  <!-- Highlight.js для підсвітки коду -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- Кастомні стилі з основного курсу -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* ---- Кольори теми ---- */
+    .js-yellow {
+      background: linear-gradient(135deg, #F7DF1E, #F0A500) !important;
+    }
+    .js-yellow h1, .js-yellow h2, .js-yellow h3, .js-yellow p {
+      color: #202124 !important;
+    }
+
+    .gradient-dark {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      color: #fff !important;
+    }
+    .gradient-dark h1, .gradient-dark h2, .gradient-dark h3,
+    .gradient-dark p, .gradient-dark li {
+      color: #fff !important;
+    }
+
+    .gradient-teal {
+      background: linear-gradient(135deg, #00897B, #00BCD4) !important;
+      color: #fff !important;
+    }
+    .gradient-teal h1, .gradient-teal h2, .gradient-teal h3,
+    .gradient-teal p, .gradient-teal li {
+      color: #fff !important;
+    }
+
+    .gradient-purple {
+      background: linear-gradient(135deg, #7B1FA2, #4A148C) !important;
+      color: #fff !important;
+    }
+    .gradient-purple h1, .gradient-purple h2, .gradient-purple h3,
+    .gradient-purple p, .gradient-purple li {
+      color: #fff !important;
+    }
+
+    /* ---- Картки концепцій ---- */
+    .concept-card {
+      background: var(--light-gray);
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 6px solid var(--google-blue);
+    }
+    .concept-card.yellow { border-left-color: #F0A500; background: #FFFDE7; }
+    .concept-card.green  { border-left-color: var(--google-green); background: #E8F5E9; }
+    .concept-card.red    { border-left-color: var(--google-red); background: #FFEBEE; }
+    .concept-card.blue   { border-left-color: var(--google-blue); background: #E3F2FD; }
+    .concept-card.teal   { border-left-color: #00897B; background: #E0F2F1; }
+    .concept-card.purple { border-left-color: #7B1FA2; background: #F3E5F5; }
+
+    /* ---- Живі приклади ---- */
+    .example-live {
+      background: #fff;
+      border: 3px solid var(--google-blue);
+      border-radius: 14px;
+      padding: 22px;
+      max-width: 1200px;
+      margin: 15px auto;
+    }
+    .example-live button {
+      background: var(--google-blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 26px;
+      font-size: 1em;
+      font-family: 'Open Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin: 4px;
+    }
+    .example-live button:hover { background: #1a73e8; }
+    .example-live button.green-btn { background: var(--google-green); }
+    .example-live button.green-btn:hover { background: #2e7d32; }
+    .example-live button.red-btn { background: var(--google-red); }
+    .example-live button.red-btn:hover { background: #c62828; }
+    .example-live output {
+      display: block;
+      margin-top: 12px;
+      font-size: 1.1em;
+      min-height: 1.4em;
+      font-weight: 600;
+      color: var(--google-green);
+    }
+
+    /* ---- Потік кроків ---- */
+    .step-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px auto;
+    }
+    .step-box {
+      background: var(--light-gray);
+      border-radius: 10px;
+      padding: 14px 18px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9em;
+      min-width: 130px;
+    }
+    .step-arrow { font-size: 1.8em; color: var(--google-blue); }
+
+    /* ---- Порівняльні рядки ---- */
+    .compare-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 15px auto;
+      align-items: start;
+    }
+
+    /* ---- Список підсумків ---- */
+    .summary-list {
+      list-style: none;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    .summary-list li {
+      padding: 13px 20px;
+      margin: 9px 0;
+      background: var(--light-gray);
+      border-radius: 10px;
+      border-left: 5px solid var(--google-green);
+      font-size: 1.1em;
+    }
+
+    /* ---- Todo-list demo ---- */
+    #todo-input {
+      padding: 10px 14px;
+      font-size: 1em;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Open Sans', sans-serif;
+      width: 320px;
+    }
+    #todo-list {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0;
+      max-height: 220px;
+      overflow-y: auto;
+      text-align: left;
+    }
+    #todo-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      margin: 5px 0;
+      background: var(--light-gray);
+      border-radius: 8px;
+      font-size: 1em;
+    }
+    #todo-list li.done { text-decoration: line-through; opacity: 0.55; }
+    #todo-list li button {
+      background: var(--google-red);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.85em;
+      cursor: pointer;
+      margin: 0;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    #todo-list li span.check {
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+
+    /* ---- LocalStorage demo ---- */
+    #ls-input {
+      padding: 10px 14px;
+      font-size: 1em;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Open Sans', sans-serif;
+      width: 280px;
+    }
+    #ls-output {
+      margin-top: 10px;
+      font-size: 1.1em;
+      font-weight: 600;
+      min-height: 1.5em;
+      color: var(--google-blue);
+    }
+
+    /* ---- Async demo ---- */
+    #async-output {
+      margin-top: 10px;
+      font-size: 1em;
+      font-weight: 600;
+      min-height: 2em;
+      color: var(--google-green);
+      text-align: left;
+      white-space: pre-line;
+    }
+
+    /* ---- Object demo ---- */
+    #obj-output {
+      margin-top: 10px;
+      font-size: 1em;
+      font-weight: 600;
+      min-height: 2em;
+      color: var(--dark-gray);
+      text-align: left;
+      white-space: pre-line;
+    }
+
+    /* ---- Agenda item ---- */
+    .agenda { text-align: left; max-width: 1100px; margin: 0 auto; }
+    .agenda-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      margin: 8px 0;
+      background: var(--light-gray);
+      border-radius: 10px;
+      border-left: 5px solid var(--google-blue);
+      font-size: 1.15em;
+    }
+    .agenda-item span { font-weight: 600; color: var(--google-blue); }
+
+    /* ---- Review cards ---- */
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 1400px;
+      margin: 20px auto;
+    }
+    .review-card {
+      padding: 18px 15px;
+      border-radius: 12px;
+      background: var(--light-gray);
+      border: 2px solid transparent;
+      text-align: center;
+    }
+    .review-card .rc-icon { font-size: 2.2em; display: block; margin-bottom: 8px; }
+    .review-card strong { font-size: 1em; display: block; margin-bottom: 5px; }
+    .review-card span { font-size: 0.82em; color: #555; }
+
+    /* ---- Promise chain vis ---- */
+    .promise-chain {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      max-width: 1300px;
+      margin: 20px auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .promise-step {
+      padding: 18px 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 0.9em;
+      font-weight: 600;
+      min-width: 160px;
+    }
+    .promise-step.pending  { background: #FFF9C4; border: 2px solid #F0A500; }
+    .promise-step.resolved { background: #E8F5E9; border: 2px solid var(--google-green); }
+    .promise-step.rejected { background: #FFEBEE; border: 2px solid var(--google-red); }
+    .promise-arrow { display: flex; align-items: center; font-size: 1.8em; color: var(--google-blue); padding: 0 8px; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ========================================
+           СЛАЙД 1: Титульний
+           ======================================== -->
+      <section class="js-yellow">
+        <div class="emoji" style="font-size: 4em;">⚡</div>
+        <h1 style="margin-top: 15px; font-size: 2.6em;">JavaScript</h1>
+        <h2 style="font-size: 1.55em;">Лекція 2: Практика та Поглиблення</h2>
+        <p style="font-size: 1.1em; margin-top: 35px;">
+          Об'єкти, асинхронність, DOM, сховище даних та перший міні-проект 🛠️
+        </p>
+        <p style="font-size: 1em; margin-top: 35px;"><small>📅 2026 • Курс «Веброзробка» • Лекція 2 з 2</small></p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 2: План лекції
+           ======================================== -->
+      <section>
+        <h2>📋 ПЛАН ЛЕКЦІЇ</h2>
+        <div class="agenda" style="max-width: 1200px;">
+          <div class="agenda-item">🔁 Коротке повторення Лекції 1 <span>Огляд</span></div>
+          <div class="agenda-item">1️⃣ Об'єкти та масиви — структури даних <span>Дані</span></div>
+          <div class="agenda-item">2️⃣ Асинхронний JS — Promises та async/await <span>Час</span></div>
+          <div class="agenda-item">3️⃣ Поглиблена робота з DOM <span>Сторінка</span></div>
+          <div class="agenda-item">4️⃣ Зберігання даних у браузері — localStorage <span>Пам'ять</span></div>
+          <div class="agenda-item">5️⃣ Практичний міні-проект — Todo List <span>Проект</span></div>
+          <div class="agenda-item">✅ Підсумки та домашнє завдання <span>Висновки</span></div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 3: Повторення Лекції 1
+           ======================================== -->
+      <section class="gradient-blue-purple">
+        <div class="emoji" style="font-size: 4em;">🔁</div>
+        <h1 style="margin-top: 15px;">ПОВТОРЕННЯ</h1>
+        <h2>Що ми дізналися на Лекції 1?</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 4: Карточки повторення
+           ======================================== -->
+      <section>
+        <h2>🧠 ЛЕКЦІЯ 1 — КЛЮЧОВІ ІДЕЇ</h2>
+        <div class="review-grid">
+          <div class="review-card" style="border-color: var(--google-blue); padding: 12px;">
+            <span class="rc-icon">⚡</span>
+            <strong>JavaScript — мова вебу</strong>
+            <span>97% сайтів, найпопулярніша мова у світі</span>
+          </div>
+          <div class="review-card" style="border-color: #F0A500; padding: 12px;">
+            <span class="rc-icon">🏠</span>
+            <strong>Три шари сайту</strong>
+            <span>HTML — структура, CSS — дизайн, JS — інтерактивність</span>
+          </div>
+          <div class="review-card" style="border-color: var(--google-green); padding: 12px;">
+            <span class="rc-icon">⚙️</span>
+            <strong>JS-двигун</strong>
+            <span>Браузер читає та виконує код через V8/SpiderMonkey</span>
+          </div>
+          <div class="review-card" style="border-color: var(--google-red); padding: 12px;">
+            <span class="rc-icon">📦</span>
+            <strong>Змінні та функції</strong>
+            <span>let/const для даних, function для дій</span>
+          </div>
+          <div class="review-card" style="border-color: #7B1FA2; padding: 12px;">
+            <span class="rc-icon">🌳</span>
+            <strong>DOM</strong>
+            <span>Браузер перетворює HTML на дерево об'єктів, JS керує ним</span>
+          </div>
+          <div class="review-card" style="border-color: #00897B; padding: 12px;">
+            <span class="rc-icon">🖱️</span>
+            <strong>Події (Events)</strong>
+            <span>JS реагує на кліки, введення, прокручування тощо</span>
+          </div>
+        </div>
+        <div class="box" style="max-width: 1100px; margin-top: 8px;">
+          <p style="font-size: 1em;">💡 <strong>Сьогодні</strong> ми йдемо глибше: вивчаємо складніші структури даних, час, пам'ять і збираємо все разом у реальний проект.</p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 5: Розділ 1 — Об'єкти та масиви
+           ======================================== -->
+      <section class="gradient-teal">
+        <div class="emoji" style="font-size: 4em;">🗂️</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 1</h1>
+        <h2>ОБ'ЄКТИ ТА МАСИВИ<br>— СТРУКТУРИ ДАНИХ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 6: Масиви
+           ======================================== -->
+      <section>
+        <h2>📋 МАСИВИ — СПИСКИ ДАНИХ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>Масив = пронумерований список</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Уявіть список покупок: кожному товару присвоєно порядковий номер (індекс).
+                Лічба починається з <strong>0</strong>, а не з 1.
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Навіщо масиви?</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>📝 Список студентів у групі</li>
+                <li>🛒 Товари в кошику</li>
+                <li>📰 Стрічка новин</li>
+                <li>📊 Оцінки студента за семестр</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Масив — квадратні дужки []
+const студенти = ["Оля", "Іван", "Юля", "Андрій"];
+
+// Доступ за індексом (з нуля!)
+console.log(студенти[0]); // → "Оля"
+console.log(студенти[2]); // → "Юля"
+
+// Кількість елементів
+console.log(студенти.length); // → 4
+
+// Додати елемент
+студенти.push("Марія");
+console.log(студенти.length); // → 5
+
+// Видалити останній
+студенти.pop();
+
+// Перебрати всі елементи
+студенти.forEach(function(студент) {
+  console.log("Привіт, " + студент + "!");
+});</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 7: Об'єкти
+           ======================================== -->
+      <section>
+        <h2>🗂️ ОБ'ЄКТИ — ОПИС СУТНОСТЕЙ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card yellow" style="margin-bottom: 10px;">
+              <p><strong>Об'єкт = «паспорт» або «картка»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Набір пар «властивість: значення» — як анкета з полями.<br><br>
+                💡 <em>Уявіть студентський квиток: ім'я, спеціальність, курс, середній бал.</em>
+              </p>
+            </div>
+            <div class="concept-card teal">
+              <p><strong>Де об'єкти зустрічаються в житті:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>👤 Профіль користувача (ім'я, email, фото)</li>
+                <li>🛒 Товар (назва, ціна, наявність)</li>
+                <li>🌤️ Погода (місто, температура, опади)</li>
+                <li>🚗 Автомобіль (марка, рік, колір)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Об'єкт — фігурні дужки {}
+const студент = {
+  ім'я: "Оксана Петренко",
+  вік: 20,
+  спеціальність: "Економіка",
+  курс: 2,
+  середнійБал: 89.5
+};
+
+// Доступ до властивостей
+console.log(студент.ім'я);       // → "Оксана Петренко"
+console.log(студент.курс);       // → 2
+
+// Зміна значення
+студент.вік = 21;
+
+// Виклик методу
+const інфо = `${студент.ім'я}, ${студент.курс} курс`;
+console.log(інфо);
+// → "Оксана Петренко, 2 курс"</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 8: Масив об'єктів — реальний приклад
+           ======================================== -->
+      <section>
+        <h2>🔗 МАСИВ ОБ'ЄКТІВ — ЯК ДАНІ З СЕРВЕРА</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Список товарів інтернет-магазину
+const товари = [
+  { id: 1, назва: "Ноутбук",    ціна: 25000, вНаявності: true  },
+  { id: 2, назва: "Клавіатура", ціна: 1200,  вНаявності: true  },
+  { id: 3, назва: "Монітор",    ціна: 12000, вНаявності: false }
+];
+
+// Знайти товари в наявності
+const доступні = товари.filter(т => т.вНаявності);
+console.log(доступні.length); // → 2
+
+// Вивести всі назви
+товари.forEach(товар => {
+  const статус = товар.вНаявності ? "✅" : "❌";
+  console.log(`${статус} ${товар.назва} — ${товар.ціна}₴`);
+});
+// ✅ Ноутбук — 25000₴
+// ✅ Клавіатура — 1200₴
+// ❌ Монітор — 12000₴</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Живий приклад:</p>
+            <div class="example-live">
+              <button onclick="objDemo()">📦 Показати товари</button>
+              <output id="obj-output"></output>
+            </div>
+            <div class="concept-card blue" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>💡 Це саме те, як надходять дані з будь-якого API:</strong>
+                масив об'єктів — будь то список новин, замовлень, студентів, транзакцій тощо.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 9: Розділ 2 — Асинхронний JS
+           ======================================== -->
+      <section class="gradient-purple">
+        <div class="emoji" style="font-size: 4em;">⏳</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 2</h1>
+        <h2>АСИНХРОННИЙ JAVASCRIPT<br>— РОБОТА З ЧАСОМ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 10: Синхронне vs Асинхронне
+           ======================================== -->
+      <section>
+        <h2>🔄 СИНХРОННЕ vs АСИНХРОННЕ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card red" style="margin-bottom: 10px;">
+              <p><strong>🚶 Синхронне — «черга в магазині»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Кожна операція чекає завершення попередньої.<br>
+                Браузер «зависає» поки йде запит до сервера — сторінка не реагує на кліки.
+              </p>
+              <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+                <pre><code class="language-javascript">// ❌ Сторінка «зависає» під час запиту
+const дані = завантажитиДані(); // чекаємо...
+відобразити(дані); // тільки тоді</code></pre>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="concept-card green" style="margin-bottom: 10px;">
+              <p><strong>🏃 Асинхронне — «замовлення у ресторані»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Замовив → займаєшся іншим → офіціант приносить страву, коли готово.<br>
+                Браузер продовжує реагувати, поки очікує відповіді сервера.
+              </p>
+              <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+                <pre><code class="language-javascript">// ✅ Сторінка залишається активною
+завантажитиДані().then(дані => {
+  відобразити(дані); // коли буде готово
+});
+// браузер продовжує працювати...</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box" style="max-width: 1100px; margin-top: 10px;">
+          <p style="font-size: 1em;">
+            💡 <strong>Реальний приклад:</strong> коли ви відкриваєте Google Maps — карта появляється одразу, а маркери та назви вулиць підвантажуються по мірі отримання відповіді від сервера.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 11: Promise — обіцянка
+           ======================================== -->
+      <section>
+        <h2>🤝 PROMISE — «ОБІЦЯНКА» МАЙБУТНЬОГО РЕЗУЛЬТАТУ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card yellow" style="margin-bottom: 10px;">
+              <p><strong>Promise = «талон очікування»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Як талон у лікарні: ви отримуєте <em>обіцянку</em> прийому.<br>
+                Результат може бути:
+              </p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>⏳ <strong>pending</strong> — ще чекаємо</li>
+                <li>✅ <strong>fulfilled</strong> — успішно виконано</li>
+                <li>❌ <strong>rejected</strong> — виникла помилка</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// fetch повертає Promise
+fetch('https://api.example.com/students')
+  .then(відповідь => відповідь.json())  // ✅ успіх: перетворити
+  .then(студенти => {
+    console.log("Отримано:", студенти.length, "студентів");
+    відобразитиСтудентів(студенти);
+  })
+  .catch(помилка => {                   // ❌ помилка
+    console.error("Помилка!", помилка.message);
+    показатиПовідомлення("Не вдалось завантажити дані");
+  })
+  .finally(() => {                      // завжди
+    сховатиЗавантаження();
+  });</code></pre>
+          </div>
+        </div>
+        <div class="promise-chain">
+          <div class="promise-step pending">⏳ Запит<br>відправлено</div>
+          <div class="promise-arrow">→</div>
+          <div class="promise-step resolved">✅ .then()<br>Обробка</div>
+          <div class="promise-arrow">→</div>
+          <div class="promise-step resolved">✅ .then()<br>Відображення</div>
+          <div class="promise-arrow" style="color: var(--google-red);">⬇</div>
+          <div class="promise-step rejected" style="margin-top: 0;">❌ .catch()<br>Помилка</div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 12: async/await — сучасний синтаксис
+           ======================================== -->
+      <section>
+        <h2>✨ ASYNC/AWAIT — ЧИТАБЕЛЬНИЙ АСИНХРОННИЙ КОД</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>async/await — «асинхронний код, схожий на синхронний»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Ключове слово <code>await</code> «призупиняє» виконання функції до отримання результату,
+                але <em>не блокує браузер</em> — решта сторінки продовжує працювати.
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Переваги async/await:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>📖 Код читається як звичайний послідовний</li>
+                <li>🐛 Легше знаходити помилки</li>
+                <li>🔀 Можна використовувати try/catch</li>
+                <li>👥 Стандарт у сучасній розробці</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="code-block" style="font-size: 1em; margin-bottom: 10px;">
+              <p style="margin-bottom: 6px; font-size: 0.85em; font-weight: 700;">❌ З .then() — складно читати:</p>
+              <pre><code class="language-javascript">завантажити(url)
+  .then(р => р.json())
+  .then(д => обробити(д))
+  .catch(е => помилка(е));</code></pre>
+            </div>
+            <div class="code-block" style="font-size: 1em;">
+              <p style="margin-bottom: 6px; font-size: 0.85em; font-weight: 700;">✅ З async/await — просто і зрозуміло:</p>
+              <pre><code class="language-javascript">async function завантажитиДані(url) {
+  try {
+    const відповідь = await fetch(url);
+    const дані = await відповідь.json();
+    обробити(дані);
+  } catch (помилка) {
+    console.error("Помилка:", помилка);
+  }
+}
+
+// Виклик
+завантажитиДані('https://api.example.com/news');</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 13: Async — живий приклад
+           ======================================== -->
+      <section>
+        <h2>🌍 ASYNC/AWAIT — ЖИВИЙ ПРИКЛАД</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <p style="margin-bottom: 8px; font-weight: 700;">Імітація завантаження даних:</p>
+            <pre><code class="language-javascript">// Функція, яка «симулює» запит до сервера
+function отриматиДані() {
+  return new Promise(resolve => {
+    // Затримка 2 секунди (як реальний запит)
+    setTimeout(() => {
+      resolve({
+        місто: "Київ",
+        температура: 18,
+        опис: "Хмарно"
+      });
+    }, 2000);
+  });
+}
+
+async function показатиПогоду() {
+  console.log("⏳ Завантаження...");
+  const погода = await отриматиДані();
+  console.log(`🌤️ ${погода.місто}: ${погода.температура}°C`);
+}</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Спробуйте:</p>
+            <div class="example-live">
+              <button onclick="asyncDemo()">🌤️ Завантажити «погоду»</button>
+              <output id="async-output"></output>
+            </div>
+            <div class="concept-card teal" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>💡 Саме так працює будь-який сайт:</strong><br>
+                кнопка натиснута → запит відправлено → 0.5–2 секунди очікування → дані відображено.
+                Все це без «зависання» браузера.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 14: Розділ 3 — Поглиблена робота з DOM
+           ======================================== -->
+      <section class="gradient-green-blue">
+        <div class="emoji" style="font-size: 4em;">🌳</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 3</h1>
+        <h2>ПОГЛИБЛЕНА РОБОТА З DOM<br>— ДИНАМІЧНА СТОРІНКА</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 15: Що можна робити з DOM
+           ======================================== -->
+      <section>
+        <h2>🛠️ ЩО МОЖНА РОБИТИ З DOM?</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1400px; margin: 20px auto;">
+          <div class="concept-card blue">
+            <p style="font-size: 1.1em;"><strong>🔍 Знаходити елементи</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// За ID
+document.getElementById('btn')
+
+// За класом
+document.querySelector('.card')
+
+// Всі за класом
+document.querySelectorAll('li')</code></pre>
+            </div>
+          </div>
+          <div class="concept-card green">
+            <p style="font-size: 1.1em;"><strong>✏️ Змінювати вміст</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Текст
+el.textContent = 'Новий текст';
+
+// HTML-код
+el.innerHTML = '&lt;b&gt;Жирний&lt;/b&gt;';
+
+// Атрибут
+el.setAttribute('href', '/page')</code></pre>
+            </div>
+          </div>
+          <div class="concept-card yellow">
+            <p style="font-size: 1.1em;"><strong>🎨 Керувати стилями</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Прямий стиль
+el.style.color = 'red';
+
+// Додати CSS клас
+el.classList.add('active');
+
+// Прибрати клас
+el.classList.remove('hidden')</code></pre>
+            </div>
+          </div>
+          <div class="concept-card teal">
+            <p style="font-size: 1.1em;"><strong>➕ Створювати елементи</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Новий елемент
+const li = document.createElement('li');
+li.textContent = 'Новий пункт';
+
+// Додати на сторінку
+список.appendChild(li);</code></pre>
+            </div>
+          </div>
+          <div class="concept-card red">
+            <p style="font-size: 1.1em;"><strong>🗑️ Видаляти елементи</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Видалити елемент
+el.remove();
+
+// Очистити контейнер
+список.innerHTML = '';
+
+// Видалити дочірній
+батько.removeChild(дитина);</code></pre>
+            </div>
+          </div>
+          <div class="concept-card purple">
+            <p style="font-size: 1.1em;"><strong>🖱️ Додавати події</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Клік
+btn.addEventListener('click', fn);
+
+// Клавіша
+input.addEventListener('keydown', fn);
+
+// Відправка форми
+form.addEventListener('submit', fn);</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 16: Динамічне додавання елементів
+           ======================================== -->
+      <section>
+        <h2>➕ СТВОРЕННЯ ЕЛЕМЕНТІВ ДИНАМІЧНО</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">function додатиКартку(ім'я, роль) {
+  // 1. Створюємо новий елемент
+  const картка = document.createElement('div');
+
+  // 2. Додаємо CSS клас
+  картка.classList.add('user-card');
+
+  // 3. Задаємо вміст (шаблонний рядок)
+  картка.innerHTML = `
+    &lt;h3&gt;👤 ${ім'я}&lt;/h3&gt;
+    &lt;p&gt;${роль}&lt;/p&gt;
+    &lt;button onclick="this.parentElement.remove()"&gt;
+      ✕ Видалити
+    &lt;/button&gt;
+  `;
+
+  // 4. Додаємо на сторінку
+  document.getElementById('cards').appendChild(картка);
+}
+
+// Виклик
+додатиКартку("Оксана Петренко", "Студентка, 2 курс");
+додатиКартку("Іван Коваль", "Викладач, Економіка");</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Живий приклад:</p>
+            <div class="example-live">
+              <button onclick="domAddCard()">👤 Додати картку</button>
+              <button class="red-btn" onclick="domClearCards()">🗑️ Очистити</button>
+              <div id="dom-cards" style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 10px;"></div>
+            </div>
+            <div class="concept-card blue" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>💡 Так працюють:</strong> соціальні мережі (нові пости без перезавантаження), інтернет-магазини (додавання товарів до каталогу), чати (нові повідомлення).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 17: Розділ 4 — localStorage
+           ======================================== -->
+      <section class="js-yellow">
+        <div class="emoji" style="font-size: 4em;">💾</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 4</h1>
+        <h2>ЗБЕРІГАННЯ ДАНИХ У БРАУЗЕРІ<br>— LOCALSTORAGE</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 18: LocalStorage — що це
+           ======================================== -->
+      <section>
+        <h2>💾 LOCALSTORAGE — «БЛОКНОТ» БРАУЗЕРА</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>localStorage = постійне сховище в браузері</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Дані зберігаються навіть після закриття вкладки або браузера.
+                При наступному відкритті сайту — дані «пам'ятаються».
+              </p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                💡 <em>Як записна книжка, яку ви залишаєте на столі — вона чекає, поки ви повернетесь.</em>
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Де використовується:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🌙 Запам'ятовування теми (темна/світла)</li>
+                <li>🛒 Кошик покупок між сесіями</li>
+                <li>📝 Збереження чернетки форми</li>
+                <li>🔐 Токен авторизації</li>
+                <li>🗂️ Список завдань (наш проект!)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// ✏️ Записати дані
+localStorage.setItem('ім'я', 'Оксана');
+localStorage.setItem('тема', 'темна');
+
+// 📖 Прочитати дані
+const ім'я = localStorage.getItem('ім'я');
+console.log(ім'я); // → "Оксана"
+
+// 🗑️ Видалити одне
+localStorage.removeItem('тема');
+
+// 🧹 Очистити все
+localStorage.clear();
+
+// ---- Збереження об'єкта ----
+const налаштування = { мова: 'uk', розмір: 16 };
+
+// Перетворити в рядок перед збереженням
+localStorage.setItem('config', JSON.stringify(налаштування));
+
+// Прочитати й розпарсити назад
+const config = JSON.parse(localStorage.getItem('config'));
+console.log(config.мова); // → "uk"</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 19: LocalStorage — живий приклад
+           ======================================== -->
+      <section>
+        <h2>💾 LOCALSTORAGE — ЖИВИЙ ПРИКЛАД</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Зберегти ім'я користувача
+function зберегтиІм'я(ім'я) {
+  localStorage.setItem('userName', ім'я);
+  console.log("✅ Збережено: " + ім'я);
+}
+
+// Завантажити при відкритті сторінки
+function привітати() {
+  const ім'я = localStorage.getItem('userName');
+
+  if (ім'я) {
+    document.getElementById('greeting').textContent =
+      "👋 З поверненням, " + ім'я + "!";
+  } else {
+    document.getElementById('greeting').textContent =
+      "Привіт, незнайомцю!";
+  }
+}
+
+// Запускаємо при завантаженні
+window.addEventListener('load', привітати);</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Спробуйте — дані збережуться між оновленнями:</p>
+            <div class="example-live">
+              <input type="text" id="ls-input" placeholder="Введіть своє ім'я..." oninput="lsPreview(this)">
+              <br>
+              <button onclick="lsSave()" style="margin-top: 10px;">💾 Зберегти</button>
+              <button onclick="lsLoad()" class="green-btn">📖 Прочитати</button>
+              <button onclick="lsClear()" class="red-btn">🗑️ Видалити</button>
+              <div id="ls-output"></div>
+            </div>
+            <div class="concept-card teal" style="margin-top: 12px;">
+              <p style="font-size: 0.88em;">
+                💡 Відкрийте DevTools (F12) → Application → Local Storage — побачите збережені дані!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 20: Розділ 5 — Міні-проект
+           ======================================== -->
+      <section class="gradient-dark">
+        <div class="emoji" style="font-size: 4em;">🛠️</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 5</h1>
+        <h2>ПРАКТИЧНИЙ МІНІ-ПРОЕКТ<br>— СПИСОК ЗАВДАНЬ (TODO LIST)</h2>
+        <p style="margin-top: 20px; font-size: 1.1em;">Збираємо все вивчене в один реальний застосунок!</p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 21: Що ми будуємо
+           ======================================== -->
+      <section>
+        <h2>🗒️ TODO LIST — ЩО МИ БУДУЄМО?</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>Функціональність застосунку:</strong></p>
+              <ul style="font-size: 0.95em; margin-top: 8px;">
+                <li>➕ Додавати нові завдання</li>
+                <li>✅ Позначати як виконане</li>
+                <li>🗑️ Видаляти завдання</li>
+                <li>💾 Зберігати між сесіями (localStorage)</li>
+                <li>📊 Показувати кількість залишених завдань</li>
+              </ul>
+            </div>
+            <div class="concept-card yellow">
+              <p><strong>Концепції, які використаємо:</strong></p>
+              <ul style="font-size: 0.95em; margin-top: 8px;">
+                <li>📋 Масив об'єктів для збереження завдань</li>
+                <li>🌳 DOM — створення/видалення елементів</li>
+                <li>🖱️ Події — click, keydown</li>
+                <li>💾 localStorage — збереження стану</li>
+                <li>🔧 Функції — модульний підхід</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Живий застосунок:</p>
+            <div class="example-live">
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="todo-input" placeholder="Нове завдання..." onkeydown="if(event.key==='Enter') todoAdd()">
+                <button onclick="todoAdd()" class="green-btn">➕ Додати</button>
+              </div>
+              <div id="todo-stats" style="margin-top: 8px; font-size: 0.9em; color: #666;"></div>
+              <ul id="todo-list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 22: Крок 1 — Структура даних
+           ======================================== -->
+      <section>
+        <h2>📐 КРОК 1: СТРУКТУРА ДАНИХ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>Спочатку — дані, потім — інтерфейс</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Хороший розробник спочатку продумує, як зберігати дані, а потім як їх відображати.
+                Для списку завдань нам потрібен <strong>масив об'єктів</strong>.
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Кожне завдання — це об'єкт з полями:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🔑 <strong>id</strong> — унікальний ідентифікатор</li>
+                <li>📝 <strong>текст</strong> — опис завдання</li>
+                <li>✅ <strong>виконано</strong> — true/false</li>
+                <li>📅 <strong>дата</strong> — коли додано</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Масив завдань (головний стан застосунку)
+let завдання = [];
+
+// Кожне завдання — об'єкт
+function створитиЗавдання(текст) {
+  return {
+    id: Date.now(),           // унікальний ID
+    текст: текст,
+    виконано: false,
+    дата: new Date().toLocaleDateString('uk-UA')
+  };
+}
+
+// Приклад даних
+завдання = [
+  { id: 1, текст: "Здати реферат",   виконано: false, дата: "30.03.2026" },
+  { id: 2, текст: "Купити підручник", виконано: true,  дата: "29.03.2026" },
+  { id: 3, текст: "Записатись на ЗНО",виконано: false, дата: "28.03.2026" }
+];</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 23: Крок 2 — Відображення списку
+           ======================================== -->
+      <section>
+        <h2>🖥️ КРОК 2: ВІДОБРАЖЕННЯ СПИСКУ</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">function відобразитиСписок() {
+  const список = document.getElementById('список');
+
+  // Очищаємо список перед перемальовуванням
+  список.innerHTML = '';
+
+  // Перебираємо кожне завдання
+  завдання.forEach(function(завд) {
+
+    // Створюємо новий елемент списку
+    const li = document.createElement('li');
+    if (завд.виконано) {
+      li.classList.add('done');
+    }
+
+    li.innerHTML = `
+      &lt;span class="check" onclick="переключити(${завд.id})"&gt;
+        ${завд.виконано ? '✅' : '⬜'}
+      &lt;/span&gt;
+      ${завд.текст}
+      &lt;button onclick="видалити(${завд.id})"&gt;✕&lt;/button&gt;
+    `;
+
+    список.appendChild(li);
+  });
+
+  оновитиСтатистику();
+}</code></pre>
+          </div>
+          <div>
+            <div class="concept-card teal" style="margin-bottom: 10px;">
+              <p><strong>💡 Ключовий принцип: «Рендеринг»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Щоразу, коли стан даних змінюється — перемальовуємо весь список.
+                Це простий, але надійний підхід. Саме так працюють React, Vue та інші фреймворки.
+              </p>
+            </div>
+            <div class="concept-card yellow">
+              <p><strong>Потік даних застосунку:</strong></p>
+              <div class="step-flow" style="flex-direction: column; align-items: flex-start; margin: 10px 0;">
+                <div style="display: flex; gap: 8px; align-items: center; font-size: 0.9em;">
+                  <div class="step-box" style="min-width: auto; padding: 8px 12px;">📋 Дані змінились</div>
+                  <span class="step-arrow" style="font-size: 1.2em;">→</span>
+                  <div class="step-box" style="min-width: auto; padding: 8px 12px;">💾 Зберегти</div>
+                  <span class="step-arrow" style="font-size: 1.2em;">→</span>
+                  <div class="step-box" style="min-width: auto; padding: 8px 12px;">🖥️ Перемалювати</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 24: Крок 3 — Додавання та видалення
+           ======================================== -->
+      <section>
+        <h2>➕🗑️ КРОК 3: ДОДАВАННЯ ТА ВИДАЛЕННЯ</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// ➕ Додати завдання
+function додатиЗавдання() {
+  const поле = document.getElementById('поле');
+  const текст = поле.value.trim(); // видаляємо пробіли
+
+  if (!текст) {
+    alert("Введіть текст завдання!");
+    return; // виходимо, якщо поле порожнє
+  }
+
+  const нове = {
+    id: Date.now(),
+    текст: текст,
+    виконано: false,
+    дата: new Date().toLocaleDateString('uk-UA')
+  };
+
+  завдання.push(нове);    // додаємо в масив
+  зберегтиВСховищі();     // зберігаємо
+  відобразитиСписок();    // перемальовуємо
+
+  поле.value = '';        // очищаємо поле вводу
+}
+
+// 🗑️ Видалити завдання
+function видалити(id) {
+  // filter повертає масив БЕЗ елемента з таким id
+  завдання = завдання.filter(з => з.id !== id);
+  зберегтиВСховищі();
+  відобразитиСписок();
+}</code></pre>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// ✅ Переключити стан виконання
+function переключити(id) {
+  const завд = завдання.find(з => з.id === id);
+  if (завд) {
+    завд.виконано = !завд.виконано; // інвертуємо
+  }
+  зберегтиВСховищі();
+  відобразитиСписок();
+}
+
+// 💾 Зберегти в localStorage
+function зберегтиВСховищі() {
+  localStorage.setItem(
+    'todoList',
+    JSON.stringify(завдання)
+  );
+}
+
+// 📖 Завантажити з localStorage
+function завантажитиЗСховища() {
+  const збережені = localStorage.getItem('todoList');
+  if (збережені) {
+    завдання = JSON.parse(збережені);
+  }
+}
+
+// 📊 Статистика
+function оновитиСтатистику() {
+  const залишилось = завдання.filter(з => !з.виконано).length;
+  document.getElementById('статистика').textContent =
+    `Залишилось: ${залишилось} з ${завдання.length}`;
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 25: Крок 4 — Ініціалізація
+           ======================================== -->
+      <section>
+        <h2>🚀 КРОК 4: ЗБИРАЄМО ВСЕ РАЗОМ</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// ========================================
+// ТОЧКА ВХОДУ — запуск застосунку
+// ========================================
+
+let завдання = []; // головний масив даних
+
+// Запустити, коли сторінка завантажилась
+document.addEventListener('DOMContentLoaded', function() {
+
+  // 1. Завантажуємо збережені завдання
+  завантажитиЗСховища();
+
+  // 2. Відображаємо список
+  відобразитиСписок();
+
+  // 3. Додаємо обробник клавіші Enter
+  document.getElementById('поле')
+    .addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        додатиЗавдання();
+      }
+    });
+
+  console.log('✅ Todo List запущено!');
+  console.log('📋 Завантажено завдань:', завдання.length);
+});</code></pre>
+          </div>
+          <div>
+            <div class="concept-card green" style="margin-bottom: 10px;">
+              <p><strong>🏗️ Архітектура готового застосунку:</strong></p>
+              <div class="step-flow" style="flex-direction: column; gap: 8px; margin: 12px 0; align-items: flex-start;">
+                <div style="font-size: 0.9em; background: #E8F5E9; padding: 8px 14px; border-radius: 8px; width: 100%;">📋 <strong>Дані</strong> — масив об'єктів у змінній</div>
+                <div style="font-size: 0.9em; background: #E3F2FD; padding: 8px 14px; border-radius: 8px; width: 100%;">🌳 <strong>DOM</strong> — відображення у HTML</div>
+                <div style="font-size: 0.9em; background: #FFFDE7; padding: 8px 14px; border-radius: 8px; width: 100%;">🖱️ <strong>Події</strong> — дії користувача</div>
+                <div style="font-size: 0.9em; background: #E0F2F1; padding: 8px 14px; border-radius: 8px; width: 100%;">💾 <strong>Сховище</strong> — localStorage</div>
+              </div>
+            </div>
+            <div class="concept-card blue">
+              <p style="font-size: 0.9em;">
+                <strong>💡 Цей самий патерн використовується у:</strong><br>
+                Google Keep, Trello, Notion, Jira, GitHub Issues — всі вони побудовані на цих самих принципах!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 26: Підсумки
+           ======================================== -->
+      <section class="confetti-slide">
+        <h2>✅ ПІДСУМКИ ЛЕКЦІЇ 2</h2>
+        <ul class="summary-list" style="margin-top: 10px;">
+          <li>🗂️ <strong>Масиви</strong> — зберігають списки даних; <strong>об'єкти</strong> — описують сутності з полями</li>
+          <li>⏳ <strong>Асинхронність</strong> — JS не блокує браузер під час очікування відповіді від сервера</li>
+          <li>🤝 <strong>Promise / async·await</strong> — зручний спосіб працювати з відкладеними результатами</li>
+          <li>🌳 <strong>DOM</strong> — JS може створювати, змінювати та видаляти елементи сторінки динамічно</li>
+          <li>💾 <strong>localStorage</strong> — дозволяє зберігати дані між сесіями прямо в браузері</li>
+          <li>🛠️ <strong>Todo List</strong> — реальний міні-проект, що поєднує всі вивчені концепції</li>
+        </ul>
+        <p style="margin-top: 10px; font-size: 1.15em;"><strong>🏆 Ви вже можете будувати справжні вебзастосунки! 🚀</strong></p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 27: Домашнє завдання
+           ======================================== -->
+      <section>
+        <h2>📚 ДОМАШНЄ ЗАВДАННЯ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 1400px; margin: 10px auto;">
+          <div>
+            <p style="font-weight: 700; font-size: 1.1em; margin-bottom: 12px;">🎯 Базовий рівень (обов'язково):</p>
+            <div class="concept-card green" style="margin-bottom: 12px;">
+              <ol style="font-size: 0.95em; padding-left: 20px; margin: 0;">
+                <li style="margin: 8px 0;">Створіть Todo List із лекції у файлі <code>todo.html</code></li>
+                <li style="margin: 8px 0;">Додайте функцію «Очистити виконані» (видаляє всі завдання з <code>виконано: true</code>)</li>
+                <li style="margin: 8px 0;">Додайте відображення дати створення для кожного завдання</li>
+              </ol>
+            </div>
+          </div>
+          <div>
+            <p style="font-weight: 700; font-size: 1.1em; margin-bottom: 12px;">⭐ Підвищений рівень (за бажанням):</p>
+            <div class="concept-card blue" style="margin-bottom: 12px;">
+              <ol style="font-size: 0.95em; padding-left: 20px; margin: 0;">
+                <li style="margin: 8px 0;">Додайте фільтри: «Всі», «Активні», «Виконані»</li>
+                <li style="margin: 8px 0;">Додайте пріоритети (🔴 Важливо / 🟡 Звичайне / 🟢 Незначне)</li>
+                <li style="margin: 8px 0;">Зробіть редагування завдання подвійним кліком</li>
+              </ol>
+            </div>
+            <div class="concept-card yellow">
+              <p style="font-size: 0.9em;">
+                🔗 <strong>Корисні ресурси:</strong><br>
+                <code>javascript.info/uk</code> — підручник українською<br>
+                <code>developer.mozilla.org</code> — документація MDN<br>
+                <code>codepen.io</code> — спробуйте в браузері
+              </p>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top: 10px; font-size: 1.1em;"><strong>🙋 Питання? Пишіть у чат або на наступному занятті! 💬</strong></p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js та плагіни -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+
+  <!-- canvas-confetti для фінального слайду -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // ================================================
+    // ІНІЦІАЛІЗАЦІЯ REVEAL.JS
+    // ================================================
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'slide',
+      slideNumber: true,
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      plugins: [RevealHighlight]
+    });
+
+    // Конфеті на фінальному слайді
+    Reveal.on('slidechanged', event => {
+      if (event.indexh === 25) { // слайд 26 (індекс з 0)
+        setTimeout(() => {
+          if (typeof confetti === 'function') {
+            confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 },
+              colors: ['#4285F4', '#34A853', '#FBBC04', '#EA4335'] });
+          }
+        }, 400);
+      }
+    });
+
+    // ================================================
+    // ДЕМО: МАСИВ ОБ'ЄКТІВ
+    // ================================================
+    const demoGoods = [
+      { id: 1, name: "Ноутбук",    price: 25000, available: true  },
+      { id: 2, name: "Клавіатура", price: 1200,  available: true  },
+      { id: 3, name: "Монітор",    price: 12000, available: false },
+      { id: 4, name: "Мишка",      price: 650,   available: true  }
+    ];
+
+    function objDemo() {
+      const out = document.getElementById('obj-output');
+      if (!out) return;
+      let result = '';
+      demoGoods.forEach(g => {
+        const status = g.available ? '✅' : '❌';
+        result += `${status} ${g.name} — ${g.price.toLocaleString('uk-UA')}₴\n`;
+      });
+      const available = demoGoods.filter(g => g.available);
+      result += `\nДоступних товарів: ${available.length} з ${demoGoods.length}`;
+      out.textContent = result;
+    }
+
+    // ================================================
+    // ДЕМО: ASYNC / AWAIT
+    // ================================================
+    function fakeWeatherAPI() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const cities = [
+            { city: 'Київ',   temp: 15, desc: 'Хмарно ☁️' },
+            { city: 'Львів',  temp: 12, desc: 'Дощ 🌧️'   },
+            { city: 'Одеса',  temp: 19, desc: 'Сонячно ☀️' }
+          ];
+          resolve(cities[Math.floor(Math.random() * cities.length)]);
+        }, 2000);
+      });
+    }
+
+    async function asyncDemo() {
+      const out = document.getElementById('async-output');
+      if (!out) return;
+      out.style.color = '#FBBC04';
+      out.textContent = '⏳ Запит відправлено...\n(чекаємо 2 секунди)';
+      const weather = await fakeWeatherAPI();
+      out.style.color = '#34A853';
+      out.textContent = `✅ Відповідь отримана!\n🌤️ ${weather.city}: ${weather.temp}°C — ${weather.desc}`;
+    }
+
+    // ================================================
+    // ДЕМО: ДИНАМІЧНЕ ДОДАВАННЯ DOM-ЕЛЕМЕНТІВ
+    // ================================================
+    const domNames = ['Оксана Петренко', 'Іван Коваль', 'Юлія Мельник', 'Андрій Шевченко', 'Марія Бондар'];
+    const domRoles = ['Студентка, 2 курс', 'Викладач, Економіка', 'Студентка, 3 курс', 'Аспірант', 'Деканат'];
+    let domIdx = 0;
+
+    function domAddCard() {
+      const container = document.getElementById('dom-cards');
+      if (!container) return;
+      const idx = domIdx % domNames.length;
+      const card = document.createElement('div');
+      card.style.cssText = 'background:#E3F2FD;border:2px solid #4285F4;border-radius:10px;padding:12px 16px;font-size:0.9em;position:relative;';
+      card.innerHTML = `<strong>👤 ${domNames[idx]}</strong><br><span style="color:#555;font-size:0.9em;">${domRoles[idx]}</span>
+        <button onclick="this.parentElement.remove()" style="position:absolute;top:6px;right:6px;background:#EA4335;color:#fff;border:none;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:0.8em;">✕</button>`;
+      container.appendChild(card);
+      domIdx++;
+    }
+
+    function domClearCards() {
+      const container = document.getElementById('dom-cards');
+      if (container) { container.innerHTML = ''; domIdx = 0; }
+    }
+
+    // ================================================
+    // ДЕМО: LOCALSTORAGE
+    // ================================================
+    function lsPreview(input) {
+      // just update border
+      input.style.borderColor = input.value ? '#4285F4' : '#ccc';
+    }
+
+    function lsSave() {
+      const input = document.getElementById('ls-input');
+      const out = document.getElementById('ls-output');
+      if (!input || !out) return;
+      const val = input.value.trim();
+      if (!val) { out.style.color = '#EA4335'; out.textContent = '❌ Поле порожнє!'; return; }
+      localStorage.setItem('lectureDemo_name', val);
+      out.style.color = '#34A853';
+      out.textContent = `✅ Збережено: "${val}"`;
+    }
+
+    function lsLoad() {
+      const out = document.getElementById('ls-output');
+      if (!out) return;
+      const val = localStorage.getItem('lectureDemo_name');
+      if (val) {
+        out.style.color = '#4285F4';
+        out.textContent = `📖 У сховищі: "${val}"`;
+      } else {
+        out.style.color = '#EA4335';
+        out.textContent = '❌ Нічого не збережено';
+      }
+    }
+
+    function lsClear() {
+      localStorage.removeItem('lectureDemo_name');
+      const out = document.getElementById('ls-output');
+      const input = document.getElementById('ls-input');
+      if (out) { out.style.color = '#EA4335'; out.textContent = '🗑️ Видалено зі сховища'; }
+      if (input) { input.value = ''; input.style.borderColor = '#ccc'; }
+    }
+
+    // ================================================
+    // ДЕМО: TODO LIST
+    // ================================================
+    let todos = [];
+
+    function todoRender() {
+      const list = document.getElementById('todo-list');
+      const stats = document.getElementById('todo-stats');
+      if (!list) return;
+      list.innerHTML = '';
+      todos.forEach(t => {
+        const li = document.createElement('li');
+        if (t.done) li.classList.add('done');
+        li.innerHTML = `
+          <span class="check" onclick="todoToggle(${t.id})">${t.done ? '✅' : '⬜'}</span>
+          ${t.text}
+          <button onclick="todoDelete(${t.id})">✕</button>
+        `;
+        list.appendChild(li);
+      });
+      if (stats) {
+        const rem = todos.filter(t => !t.done).length;
+        stats.textContent = todos.length ? `Залишилось: ${rem} з ${todos.length}` : '';
+      }
+      localStorage.setItem('lecture2_todos', JSON.stringify(todos));
+    }
+
+    function todoAdd() {
+      const input = document.getElementById('todo-input');
+      if (!input) return;
+      const text = input.value.trim();
+      if (!text) return;
+      todos.push({ id: Date.now(), text, done: false });
+      todoRender();
+      input.value = '';
+    }
+
+    function todoToggle(id) {
+      const t = todos.find(x => x.id === id);
+      if (t) t.done = !t.done;
+      todoRender();
+    }
+
+    function todoDelete(id) {
+      todos = todos.filter(x => x.id !== id);
+      todoRender();
+    }
+
+    // Завантажити збережені Todo при старті
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('lecture2_todos');
+      if (saved) {
+        try { todos = JSON.parse(saved); } catch(e) { todos = []; }
+      }
+      todoRender();
+    });
+
+    console.log('⚡ Презентація «JavaScript Лекція 2» завантажена!');
+    console.log('📍 Використовуйте стрілки для навігації');
+  </script>
+</body>
+</html>

@@ -44,7 +44,7 @@
 
 .reveal p, .reveal li {
   font-size: 1.1em;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .reveal code, .reveal pre {
@@ -93,7 +93,7 @@
 /* Блоки коду */
 .code-block {
   background: var(--light-gray);
-  padding: 15px;
+  padding: 10px;
   border-radius: 10px;
   border-left: 5px solid var(--google-blue);
   text-align: left;
@@ -116,7 +116,7 @@
 /* Рамка */
 .box {
   border: 3px solid var(--google-blue);
-  padding: 20px;
+  padding: 15px;
   border-radius: 15px;
   margin: 20px auto;
   background: var(--white);
@@ -477,7 +477,12 @@
 /* Спеціальні ефекти */
 .reveal .slides section {
   text-align: center;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.18) transparent;
 }
+.reveal .slides section::-webkit-scrollbar { width: 5px; }
+.reveal .slides section::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 4px; }
 
 .reveal ul {
   display: block;

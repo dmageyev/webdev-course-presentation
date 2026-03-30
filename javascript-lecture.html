@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лекції 1–2: Мова JavaScript | Веброзробка</title>
+  <meta name="description" content="Інтерактивна презентація лекції «Мова програмування JavaScript» для студентів ВНЗ не ІТ-напрямку">
+  <meta name="author" content="Курс розробки вебсайтів">
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+
+  <!-- Highlight.js для підсвітки коду -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- Кастомні стилі -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* Додаткові стилі специфічні для цієї лекції */
+    .js-yellow {
+      background: linear-gradient(135deg, #F7DF1E, #F0A500) !important;
+    }
+    .js-yellow h1, .js-yellow h2, .js-yellow h3, .js-yellow p {
+      color: #202124 !important;
+    }
+
+    .gradient-dark {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      color: #fff !important;
+    }
+    .gradient-dark h1, .gradient-dark h2, .gradient-dark h3, .gradient-dark p, .gradient-dark li {
+      color: #fff !important;
+    }
+
+    .concept-card {
+      background: var(--light-gray);
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 6px solid var(--google-blue);
+    }
+
+    .concept-card.yellow { border-left-color: #F7DF1E; background: #FFFDE7; }
+    .concept-card.green  { border-left-color: var(--google-green); background: #E8F5E9; }
+    .concept-card.red    { border-left-color: var(--google-red); background: #FFEBEE; }
+    .concept-card.blue   { border-left-color: var(--google-blue); background: #E3F2FD; }
+
+    .uses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1400px;
+      margin: 20px auto;
+    }
+    .use-card {
+      padding: 20px 15px;
+      border-radius: 14px;
+      border: 2px solid var(--light-gray);
+      background: var(--white);
+      text-align: center;
+    }
+    .use-card .icon { font-size: 2.2em; display: block; margin-bottom: 10px; }
+    .use-card strong { font-size: 1em; display: block; margin-bottom: 6px; }
+    .use-card span { font-size: 0.82em; color: #555; }
+
+    .analogy-row {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 15px;
+      align-items: center;
+      max-width: 1300px;
+      margin: 15px auto;
+    }
+    .analogy-row .arrow { text-align: center; font-size: 2em; }
+
+    .step-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px auto;
+    }
+    .step-box {
+      background: var(--light-gray);
+      border-radius: 10px;
+      padding: 15px 20px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95em;
+      min-width: 140px;
+    }
+    .step-arrow { font-size: 1.8em; color: var(--google-blue); }
+
+    .example-live {
+      background: #fff;
+      border: 3px solid var(--google-blue);
+      border-radius: 14px;
+      padding: 25px;
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+    .example-live button {
+      background: var(--google-blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 30px;
+      font-size: 1.1em;
+      font-family: 'Open Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin: 5px;
+    }
+    .example-live button:hover { background: #1a73e8; }
+    .example-live output {
+      display: block;
+      margin-top: 15px;
+      font-size: 1.2em;
+      min-height: 1.4em;
+      font-weight: 600;
+      color: var(--google-green);
+    }
+
+    .input-demo input {
+      padding: 10px 15px;
+      font-size: 1.1em;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Open Sans', sans-serif;
+      width: 260px;
+    }
+    .input-demo input.valid   { border-color: var(--google-green); }
+    .input-demo input.invalid { border-color: var(--google-red); }
+    .input-demo .msg { margin-top: 10px; font-size: 1em; font-weight: 600; min-height: 1.4em; }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1300px;
+      margin: 20px auto;
+    }
+    .fw-card {
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--light-gray);
+      text-align: center;
+      border: 2px solid transparent;
+    }
+    .fw-card .fw-icon { font-size: 2.5em; display: block; margin-bottom: 8px; }
+    .fw-card strong { display: block; font-size: 1.1em; margin-bottom: 6px; }
+    .fw-card span { font-size: 0.85em; color: #555; }
+    .fw-card.react { border-color: #61DAFB; }
+    .fw-card.vue   { border-color: #41B883; }
+    .fw-card.angular { border-color: #DD0031; }
+    .fw-card.node  { border-color: #339933; }
+    .fw-card.rn    { border-color: #61DAFB; }
+    .fw-card.next  { border-color: #000; }
+
+    .timeline {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin: 15px 0;
+    }
+    .timeline-year {
+      background: var(--google-blue);
+      color: #fff;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 1em;
+      min-width: 80px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .timeline-text {
+      background: var(--light-gray);
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 1em;
+      flex: 1;
+    }
+
+    .summary-list {
+      list-style: none;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    .summary-list li {
+      padding: 14px 20px;
+      margin: 10px 0;
+      background: var(--light-gray);
+      border-radius: 10px;
+      border-left: 5px solid var(--google-green);
+      font-size: 1.15em;
+    }
+
+    /* ---- Додаткові стилі з Лекції 2 ---- */
+    .gradient-teal {
+      background: linear-gradient(135deg, #00897B, #00BCD4) !important;
+      color: #fff !important;
+    }
+    .gradient-teal h1, .gradient-teal h2, .gradient-teal h3,
+    .gradient-teal p, .gradient-teal li {
+      color: #fff !important;
+    }
+
+    .gradient-purple {
+      background: linear-gradient(135deg, #7B1FA2, #4A148C) !important;
+      color: #fff !important;
+    }
+    .gradient-purple h1, .gradient-purple h2, .gradient-purple h3,
+    .gradient-purple p, .gradient-purple li {
+      color: #fff !important;
+    }
+
+    .concept-card.teal   { border-left-color: #00897B; background: #E0F2F1; }
+    .concept-card.purple { border-left-color: #7B1FA2; background: #F3E5F5; }
+
+    .example-live button.green-btn { background: var(--google-green); }
+    .example-live button.green-btn:hover { background: #2e7d32; }
+    .example-live button.red-btn { background: var(--google-red); }
+    .example-live button.red-btn:hover { background: #c62828; }
+
+    .compare-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 15px auto;
+      align-items: start;
+    }
+
+    /* ---- Todo-list demo ---- */
+    #todo-input {
+      padding: 10px 14px;
+      font-size: 1em;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Open Sans', sans-serif;
+      width: 320px;
+    }
+    #todo-list {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0;
+      max-height: 220px;
+      overflow-y: auto;
+      text-align: left;
+    }
+    #todo-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      margin: 5px 0;
+      background: var(--light-gray);
+      border-radius: 8px;
+      font-size: 1em;
+    }
+    #todo-list li.done { text-decoration: line-through; opacity: 0.55; }
+    #todo-list li button {
+      background: var(--google-red);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.85em;
+      cursor: pointer;
+      margin: 0;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    #todo-list li span.check {
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+
+    /* ---- LocalStorage demo ---- */
+    #ls-input {
+      padding: 10px 14px;
+      font-size: 1em;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Open Sans', sans-serif;
+      width: 280px;
+    }
+    #ls-output {
+      margin-top: 10px;
+      font-size: 1.1em;
+      font-weight: 600;
+      min-height: 1.5em;
+      color: var(--google-blue);
+    }
+
+    /* ---- Async demo ---- */
+    #async-output {
+      margin-top: 10px;
+      font-size: 1em;
+      font-weight: 600;
+      min-height: 2em;
+      color: var(--google-green);
+      text-align: left;
+      white-space: pre-line;
+    }
+
+    /* ---- Object demo ---- */
+    #obj-output {
+      margin-top: 10px;
+      font-size: 1em;
+      font-weight: 600;
+      min-height: 2em;
+      color: var(--dark-gray);
+      text-align: left;
+      white-space: pre-line;
+    }
+
+    /* ---- Agenda ---- */
+    .agenda { text-align: left; max-width: 1100px; margin: 0 auto; }
+    .agenda-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      margin: 8px 0;
+      background: var(--light-gray);
+      border-radius: 10px;
+      border-left: 5px solid var(--google-blue);
+      font-size: 1.15em;
+    }
+    .agenda-item span { font-weight: 600; color: var(--google-blue); }
+
+    /* ---- Review cards ---- */
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 1400px;
+      margin: 20px auto;
+    }
+    .review-card {
+      padding: 18px 15px;
+      border-radius: 12px;
+      background: var(--light-gray);
+      border: 2px solid transparent;
+      text-align: center;
+    }
+    .review-card .rc-icon { font-size: 2.2em; display: block; margin-bottom: 8px; }
+    .review-card strong { font-size: 1em; display: block; margin-bottom: 5px; }
+    .review-card span { font-size: 0.82em; color: #555; }
+
+    /* ---- Promise chain vis ---- */
+    .promise-chain {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      max-width: 1300px;
+      margin: 20px auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .promise-step {
+      padding: 18px 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 0.9em;
+      font-weight: 600;
+      min-width: 160px;
+    }
+    .promise-step.pending  { background: #FFF9C4; border: 2px solid #F0A500; }
+    .promise-step.resolved { background: #E8F5E9; border: 2px solid var(--google-green); }
+    .promise-step.rejected { background: #FFEBEE; border: 2px solid var(--google-red); }
+    .promise-arrow { display: flex; align-items: center; font-size: 1.8em; color: var(--google-blue); padding: 0 8px; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ========================================
+           СЛАЙД 1: Титульний
+           ======================================== -->
+      <section class="js-yellow">
+        <div class="emoji" style="font-size: 4em;">⚡</div>
+        <h1 style="margin-top: 20px; font-size: 2.8em;">JavaScript</h1>
+        <h2 style="font-size: 1.6em;">Мова програмування Інтернету</h2>
+        <p style="font-size: 1.2em; margin-top: 40px;">Лекція для студентів, які хочуть розуміти, як влаштовано цифровий світ 🌐</p>
+        <p style="font-size: 1em; margin-top: 40px;"><small>📅 2026 • Курс «Веброзробка»</small></p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 2: План лекцій
+           ======================================== -->
+      <section>
+        <h2>📋 ПЛАН ЛЕКЦІЙ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1400px; margin: 15px auto; align-items: start;">
+          <div>
+            <p style="font-weight: 700; margin-bottom: 10px;">📘 Лекція 1:</p>
+            <div class="agenda">
+              <div class="agenda-item">1️⃣ Що таке JavaScript <span>Мета</span></div>
+              <div class="agenda-item">2️⃣ Як виконується JS у браузері <span>Механізм</span></div>
+              <div class="agenda-item">3️⃣ DOM та події <span>Сторінка</span></div>
+              <div class="agenda-item">4️⃣ Змінні, функції, умови, цикли <span>Основи</span></div>
+              <div class="agenda-item">5️⃣ Шляхи використання <span>Практика</span></div>
+            </div>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 10px;">📗 Лекція 2:</p>
+            <div class="agenda">
+              <div class="agenda-item">1️⃣ Масиви та об'єкти <span>Дані</span></div>
+              <div class="agenda-item">2️⃣ Асинхронний JS та AJAX <span>Час</span></div>
+              <div class="agenda-item">3️⃣ DOM-маніпуляції <span>Сторінка</span></div>
+              <div class="agenda-item">4️⃣ localStorage <span>Пам'ять</span></div>
+              <div class="agenda-item">5️⃣ Проект: Todo List <span>Проект</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 3: Розділ — «ЩО ТАКЕ JS»
+           ======================================== -->
+      <section class="gradient-blue-purple">
+        <div class="emoji" style="font-size: 4em;">❓</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 1</h1>
+        <h2>ЩО ТАКЕ JAVASCRIPT І НАВІЩО ВІН ПОТРІБЕН?</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 4: Три складові вебу
+           ======================================== -->
+      <section>
+        <h2>🏠 ВЕБСТОРІНКА = БУДИНОК</h2>
+        <p>Кожен вебсайт складається з трьох шарів — кожен виконує свою роль:</p>
+        <div class="html-layers" style="max-width: 700px;">
+          <div class="layer layer-js">
+            <strong>⚡ JavaScript</strong><br>
+            <span>Інтерактивність — кнопки, анімації, реакція на дії користувача</span><br>
+            <span style="font-size: 1.2em; color: #b37e00;">← СЬОГОДНІШНЯ ТЕМА!</span>
+          </div>
+          <div class="layer layer-css">
+            <strong>🎨 CSS</strong><br>
+            <span>Дизайн — кольори, шрифти, розташування елементів</span>
+          </div>
+          <div class="layer layer-html">
+            <strong>🏗️ HTML</strong><br>
+            <span>Структура — текст, заголовки, посилання, зображення</span>
+          </div>
+        </div>
+        <p style="margin-top: 20px; font-size: 1.05em;">
+          <strong>HTML — фундамент, CSS — інтер'єр, JavaScript — «розумна начинка»</strong>
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 5: Аналогія — JS як душа будинку
+           ======================================== -->
+      <section>
+        <h2>💡 АНАЛОГІЯ: JS — ЦЕ «МІЗКИ» САЙТУ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1300px; margin: 20px auto;">
+          <div class="concept-card blue">
+            <p style="font-size: 1.1em;"><strong>🏠 Звичайний будинок</strong></p>
+            <ul style="font-size: 0.95em; margin-top: 10px;">
+              <li>Натискаєш вимикач → вмикається світло</li>
+              <li>Стукаєш у двері → охоронець відчиняє</li>
+              <li>Ставиш термостат → регулюється температура</li>
+            </ul>
+          </div>
+          <div class="concept-card yellow">
+            <p style="font-size: 1.1em;"><strong>🌐 Вебсайт із JavaScript</strong></p>
+            <ul style="font-size: 0.95em; margin-top: 10px;">
+              <li>Натискаєш кнопку → з'являється меню</li>
+              <li>Вводиш дані → перевіряється форма</li>
+              <li>Прокручуєш → підвантажується контент</li>
+            </ul>
+          </div>
+        </div>
+        <div class="box" style="max-width: 1100px; margin-top: 20px;">
+          <p style="font-size: 1.2em;">
+            <strong>JavaScript</strong> — це мова програмування, яка дозволяє сайтам <span class="highlight">реагувати на дії користувача</span> та змінюватися в реальному часі, без перезавантаження сторінки.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 6: Де ми зустрічаємо JS щодня
+           ======================================== -->
+      <section>
+        <h2>📱 ДЕ МИ ЗУСТРІЧАЄМО JS ЩОДНЯ?</h2>
+        <div class="uses-grid">
+          <div class="use-card">
+            <span class="icon">🛒</span>
+            <strong>Інтернет-магазини</strong>
+            <span>Кошик покупок, фільтри товарів, слайдери фото</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🏦</span>
+            <strong>Банківські сервіси</strong>
+            <span>Онлайн-оплата, перевірка картки, калькулятори</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">📺</span>
+            <strong>YouTube / Netflix</strong>
+            <span>Відеоплеєр, рекомендації, пошук</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">📍</span>
+            <strong>Google Maps</strong>
+            <span>Інтерактивні карти, маршрути, позначки</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">💬</span>
+            <strong>Чати та месенджери</strong>
+            <span>Telegram Web, WhatsApp Web — миттєві повідомлення</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">📊</span>
+            <strong>Таблиці та дашборди</strong>
+            <span>Google Sheets, графіки аналітики, звіти</span>
+          </div>
+        </div>
+        <p style="margin-top: 10px; font-size: 1em;">
+          <strong>97% усіх вебсайтів у світі використовують JavaScript! 🌍</strong>
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 7: Коротка історія
+           ======================================== -->
+      <section>
+        <h2>📜 КОРОТКА ІСТОРІЯ JAVASCRIPT</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1995</div>
+            <div class="timeline-text">
+              Бренден Ейх (Netscape) створив мову всього за <strong>10 днів</strong>.
+              Спочатку називалась <em>Mocha</em>, потім <em>LiveScript</em>, і нарешті — <strong>JavaScript</strong>.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1997</div>
+            <div class="timeline-text">
+              Стандартизація: з'явився стандарт <strong>ECMAScript</strong> — офіційна специфікація мови.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2008</div>
+            <div class="timeline-text">
+              Google випустив браузер Chrome із <strong>V8-двигуном</strong> — JS став у десятки разів швидшим.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2009</div>
+            <div class="timeline-text">
+              Народився <strong>Node.js</strong> — тепер JS можна запускати на сервері, а не лише у браузері.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">Сьогодні</div>
+            <div class="timeline-text">
+              JavaScript — <strong>найпопулярніша мова програмування у світі</strong> (рейтинг Stack Overflow 2023–2024).
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 8: Розділ — «ПРИНЦИПИ РЕАЛІЗАЦІЇ»
+           ======================================== -->
+      <section class="gradient-green-blue">
+        <div class="emoji" style="font-size: 4em;">⚙️</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 2</h1>
+        <h2>ЗАГАЛЬНІ ПРИНЦИПИ РЕАЛІЗАЦІЇ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 9: Як JS виконується у браузері
+           ======================================== -->
+      <section>
+        <h2>🔄 ЯК JAVASCRIPT ВИКОНУЄТЬСЯ?</h2>
+        <div class="step-flow">
+          <div class="step-box">✍️ Розробник<br>пише код JS</div>
+          <div class="step-arrow">→</div>
+          <div class="step-box">📄 Браузер<br>завантажує файл</div>
+          <div class="step-arrow">→</div>
+          <div class="step-box">⚙️ JS-двигун<br>читає код</div>
+          <div class="step-arrow">→</div>
+          <div class="step-box">⚡ Двигун<br>виконує команди</div>
+          <div class="step-arrow">→</div>
+          <div class="step-box">🖥️ Сторінка<br>змінюється</div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1300px; margin: 20px auto;">
+          <div class="concept-card blue">
+            <p><strong>🔍 JS-двигун — «перекладач»</strong></p>
+            <p style="font-size: 0.9em; margin-top: 10px;">
+              Переводить JavaScript-код у машинні команди, які розуміє процесор.<br>
+              <em>Chrome</em> → <strong>V8</strong> | <em>Firefox</em> → <strong>SpiderMonkey</strong> | <em>Safari</em> → <strong>JavaScriptCore</strong>
+            </p>
+          </div>
+          <div class="concept-card green">
+            <p><strong>⚡ Інтерпретована мова</strong></p>
+            <p style="font-size: 0.9em; margin-top: 10px;">
+              JS не потребує компіляції перед запуском — він виконується рядок за рядком у реальному часі.
+              Це спрощує розробку та налагодження.
+            </p>
+          </div>
+        </div>
+
+        <div class="box" style="max-width: 1100px; margin-top: 10px;">
+          <p style="font-size: 1em;">💡 <strong>Аналогія:</strong> JS-двигун — як синхронний перекладач на міжнародній конференції: читає вашу мову й одразу «говорить» нею до комп'ютера.</p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 10: DOM — міст між JS і сторінкою
+           ======================================== -->
+      <section>
+        <h2>🌳 DOM — «МОДЕЛЬ СТОРІНКИ»</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 15px;">
+              <p><strong>DOM = Document Object Model</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Браузер «перетворює» HTML-сторінку на <strong>дерево об'єктів</strong>.
+                JS може знаходити будь-який елемент цього дерева й змінювати його.
+              </p>
+            </div>
+            <div class="concept-card yellow">
+              <p><strong>💡 Аналогія</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                DOM — це як <strong>схема будівлі</strong>. JS — це будівельник, який за цією схемою може відкрити двері, пофарбувати стіну або прибудувати кімнату — прямо під час вашого перебування всередині.
+              </p>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// Знайти елемент на сторінці
+const кнопка = document.getElementById('myBtn');
+
+// Змінити текст заголовку
+const заголовок = document.querySelector('h1');
+заголовок.textContent = 'Новий текст!';
+
+// Змінити колір фону
+document.body.style.backgroundColor = 'lightblue';
+
+// Приховати елемент
+кнопка.style.display = 'none';</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 11: Розділ — «КЛЮЧОВІ КОНЦЕПЦІЇ»
+           ======================================== -->
+      <section class="js-yellow">
+        <div class="emoji" style="font-size: 4em;">📚</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 3</h1>
+        <h2>КЛЮЧОВІ КОНЦЕПЦІЇ МОВИ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 12: Змінні
+           ======================================== -->
+      <section>
+        <h2>📦 ЗМІННІ — ЗБЕРІГАННЯ ДАНИХ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 15px;">
+              <p><strong>Змінна = іменована «коробка» для даних</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Уявіть шафу з підписаними ящиками. У кожному ящику зберігається якесь значення. Ви можете покласти щось нове або забрати з будь-якого ящика.
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Типи даних у JS:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🔢 Числа: <code>42</code>, <code>3.14</code></li>
+                <li>📝 Рядки: <code>"Привіт, світе!"</code></li>
+                <li>✅ Булеві: <code>true</code> / <code>false</code></li>
+                <li>📋 Масиви: <code>["яблуко", "груша"]</code></li>
+                <li>🗂️ Об'єкти: <code>{ ім'я: "Іван", вік: 20 }</code></li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// let — змінна, яку можна змінити
+let ім'я = "Оксана";
+let вік = 21;
+let студент = true;
+
+// const — константа (не змінюється)
+const університет = "КПІ";
+
+// Використання
+console.log("Привіт, " + ім'я + "!");
+// → "Привіт, Оксана!"
+
+вік = 22; // змінили значення
+console.log(вік); // → 22</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 13: Функції
+           ======================================== -->
+      <section>
+        <h2>🔧 ФУНКЦІЇ — НАБОРИ КОМАНД</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card yellow" style="margin-bottom: 15px;">
+              <p><strong>Функція = «рецепт» або «інструкція»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Набір команд, який можна виконати скільки завгодно разів, просто назвавши його.<br>
+                Як рецепт: <em>написав один раз → готуєш щоразу</em>.
+              </p>
+            </div>
+            <div class="concept-card blue">
+              <p><strong>Навіщо функції?</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>♻️ Повторне використання коду</li>
+                <li>📦 Організація логіки</li>
+                <li>🔍 Легше знаходити помилки</li>
+                <li>🤝 Командна розробка</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// Оголошення функції
+function привітати(ім'я) {
+  return "Привіт, " + ім'я + "! 👋";
+}
+
+// Виклик функції
+console.log(привітати("Марія"));
+// → "Привіт, Марія! 👋"
+
+console.log(привітати("Андрій"));
+// → "Привіт, Андрій! 👋"
+
+// Функція з обчисленням
+function площаКімнати(ширина, довжина) {
+  return ширина * довжина;
+}
+
+console.log(площаКімнати(4, 5)); // → 20</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 14: Умови та цикли
+           ======================================== -->
+      <section>
+        <h2>🔀 УМОВИ ТА 🔁 ЦИКЛИ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 15px auto; align-items: start;">
+          <div>
+            <p style="font-weight: 700; font-size: 1.1em; margin-bottom: 10px;">🔀 Умови (if / else)</p>
+            <div class="code-block" style="font-size: 1em; margin-bottom: 15px;">
+              <pre><code class="language-javascript">let оцінка = 85;
+
+if (оцінка >= 90) {
+  console.log("Відмінно! 🌟");
+} else if (оцінка >= 75) {
+  console.log("Добре! 👍");
+} else {
+  console.log("Треба підтягнутись 📚");
+}
+// → "Добре! 👍"</code></pre>
+            </div>
+            <div class="concept-card blue">
+              <p style="font-size: 0.9em;">💡 Аналогія: «Якщо температура &gt; 25°C — йдемо на пляж, інакше — залишаємося вдома»</p>
+            </div>
+          </div>
+          <div>
+            <p style="font-weight: 700; font-size: 1.1em; margin-bottom: 10px;">🔁 Цикли (for)</p>
+            <div class="code-block" style="font-size: 1em; margin-bottom: 15px;">
+              <pre><code class="language-javascript">// Надрукувати числа від 1 до 5
+for (let i = 1; i <= 5; i++) {
+  console.log("Крок " + i);
+}
+// → Крок 1
+// → Крок 2
+// → ... Крок 5
+
+// Обробка списку студентів
+let студенти = ["Оля", "Іван", "Юля"];
+for (let студент of студенти) {
+  console.log("Привіт, " + студент + "!");
+}</code></pre>
+            </div>
+            <div class="concept-card green">
+              <p style="font-size: 0.9em;">💡 Аналогія: «Пройти всю чергу та привітатися з кожною людиною»</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 15: Події (Events)
+           ======================================== -->
+      <section>
+        <h2>🖱️ ПОДІЇ (EVENTS) — «РЕАКЦІЯ» НА ДІЇ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div>
+            <div class="concept-card red" style="margin-bottom: 15px;">
+              <p><strong>Подія — це сигнал: «щось сталося»</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🖱️ Клік мишкою на кнопку</li>
+                <li>⌨️ Натискання клавіші</li>
+                <li>📝 Введення тексту у поле</li>
+                <li>📜 Прокручування сторінки</li>
+                <li>🖼️ Завантаження зображення</li>
+                <li>⏱️ Таймер спрацював</li>
+              </ul>
+            </div>
+            <div class="concept-card blue">
+              <p style="font-size: 0.9em;">💡 JS «слухає» події та запускає потрібний код у відповідь — без перезавантаження сторінки!</p>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// Знаходимо кнопку на сторінці
+const кнопка = document.getElementById('myBtn');
+
+// Призначаємо реакцію на клік
+кнопка.addEventListener('click', function() {
+  alert('Кнопку натиснуто! 🎉');
+});
+
+// Реакція на введення тексту
+const поле = document.getElementById('input');
+поле.addEventListener('input', function() {
+  console.log('Ви ввели: ' + поле.value);
+});
+
+// Реакція на прокручування
+window.addEventListener('scroll', function() {
+  console.log('Позиція: ' + window.scrollY);
+});</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 16: Розділ — «ШЛЯХИ ВИКОРИСТАННЯ»
+           ======================================== -->
+      <section class="gradient-green-blue">
+        <div class="emoji" style="font-size: 4em;">🚀</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 4</h1>
+        <h2>ШЛЯХИ ВИКОРИСТАННЯ З ПРИКЛАДАМИ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 17: Приклад 1 — Інтерактивна кнопка
+           ======================================== -->
+      <section>
+        <h2>🎯 ПРИКЛАД 1: ІНТЕРАКТИВНІСТЬ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div class="code-block" style="font-size: 1.05em;">
+            <p style="margin-bottom: 10px;"><strong>Код JavaScript:</strong></p>
+            <pre><code class="language-javascript">let лічильник = 0;
+
+function натиснути() {
+  лічильник++;
+  document.getElementById('count').textContent =
+    'Натиснуто: ' + лічильник + ' разів';
+}
+
+function скинути() {
+  лічильник = 0;
+  document.getElementById('count').textContent =
+    'Натиснуто: 0 разів';
+}</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 15px;">Живий приклад:</p>
+            <div class="example-live">
+              <button onclick="jsDemo1Click()">👆 Натисни мене!</button>
+              <button onclick="jsDemo1Reset()" style="background: var(--google-red);">🔄 Скинути</button>
+              <output id="demo1-output">Натиснуто: 0 разів</output>
+            </div>
+            <div class="concept-card green" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>Де це застосовується?</strong><br>
+                Лічильники лайків, кількість товарів у кошику, прогрес виконання завдань.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 18: Приклад 2 — Валідація форми
+           ======================================== -->
+      <section>
+        <h2>📝 ПРИКЛАД 2: ПЕРЕВІРКА ФОРМИ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div class="code-block" style="font-size: 1.05em;">
+            <p style="margin-bottom: 10px;"><strong>Код JavaScript:</strong></p>
+            <pre><code class="language-javascript">function перевіритиEmail(email) {
+  // Шаблон правильного email
+  const шаблон = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (шаблон.test(email)) {
+    показатиПовідомлення('✅ Email коректний!', 'green');
+  } else {
+    показатиПовідомлення('❌ Невірний формат!', 'red');
+  }
+}
+
+// Перевіряємо при кожному введенні
+emailПоле.addEventListener('input', function() {
+  перевіритиEmail(this.value);
+});</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 15px;">Живий приклад:</p>
+            <div class="example-live input-demo">
+              <input type="text" id="demo2-email" placeholder="Введіть email адресу..." oninput="jsDemo2Check(this)">
+              <div class="msg" id="demo2-msg"></div>
+            </div>
+            <div class="concept-card yellow" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>Де це застосовується?</strong><br>
+                Форми реєстрації, оформлення замовлення, входу в систему — перевірка на стороні клієнта без звернення до сервера.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 19: Приклад 3 — Динамічне оновлення
+           ======================================== -->
+      <section>
+        <h2>⏱️ ПРИКЛАД 3: ДИНАМІЧНЕ ОНОВЛЕННЯ ДАНИХ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto; align-items: start;">
+          <div class="code-block" style="font-size: 1.05em;">
+            <p style="margin-bottom: 10px;"><strong>Годинник, що оновлюється кожну секунду:</strong></p>
+            <pre><code class="language-javascript">function оновитиЧас() {
+  const зараз = new Date();
+
+  const години = зараз.getHours()
+    .toString().padStart(2, '0');
+  const хвилини = зараз.getMinutes()
+    .toString().padStart(2, '0');
+  const секунди = зараз.getSeconds()
+    .toString().padStart(2, '0');
+
+  document.getElementById('clock').textContent =
+    `${години}:${хвилини}:${секунди}`;
+}
+
+// Виклик кожну секунду (1000 мс)
+setInterval(оновитиЧас, 1000);</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 15px;">Живий приклад:</p>
+            <div class="example-live" style="text-align: center;">
+              <div style="font-size: 3em; font-family: 'Roboto Mono', monospace; font-weight: 700; color: var(--google-blue);" id="demo3-clock">00:00:00</div>
+              <p style="margin-top: 15px; font-size: 0.9em; color: #555;">Оновлюється автоматично кожну секунду</p>
+            </div>
+            <div class="concept-card red" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>Де це застосовується?</strong><br>
+                Відлік часу до події, live-оновлення курсів валют, відображення статусу доставки, онлайн-моніторинг.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 20: Приклад 4 — Завантаження даних (API)
+           ======================================== -->
+      <section>
+        <h2>🌐 ПРИКЛАД 4: ОТРИМАННЯ ДАНИХ З ІНТЕРНЕТУ (API)</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 1400px; margin: 10px auto; align-items: start;">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>Що таке API?</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                API (Application Programming Interface) — це «меню» сервісу, де описано, які дані можна замовити.<br><br>
+                💡 <em>Аналогія: офіціант передає ваше замовлення на кухню (сервер) і повертає страву (дані).</em>
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Реальні приклади API-запитів:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🌤️ Погода на сайті</li>
+                <li>💱 Курс валют</li>
+                <li>🗺️ Дані для карт</li>
+                <li>📰 Стрічка новин</li>
+                <li>🎵 Інформація про треки</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.98em;">
+            <p style="margin-bottom: 10px;"><strong>Запит до API погоди:</strong></p>
+            <pre><code class="language-javascript">// fetch — вбудована функція JS для запитів
+async function отриматиПогоду(місто) {
+  const відповідь = await fetch(
+    `https://api.weather.com?city=${місто}`
+  );
+
+  const дані = await відповідь.json();
+
+  document.getElementById('weather').innerHTML = `
+    <h3>${дані.city}</h3>
+    <p>🌡️ ${дані.temperature}°C</p>
+    <p>💧 Вологість: ${дані.humidity}%</p>
+    <p>${дані.description}</p>
+  `;
+}
+
+отриматиПогоду('Kyiv');</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 21: JS у реальних сферах
+           ======================================== -->
+      <section>
+        <h2>🏛️ JS У РІЗНИХ СФЕРАХ ДІЯЛЬНОСТІ</h2>
+        <div class="uses-grid">
+          <div class="use-card">
+            <span class="icon">🏥</span>
+            <strong>Медицина</strong>
+            <span>Онлайн-запис до лікаря, медичні калькулятори, телемедицина, відображення результатів аналізів</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🎓</span>
+            <strong>Освіта</strong>
+            <span>Платформи Coursera, Duolingo, Google Classroom — інтерактивні тести, прогрес навчання</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">💼</span>
+            <strong>Бізнес</strong>
+            <span>CRM-системи, звіти та аналітика, автоматизація документообігу</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🏛️</span>
+            <strong>Державні послуги</strong>
+            <span>Портал Дія, e-Податкова, подання декларацій, онлайн-реєстри</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🎮</span>
+            <strong>Ігри та розваги</strong>
+            <span>Браузерні ігри, відеоплеєри, потокове відео (Netflix, YouTube)</span>
+          </div>
+          <div class="use-card">
+            <span class="icon">🚗</span>
+            <strong>Транспорт та логістика</strong>
+            <span>Uber, Bolt, онлайн-відстеження посилок, розкладу транспорту</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 22: Розділ — «JS ПОЗА БРАУЗЕРОМ»
+           ======================================== -->
+      <section class="gradient-dark">
+        <div class="emoji" style="font-size: 4em;">🖥️</div>
+        <h1 style="margin-top: 20px;">РОЗДІЛ 5</h1>
+        <h2>JS ПОЗА БРАУЗЕРОМ:<br>СЕРВЕР, МОБІЛЬНІ ДОДАТКИ ТА БІЛЬШЕ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 23: Node.js
+           ======================================== -->
+      <section>
+        <h2>⚙️ NODE.JS — JAVASCRIPT НА СЕРВЕРІ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 1400px; margin: 10px auto; align-items: start;">
+          <div>
+            <div class="concept-card green" style="margin-bottom: 10px;">
+              <p><strong>До 2009 року:</strong> JS тільки у браузері</p>
+              <p><strong>Після Node.js:</strong> JS скрізь 🌍</p>
+              <p style="font-size: 0.9em; margin-top: 10px;">
+                Node.js дозволяє запускати JavaScript-код на сервері — там, де раніше використовувалися Java, Python або PHP.
+              </p>
+            </div>
+            <div class="concept-card blue">
+              <p><strong>Що будують на Node.js:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🌐 REST API та веб-сервери</li>
+                <li>💬 Чати у реальному часі</li>
+                <li>🔐 Системи авторизації</li>
+                <li>📊 Обробка великих даних</li>
+                <li>🤖 Боти для Telegram / Discord</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.98em;">
+            <p style="margin-bottom: 10px;"><strong>Простий веб-сервер на Node.js:</strong></p>
+            <pre><code class="language-javascript">const http = require('http');
+
+const сервер = http.createServer((запит, відповідь) => {
+  відповідь.writeHead(200, {
+    'Content-Type': 'text/html; charset=utf-8'
+  });
+
+  відповідь.end('<h1>Привіт з Node.js!</h1>');
+});
+
+// Запускаємо сервер на порту 3000
+сервер.listen(3000, () => {
+  console.log('Сервер запущено! 🚀');
+  console.log('Відкрийте http://localhost:3000');
+});</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 24: Популярні фреймворки та бібліотеки
+           ======================================== -->
+      <section>
+        <h2>📦 ПОПУЛЯРНІ БІБЛІОТЕКИ ТА ФРЕЙМВОРКИ</h2>
+        <p style="margin-bottom: 8px; font-size: 0.95em;">Готові набори інструментів, що прискорюють розробку:</p>
+        <div class="framework-grid" style="margin: 10px auto;">
+          <div class="fw-card react" style="padding: 14px 12px;">
+            <span class="fw-icon" style="font-size: 2em;">⚛️</span>
+            <strong>React</strong>
+            <span>Бібліотека від Facebook для інтерфейсів. Використовують Instagram, Airbnb, Netflix.</span>
+          </div>
+          <div class="fw-card vue" style="padding: 14px 12px;">
+            <span class="fw-icon" style="font-size: 2em;">💚</span>
+            <strong>Vue.js</strong>
+            <span>Простий та гнучкий фреймворк. Популярний у стартапах та середньому бізнесі.</span>
+          </div>
+          <div class="fw-card angular" style="padding: 14px 12px;">
+            <span class="fw-icon" style="font-size: 2em;">🔴</span>
+            <strong>Angular</strong>
+            <span>Потужний фреймворк від Google. Корпоративні додатки, CRM-системи.</span>
+          </div>
+          <div class="fw-card node" style="padding: 14px 12px;">
+            <span class="fw-icon" style="font-size: 2em;">🟢</span>
+            <strong>Node.js + Express</strong>
+            <span>Серверна розробка. API для мобільних та веб-додатків.</span>
+          </div>
+          <div class="fw-card rn" style="padding: 14px 12px;">
+            <span class="fw-icon" style="font-size: 2em;">📱</span>
+            <strong>React Native</strong>
+            <span>Мобільні додатки для iOS та Android на одній кодовій базі JavaScript.</span>
+          </div>
+          <div class="fw-card next" style="padding: 14px 12px;">
+            <span class="fw-icon" style="font-size: 2em;">▲</span>
+            <strong>Next.js</strong>
+            <span>Повноцінні веб-додатки (фронтенд + бекенд). Використовують TikTok, Twitch.</span>
+          </div>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9em;">
+          💡 <strong>Один розробник з JS може створити: вебсайт, мобільний застосунок, серверний API та навіть десктопну програму.</strong>
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 25: Порівняння JS з іншими мовами
+           ======================================== -->
+      <section>
+        <h2>⚖️ JAVASCRIPT СЕРЕД ІНШИХ МОВ</h2>
+        <table class="tags-table" style="margin: 20px auto; font-size: 0.88em; max-width: 1300px;">
+          <thead>
+            <tr>
+              <th>Мова</th>
+              <th>Основне застосування</th>
+              <th>Де виконується</th>
+              <th>Складність</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background: #FFF9E6;">
+              <td><strong>⚡ JavaScript</strong></td>
+              <td>Веб, мобільні, сервер</td>
+              <td>Браузер + сервер</td>
+              <td>⭐⭐⭐ Середня</td>
+            </tr>
+            <tr>
+              <td>🐍 Python</td>
+              <td>Data Science, ШІ, скрипти</td>
+              <td>Сервер, локально</td>
+              <td>⭐⭐ Легка</td>
+            </tr>
+            <tr>
+              <td>☕ Java</td>
+              <td>Корпоративні системи, Android</td>
+              <td>JVM (сервер)</td>
+              <td>⭐⭐⭐⭐ Складна</td>
+            </tr>
+            <tr>
+              <td>🦋 C#</td>
+              <td>Windows, ігри (Unity)</td>
+              <td>ОС / .NET</td>
+              <td>⭐⭐⭐⭐ Складна</td>
+            </tr>
+            <tr>
+              <td>🦀 Swift</td>
+              <td>Тільки iOS/macOS додатки</td>
+              <td>Apple пристрої</td>
+              <td>⭐⭐⭐ Середня</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="box" style="max-width: 1100px; margin-top: 10px;">
+          <p style="font-size: 1em;">
+            💡 <strong>Унікальність JavaScript:</strong> єдина мова, що виконується безпосередньо у браузері та може охопити всі рівні розробки — від кнопки на сайті до серверної логіки та мобільного додатку.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 26: Де і як навчитись
+           ======================================== -->
+      <section>
+        <h2>📖 ЯК І ДЕ НАВЧИТИСЯ JAVASCRIPT?</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1400px; margin: 20px auto;">
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">🆓 Безкоштовні ресурси (українською/англійською):</p>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <ul style="font-size: 0.92em; margin: 0; padding-left: 20px;">
+                <li><strong>MDN Web Docs</strong> — офіційна документація Mozilla</li>
+                <li><strong>The Odin Project</strong> — безкоштовний повний курс</li>
+                <li><strong>freeCodeCamp</strong> — інтерактивні завдання</li>
+                <li><strong>javascript.info</strong> — підручник є українською</li>
+                <li><strong>YouTube</strong> — канали Traversy Media, Fireship</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">🎯 Платні та структуровані курси:</p>
+            <div class="concept-card green" style="margin-bottom: 10px;">
+              <ul style="font-size: 0.92em; margin: 0; padding-left: 20px;">
+                <li><strong>Coursera / edX</strong> — курси від університетів</li>
+                <li><strong>Udemy</strong> — доступна ціна, великий вибір</li>
+                <li><strong>Hillel / GOIT / Beetroot</strong> — українські школи</li>
+                <li><strong>Codecademy</strong> — інтерактивне навчання у браузері</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="box" style="max-width: 1200px; margin-top: 10px;">
+          <p style="font-size: 1em;">
+            🛠️ <strong>Порада:</strong> найкращий спосіб вивчити JS — це практика. Починайте з малого: зробіть просту сторінку з кнопками, калькулятор, список завдань (todo-list). <strong>Код + практика + терпіння = результат!</strong>
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 27: Підсумки
+           ======================================== -->
+      <section class="confetti-slide">
+        <h2>✅ ПІДСУМКИ ЛЕКЦІЇ</h2>
+        <ul class="summary-list" style="margin-top: 10px;">
+          <li>⚡ <strong>JavaScript</strong> — мова програмування, що оживляє вебсторінки та додає їм інтерактивність</li>
+          <li>🌍 <strong>97% сайтів</strong> використовують JS — ви взаємодієте з ним щодня</li>
+          <li>⚙️ JS виконується у <strong>браузері</strong> через вбудований JS-двигун (V8, SpiderMonkey)</li>
+          <li>📚 Ключові концепції: <strong>змінні, функції, умови, цикли, DOM, події</strong></li>
+          <li>🛒 Застосовується у <strong>торгівлі, медицині, освіті, держсервісах</strong> і тисячах інших галузей</li>
+          <li>🖥️ Завдяки <strong>Node.js</strong> JS вийшов за межі браузера — сервери, мобільні додатки</li>
+          <li>🏆 <strong>Найпопулярніша мова програмування</strong> у світі (2024)</li>
+        </ul>
+        <p style="margin-top: 15px; font-size: 1.2em;"><strong>🙋 Питання? Коментарі? Давайте обговоримо! 💬</strong></p>
+      </section>
+
+
+      <!-- ========================================
+           РОЗДІЛ: ЛЕКЦІЯ 2
+           ======================================== -->
+      <section class="gradient-dark">
+        <div style="font-size:4em;">⚡</div>
+        <h1>ЛЕКЦІЯ 2</h1>
+        <h2>ПОГЛИБЛЕНІ КОНЦЕПЦІЇ<br>ТА ПРОЕКТ</h2>
+      </section>
+      <!-- ========================================
+           СЛАЙД 5: Розділ 1 — Об'єкти та масиви
+           ======================================== -->
+      <section class="gradient-teal">
+        <div class="emoji" style="font-size: 4em;">🗂️</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 1</h1>
+        <h2>ОБ'ЄКТИ ТА МАСИВИ<br>— СТРУКТУРИ ДАНИХ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 6: Масиви
+           ======================================== -->
+      <section>
+        <h2>📋 МАСИВИ — СПИСКИ ДАНИХ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>Масив = пронумерований список</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Уявіть список покупок: кожному товару присвоєно порядковий номер (індекс).
+                Лічба починається з <strong>0</strong>, а не з 1.
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Навіщо масиви?</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>📝 Список студентів у групі</li>
+                <li>🛒 Товари в кошику</li>
+                <li>📰 Стрічка новин</li>
+                <li>📊 Оцінки студента за семестр</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Масив — квадратні дужки []
+const студенти = ["Оля", "Іван", "Юля", "Андрій"];
+
+// Доступ за індексом (з нуля!)
+console.log(студенти[0]); // → "Оля"
+console.log(студенти[2]); // → "Юля"
+
+// Кількість елементів
+console.log(студенти.length); // → 4
+
+// Додати елемент
+студенти.push("Марія");
+console.log(студенти.length); // → 5
+
+// Видалити останній
+студенти.pop();
+
+// Перебрати всі елементи
+студенти.forEach(function(студент) {
+  console.log("Привіт, " + студент + "!");
+});</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 7: Об'єкти
+           ======================================== -->
+      <section>
+        <h2>🗂️ ОБ'ЄКТИ — ОПИС СУТНОСТЕЙ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card yellow" style="margin-bottom: 10px;">
+              <p><strong>Об'єкт = «паспорт» або «картка»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Набір пар «властивість: значення» — як анкета з полями.<br><br>
+                💡 <em>Уявіть студентський квиток: ім'я, спеціальність, курс, середній бал.</em>
+              </p>
+            </div>
+            <div class="concept-card teal">
+              <p><strong>Де об'єкти зустрічаються в житті:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>👤 Профіль користувача (ім'я, email, фото)</li>
+                <li>🛒 Товар (назва, ціна, наявність)</li>
+                <li>🌤️ Погода (місто, температура, опади)</li>
+                <li>🚗 Автомобіль (марка, рік, колір)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Об'єкт — фігурні дужки {}
+const студент = {
+  ім'я: "Оксана Петренко",
+  вік: 20,
+  спеціальність: "Економіка",
+  курс: 2,
+  середнійБал: 89.5
+};
+
+// Доступ до властивостей
+console.log(студент.ім'я);       // → "Оксана Петренко"
+console.log(студент.курс);       // → 2
+
+// Зміна значення
+студент.вік = 21;
+
+// Виклик методу
+const інфо = `${студент.ім'я}, ${студент.курс} курс`;
+console.log(інфо);
+// → "Оксана Петренко, 2 курс"</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 8: Масив об'єктів — реальний приклад
+           ======================================== -->
+      <section>
+        <h2>🔗 МАСИВ ОБ'ЄКТІВ — ЯК ДАНІ З СЕРВЕРА</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Список товарів інтернет-магазину
+const товари = [
+  { id: 1, назва: "Ноутбук",    ціна: 25000, вНаявності: true  },
+  { id: 2, назва: "Клавіатура", ціна: 1200,  вНаявності: true  },
+  { id: 3, назва: "Монітор",    ціна: 12000, вНаявності: false }
+];
+
+// Знайти товари в наявності
+const доступні = товари.filter(т => т.вНаявності);
+console.log(доступні.length); // → 2
+
+// Вивести всі назви
+товари.forEach(товар => {
+  const статус = товар.вНаявності ? "✅" : "❌";
+  console.log(`${статус} ${товар.назва} — ${товар.ціна}₴`);
+});
+// ✅ Ноутбук — 25000₴
+// ✅ Клавіатура — 1200₴
+// ❌ Монітор — 12000₴</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Живий приклад:</p>
+            <div class="example-live">
+              <button onclick="objDemo()">📦 Показати товари</button>
+              <output id="obj-output"></output>
+            </div>
+            <div class="concept-card blue" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>💡 Це саме те, як надходять дані з будь-якого API:</strong>
+                масив об'єктів — будь то список новин, замовлень, студентів, транзакцій тощо.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 9: Розділ 2 — Асинхронний JS
+           ======================================== -->
+      <section class="gradient-purple">
+        <div class="emoji" style="font-size: 4em;">⏳</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 2</h1>
+        <h2>АСИНХРОННИЙ JAVASCRIPT<br>— РОБОТА З ЧАСОМ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 10: Синхронне vs Асинхронне
+           ======================================== -->
+      <section>
+        <h2>🔄 СИНХРОННЕ vs АСИНХРОННЕ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card red" style="margin-bottom: 10px;">
+              <p><strong>🚶 Синхронне — «черга в магазині»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Кожна операція чекає завершення попередньої.<br>
+                Браузер «зависає» поки йде запит до сервера — сторінка не реагує на кліки.
+              </p>
+              <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+                <pre><code class="language-javascript">// ❌ Сторінка «зависає» під час запиту
+const дані = завантажитиДані(); // чекаємо...
+відобразити(дані); // тільки тоді</code></pre>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="concept-card green" style="margin-bottom: 10px;">
+              <p><strong>🏃 Асинхронне — «замовлення у ресторані»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Замовив → займаєшся іншим → офіціант приносить страву, коли готово.<br>
+                Браузер продовжує реагувати, поки очікує відповіді сервера.
+              </p>
+              <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+                <pre><code class="language-javascript">// ✅ Сторінка залишається активною
+завантажитиДані().then(дані => {
+  відобразити(дані); // коли буде готово
+});
+// браузер продовжує працювати...</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box" style="max-width: 1100px; margin-top: 10px;">
+          <p style="font-size: 1em;">
+            💡 <strong>Реальний приклад:</strong> коли ви відкриваєте Google Maps — карта появляється одразу, а маркери та назви вулиць підвантажуються по мірі отримання відповіді від сервера.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 11: Promise — обіцянка
+           ======================================== -->
+      <section>
+        <h2>🤝 PROMISE — «ОБІЦЯНКА» МАЙБУТНЬОГО РЕЗУЛЬТАТУ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card yellow" style="margin-bottom: 10px;">
+              <p><strong>Promise = «талон очікування»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Як талон у лікарні: ви отримуєте <em>обіцянку</em> прийому.<br>
+                Результат може бути:
+              </p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>⏳ <strong>pending</strong> — ще чекаємо</li>
+                <li>✅ <strong>fulfilled</strong> — успішно виконано</li>
+                <li>❌ <strong>rejected</strong> — виникла помилка</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// fetch повертає Promise
+fetch('https://api.example.com/students')
+  .then(відповідь => відповідь.json())  // ✅ успіх: перетворити
+  .then(студенти => {
+    console.log("Отримано:", студенти.length, "студентів");
+    відобразитиСтудентів(студенти);
+  })
+  .catch(помилка => {                   // ❌ помилка
+    console.error("Помилка!", помилка.message);
+    показатиПовідомлення("Не вдалось завантажити дані");
+  })
+  .finally(() => {                      // завжди
+    сховатиЗавантаження();
+  });</code></pre>
+          </div>
+        </div>
+        <div class="promise-chain">
+          <div class="promise-step pending">⏳ Запит<br>відправлено</div>
+          <div class="promise-arrow">→</div>
+          <div class="promise-step resolved">✅ .then()<br>Обробка</div>
+          <div class="promise-arrow">→</div>
+          <div class="promise-step resolved">✅ .then()<br>Відображення</div>
+          <div class="promise-arrow" style="color: var(--google-red);">⬇</div>
+          <div class="promise-step rejected" style="margin-top: 0;">❌ .catch()<br>Помилка</div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 12: async/await — сучасний синтаксис
+           ======================================== -->
+      <section>
+        <h2>✨ ASYNC/AWAIT — ЧИТАБЕЛЬНИЙ АСИНХРОННИЙ КОД</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>async/await — «асинхронний код, схожий на синхронний»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Ключове слово <code>await</code> «призупиняє» виконання функції до отримання результату,
+                але <em>не блокує браузер</em> — решта сторінки продовжує працювати.
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Переваги async/await:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>📖 Код читається як звичайний послідовний</li>
+                <li>🐛 Легше знаходити помилки</li>
+                <li>🔀 Можна використовувати try/catch</li>
+                <li>👥 Стандарт у сучасній розробці</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="code-block" style="font-size: 1em; margin-bottom: 10px;">
+              <p style="margin-bottom: 6px; font-size: 0.85em; font-weight: 700;">❌ З .then() — складно читати:</p>
+              <pre><code class="language-javascript">завантажити(url)
+  .then(р => р.json())
+  .then(д => обробити(д))
+  .catch(е => помилка(е));</code></pre>
+            </div>
+            <div class="code-block" style="font-size: 1em;">
+              <p style="margin-bottom: 6px; font-size: 0.85em; font-weight: 700;">✅ З async/await — просто і зрозуміло:</p>
+              <pre><code class="language-javascript">async function завантажитиДані(url) {
+  try {
+    const відповідь = await fetch(url);
+    const дані = await відповідь.json();
+    обробити(дані);
+  } catch (помилка) {
+    console.error("Помилка:", помилка);
+  }
+}
+
+// Виклик
+завантажитиДані('https://api.example.com/news');</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 13: Async — живий приклад
+           ======================================== -->
+      <section>
+        <h2>🌍 ASYNC/AWAIT — ЖИВИЙ ПРИКЛАД</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <p style="margin-bottom: 8px; font-weight: 700;">Імітація завантаження даних:</p>
+            <pre><code class="language-javascript">// Функція, яка «симулює» запит до сервера
+function отриматиДані() {
+  return new Promise(resolve => {
+    // Затримка 2 секунди (як реальний запит)
+    setTimeout(() => {
+      resolve({
+        місто: "Київ",
+        температура: 18,
+        опис: "Хмарно"
+      });
+    }, 2000);
+  });
+}
+
+async function показатиПогоду() {
+  console.log("⏳ Завантаження...");
+  const погода = await отриматиДані();
+  console.log(`🌤️ ${погода.місто}: ${погода.температура}°C`);
+}</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Спробуйте:</p>
+            <div class="example-live">
+              <button onclick="asyncDemo()">🌤️ Завантажити «погоду»</button>
+              <output id="async-output"></output>
+            </div>
+            <div class="concept-card teal" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>💡 Саме так працює будь-який сайт:</strong><br>
+                кнопка натиснута → запит відправлено → 0.5–2 секунди очікування → дані відображено.
+                Все це без «зависання» браузера.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 14: Розділ 3 — Поглиблена робота з DOM
+           ======================================== -->
+      <section class="gradient-green-blue">
+        <div class="emoji" style="font-size: 4em;">🌳</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 3</h1>
+        <h2>ПОГЛИБЛЕНА РОБОТА З DOM<br>— ДИНАМІЧНА СТОРІНКА</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 15: Що можна робити з DOM
+           ======================================== -->
+      <section>
+        <h2>🛠️ ЩО МОЖНА РОБИТИ З DOM?</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1400px; margin: 20px auto;">
+          <div class="concept-card blue">
+            <p style="font-size: 1.1em;"><strong>🔍 Знаходити елементи</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// За ID
+document.getElementById('btn')
+
+// За класом
+document.querySelector('.card')
+
+// Всі за класом
+document.querySelectorAll('li')</code></pre>
+            </div>
+          </div>
+          <div class="concept-card green">
+            <p style="font-size: 1.1em;"><strong>✏️ Змінювати вміст</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Текст
+el.textContent = 'Новий текст';
+
+// HTML-код
+el.innerHTML = '&lt;b&gt;Жирний&lt;/b&gt;';
+
+// Атрибут
+el.setAttribute('href', '/page')</code></pre>
+            </div>
+          </div>
+          <div class="concept-card yellow">
+            <p style="font-size: 1.1em;"><strong>🎨 Керувати стилями</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Прямий стиль
+el.style.color = 'red';
+
+// Додати CSS клас
+el.classList.add('active');
+
+// Прибрати клас
+el.classList.remove('hidden')</code></pre>
+            </div>
+          </div>
+          <div class="concept-card teal">
+            <p style="font-size: 1.1em;"><strong>➕ Створювати елементи</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Новий елемент
+const li = document.createElement('li');
+li.textContent = 'Новий пункт';
+
+// Додати на сторінку
+список.appendChild(li);</code></pre>
+            </div>
+          </div>
+          <div class="concept-card red">
+            <p style="font-size: 1.1em;"><strong>🗑️ Видаляти елементи</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Видалити елемент
+el.remove();
+
+// Очистити контейнер
+список.innerHTML = '';
+
+// Видалити дочірній
+батько.removeChild(дитина);</code></pre>
+            </div>
+          </div>
+          <div class="concept-card purple">
+            <p style="font-size: 1.1em;"><strong>🖱️ Додавати події</strong></p>
+            <div class="code-block" style="margin-top: 10px; font-size: 0.85em;">
+              <pre><code class="language-javascript">// Клік
+btn.addEventListener('click', fn);
+
+// Клавіша
+input.addEventListener('keydown', fn);
+
+// Відправка форми
+form.addEventListener('submit', fn);</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 16: Динамічне додавання елементів
+           ======================================== -->
+      <section>
+        <h2>➕ СТВОРЕННЯ ЕЛЕМЕНТІВ ДИНАМІЧНО</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">function додатиКартку(ім'я, роль) {
+  // 1. Створюємо новий елемент
+  const картка = document.createElement('div');
+
+  // 2. Додаємо CSS клас
+  картка.classList.add('user-card');
+
+  // 3. Задаємо вміст (шаблонний рядок)
+  картка.innerHTML = `
+    &lt;h3&gt;👤 ${ім'я}&lt;/h3&gt;
+    &lt;p&gt;${роль}&lt;/p&gt;
+    &lt;button onclick="this.parentElement.remove()"&gt;
+      ✕ Видалити
+    &lt;/button&gt;
+  `;
+
+  // 4. Додаємо на сторінку
+  document.getElementById('cards').appendChild(картка);
+}
+
+// Виклик
+додатиКартку("Оксана Петренко", "Студентка, 2 курс");
+додатиКартку("Іван Коваль", "Викладач, Економіка");</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Живий приклад:</p>
+            <div class="example-live">
+              <button onclick="domAddCard()">👤 Додати картку</button>
+              <button class="red-btn" onclick="domClearCards()">🗑️ Очистити</button>
+              <div id="dom-cards" style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 10px;"></div>
+            </div>
+            <div class="concept-card blue" style="margin-top: 15px;">
+              <p style="font-size: 0.9em;">
+                <strong>💡 Так працюють:</strong> соціальні мережі (нові пости без перезавантаження), інтернет-магазини (додавання товарів до каталогу), чати (нові повідомлення).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 17: Розділ 4 — localStorage
+           ======================================== -->
+      <section class="js-yellow">
+        <div class="emoji" style="font-size: 4em;">💾</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 4</h1>
+        <h2>ЗБЕРІГАННЯ ДАНИХ У БРАУЗЕРІ<br>— LOCALSTORAGE</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 18: LocalStorage — що це
+           ======================================== -->
+      <section>
+        <h2>💾 LOCALSTORAGE — «БЛОКНОТ» БРАУЗЕРА</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>localStorage = постійне сховище в браузері</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Дані зберігаються навіть після закриття вкладки або браузера.
+                При наступному відкритті сайту — дані «пам'ятаються».
+              </p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                💡 <em>Як записна книжка, яку ви залишаєте на столі — вона чекає, поки ви повернетесь.</em>
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Де використовується:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🌙 Запам'ятовування теми (темна/світла)</li>
+                <li>🛒 Кошик покупок між сесіями</li>
+                <li>📝 Збереження чернетки форми</li>
+                <li>🔐 Токен авторизації</li>
+                <li>🗂️ Список завдань (наш проект!)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// ✏️ Записати дані
+localStorage.setItem('ім'я', 'Оксана');
+localStorage.setItem('тема', 'темна');
+
+// 📖 Прочитати дані
+const ім'я = localStorage.getItem('ім'я');
+console.log(ім'я); // → "Оксана"
+
+// 🗑️ Видалити одне
+localStorage.removeItem('тема');
+
+// 🧹 Очистити все
+localStorage.clear();
+
+// ---- Збереження об'єкта ----
+const налаштування = { мова: 'uk', розмір: 16 };
+
+// Перетворити в рядок перед збереженням
+localStorage.setItem('config', JSON.stringify(налаштування));
+
+// Прочитати й розпарсити назад
+const config = JSON.parse(localStorage.getItem('config'));
+console.log(config.мова); // → "uk"</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 19: LocalStorage — живий приклад
+           ======================================== -->
+      <section>
+        <h2>💾 LOCALSTORAGE — ЖИВИЙ ПРИКЛАД</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Зберегти ім'я користувача
+function зберегтиІм'я(ім'я) {
+  localStorage.setItem('userName', ім'я);
+  console.log("✅ Збережено: " + ім'я);
+}
+
+// Завантажити при відкритті сторінки
+function привітати() {
+  const ім'я = localStorage.getItem('userName');
+
+  if (ім'я) {
+    document.getElementById('greeting').textContent =
+      "👋 З поверненням, " + ім'я + "!";
+  } else {
+    document.getElementById('greeting').textContent =
+      "Привіт, незнайомцю!";
+  }
+}
+
+// Запускаємо при завантаженні
+window.addEventListener('load', привітати);</code></pre>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Спробуйте — дані збережуться між оновленнями:</p>
+            <div class="example-live">
+              <input type="text" id="ls-input" placeholder="Введіть своє ім'я..." oninput="lsPreview(this)">
+              <br>
+              <button onclick="lsSave()" style="margin-top: 10px;">💾 Зберегти</button>
+              <button onclick="lsLoad()" class="green-btn">📖 Прочитати</button>
+              <button onclick="lsClear()" class="red-btn">🗑️ Видалити</button>
+              <div id="ls-output"></div>
+            </div>
+            <div class="concept-card teal" style="margin-top: 12px;">
+              <p style="font-size: 0.88em;">
+                💡 Відкрийте DevTools (F12) → Application → Local Storage — побачите збережені дані!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 20: Розділ 5 — Міні-проект
+           ======================================== -->
+      <section class="gradient-dark">
+        <div class="emoji" style="font-size: 4em;">🛠️</div>
+        <h1 style="margin-top: 15px;">РОЗДІЛ 5</h1>
+        <h2>ПРАКТИЧНИЙ МІНІ-ПРОЕКТ<br>— СПИСОК ЗАВДАНЬ (TODO LIST)</h2>
+        <p style="margin-top: 20px; font-size: 1.1em;">Збираємо все вивчене в один реальний застосунок!</p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 21: Що ми будуємо
+           ======================================== -->
+      <section>
+        <h2>🗒️ TODO LIST — ЩО МИ БУДУЄМО?</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>Функціональність застосунку:</strong></p>
+              <ul style="font-size: 0.95em; margin-top: 8px;">
+                <li>➕ Додавати нові завдання</li>
+                <li>✅ Позначати як виконане</li>
+                <li>🗑️ Видаляти завдання</li>
+                <li>💾 Зберігати між сесіями (localStorage)</li>
+                <li>📊 Показувати кількість залишених завдань</li>
+              </ul>
+            </div>
+            <div class="concept-card yellow">
+              <p><strong>Концепції, які використаємо:</strong></p>
+              <ul style="font-size: 0.95em; margin-top: 8px;">
+                <li>📋 Масив об'єктів для збереження завдань</li>
+                <li>🌳 DOM — створення/видалення елементів</li>
+                <li>🖱️ Події — click, keydown</li>
+                <li>💾 localStorage — збереження стану</li>
+                <li>🔧 Функції — модульний підхід</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p style="font-weight: 700; margin-bottom: 12px;">Живий застосунок:</p>
+            <div class="example-live">
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="todo-input" placeholder="Нове завдання..." onkeydown="if(event.key==='Enter') todoAdd()">
+                <button onclick="todoAdd()" class="green-btn">➕ Додати</button>
+              </div>
+              <div id="todo-stats" style="margin-top: 8px; font-size: 0.9em; color: #666;"></div>
+              <ul id="todo-list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 22: Крок 1 — Структура даних
+           ======================================== -->
+      <section>
+        <h2>📐 КРОК 1: СТРУКТУРА ДАНИХ</h2>
+        <div class="compare-row">
+          <div>
+            <div class="concept-card blue" style="margin-bottom: 10px;">
+              <p><strong>Спочатку — дані, потім — інтерфейс</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Хороший розробник спочатку продумує, як зберігати дані, а потім як їх відображати.
+                Для списку завдань нам потрібен <strong>масив об'єктів</strong>.
+              </p>
+            </div>
+            <div class="concept-card green">
+              <p><strong>Кожне завдання — це об'єкт з полями:</strong></p>
+              <ul style="font-size: 0.9em; margin-top: 8px;">
+                <li>🔑 <strong>id</strong> — унікальний ідентифікатор</li>
+                <li>📝 <strong>текст</strong> — опис завдання</li>
+                <li>✅ <strong>виконано</strong> — true/false</li>
+                <li>📅 <strong>дата</strong> — коли додано</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// Масив завдань (головний стан застосунку)
+let завдання = [];
+
+// Кожне завдання — об'єкт
+function створитиЗавдання(текст) {
+  return {
+    id: Date.now(),           // унікальний ID
+    текст: текст,
+    виконано: false,
+    дата: new Date().toLocaleDateString('uk-UA')
+  };
+}
+
+// Приклад даних
+завдання = [
+  { id: 1, текст: "Здати реферат",   виконано: false, дата: "30.03.2026" },
+  { id: 2, текст: "Купити підручник", виконано: true,  дата: "29.03.2026" },
+  { id: 3, текст: "Записатись на ЗНО",виконано: false, дата: "28.03.2026" }
+];</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 23: Крок 2 — Відображення списку
+           ======================================== -->
+      <section>
+        <h2>🖥️ КРОК 2: ВІДОБРАЖЕННЯ СПИСКУ</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">function відобразитиСписок() {
+  const список = document.getElementById('список');
+
+  // Очищаємо список перед перемальовуванням
+  список.innerHTML = '';
+
+  // Перебираємо кожне завдання
+  завдання.forEach(function(завд) {
+
+    // Створюємо новий елемент списку
+    const li = document.createElement('li');
+    if (завд.виконано) {
+      li.classList.add('done');
+    }
+
+    li.innerHTML = `
+      &lt;span class="check" onclick="переключити(${завд.id})"&gt;
+        ${завд.виконано ? '✅' : '⬜'}
+      &lt;/span&gt;
+      ${завд.текст}
+      &lt;button onclick="видалити(${завд.id})"&gt;✕&lt;/button&gt;
+    `;
+
+    список.appendChild(li);
+  });
+
+  оновитиСтатистику();
+}</code></pre>
+          </div>
+          <div>
+            <div class="concept-card teal" style="margin-bottom: 10px;">
+              <p><strong>💡 Ключовий принцип: «Рендеринг»</strong></p>
+              <p style="font-size: 0.9em; margin-top: 8px;">
+                Щоразу, коли стан даних змінюється — перемальовуємо весь список.
+                Це простий, але надійний підхід. Саме так працюють React, Vue та інші фреймворки.
+              </p>
+            </div>
+            <div class="concept-card yellow">
+              <p><strong>Потік даних застосунку:</strong></p>
+              <div class="step-flow" style="flex-direction: column; align-items: flex-start; margin: 10px 0;">
+                <div style="display: flex; gap: 8px; align-items: center; font-size: 0.9em;">
+                  <div class="step-box" style="min-width: auto; padding: 8px 12px;">📋 Дані змінились</div>
+                  <span class="step-arrow" style="font-size: 1.2em;">→</span>
+                  <div class="step-box" style="min-width: auto; padding: 8px 12px;">💾 Зберегти</div>
+                  <span class="step-arrow" style="font-size: 1.2em;">→</span>
+                  <div class="step-box" style="min-width: auto; padding: 8px 12px;">🖥️ Перемалювати</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 24: Крок 3 — Додавання та видалення
+           ======================================== -->
+      <section>
+        <h2>➕🗑️ КРОК 3: ДОДАВАННЯ ТА ВИДАЛЕННЯ</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// ➕ Додати завдання
+function додатиЗавдання() {
+  const поле = document.getElementById('поле');
+  const текст = поле.value.trim(); // видаляємо пробіли
+
+  if (!текст) {
+    alert("Введіть текст завдання!");
+    return; // виходимо, якщо поле порожнє
+  }
+
+  const нове = {
+    id: Date.now(),
+    текст: текст,
+    виконано: false,
+    дата: new Date().toLocaleDateString('uk-UA')
+  };
+
+  завдання.push(нове);    // додаємо в масив
+  зберегтиВСховищі();     // зберігаємо
+  відобразитиСписок();    // перемальовуємо
+
+  поле.value = '';        // очищаємо поле вводу
+}
+
+// 🗑️ Видалити завдання
+function видалити(id) {
+  // filter повертає масив БЕЗ елемента з таким id
+  завдання = завдання.filter(з => з.id !== id);
+  зберегтиВСховищі();
+  відобразитиСписок();
+}</code></pre>
+          </div>
+          <div class="code-block" style="font-size: 0.95em;">
+            <pre><code class="language-javascript">// ✅ Переключити стан виконання
+function переключити(id) {
+  const завд = завдання.find(з => з.id === id);
+  if (завд) {
+    завд.виконано = !завд.виконано; // інвертуємо
+  }
+  зберегтиВСховищі();
+  відобразитиСписок();
+}
+
+// 💾 Зберегти в localStorage
+function зберегтиВСховищі() {
+  localStorage.setItem(
+    'todoList',
+    JSON.stringify(завдання)
+  );
+}
+
+// 📖 Завантажити з localStorage
+function завантажитиЗСховища() {
+  const збережені = localStorage.getItem('todoList');
+  if (збережені) {
+    завдання = JSON.parse(збережені);
+  }
+}
+
+// 📊 Статистика
+function оновитиСтатистику() {
+  const залишилось = завдання.filter(з => !з.виконано).length;
+  document.getElementById('статистика').textContent =
+    `Залишилось: ${залишилось} з ${завдання.length}`;
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 25: Крок 4 — Ініціалізація
+           ======================================== -->
+      <section>
+        <h2>🚀 КРОК 4: ЗБИРАЄМО ВСЕ РАЗОМ</h2>
+        <div class="compare-row">
+          <div class="code-block" style="font-size: 1.1em;">
+            <pre><code class="language-javascript">// ========================================
+// ТОЧКА ВХОДУ — запуск застосунку
+// ========================================
+
+let завдання = []; // головний масив даних
+
+// Запустити, коли сторінка завантажилась
+document.addEventListener('DOMContentLoaded', function() {
+
+  // 1. Завантажуємо збережені завдання
+  завантажитиЗСховища();
+
+  // 2. Відображаємо список
+  відобразитиСписок();
+
+  // 3. Додаємо обробник клавіші Enter
+  document.getElementById('поле')
+    .addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        додатиЗавдання();
+      }
+    });
+
+  console.log('✅ Todo List запущено!');
+  console.log('📋 Завантажено завдань:', завдання.length);
+});</code></pre>
+          </div>
+          <div>
+            <div class="concept-card green" style="margin-bottom: 10px;">
+              <p><strong>🏗️ Архітектура готового застосунку:</strong></p>
+              <div class="step-flow" style="flex-direction: column; gap: 8px; margin: 12px 0; align-items: flex-start;">
+                <div style="font-size: 0.9em; background: #E8F5E9; padding: 8px 14px; border-radius: 8px; width: 100%;">📋 <strong>Дані</strong> — масив об'єктів у змінній</div>
+                <div style="font-size: 0.9em; background: #E3F2FD; padding: 8px 14px; border-radius: 8px; width: 100%;">🌳 <strong>DOM</strong> — відображення у HTML</div>
+                <div style="font-size: 0.9em; background: #FFFDE7; padding: 8px 14px; border-radius: 8px; width: 100%;">🖱️ <strong>Події</strong> — дії користувача</div>
+                <div style="font-size: 0.9em; background: #E0F2F1; padding: 8px 14px; border-radius: 8px; width: 100%;">💾 <strong>Сховище</strong> — localStorage</div>
+              </div>
+            </div>
+            <div class="concept-card blue">
+              <p style="font-size: 0.9em;">
+                <strong>💡 Цей самий патерн використовується у:</strong><br>
+                Google Keep, Trello, Notion, Jira, GitHub Issues — всі вони побудовані на цих самих принципах!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 26: Підсумки
+           ======================================== -->
+      <section class="confetti-slide">
+        <h2>✅ ПІДСУМКИ ЛЕКЦІЇ 2</h2>
+        <ul class="summary-list" style="margin-top: 10px;">
+          <li>🗂️ <strong>Масиви</strong> — зберігають списки даних; <strong>об'єкти</strong> — описують сутності з полями</li>
+          <li>⏳ <strong>Асинхронність</strong> — JS не блокує браузер під час очікування відповіді від сервера</li>
+          <li>🤝 <strong>Promise / async·await</strong> — зручний спосіб працювати з відкладеними результатами</li>
+          <li>🌳 <strong>DOM</strong> — JS може створювати, змінювати та видаляти елементи сторінки динамічно</li>
+          <li>💾 <strong>localStorage</strong> — дозволяє зберігати дані між сесіями прямо в браузері</li>
+          <li>🛠️ <strong>Todo List</strong> — реальний міні-проект, що поєднує всі вивчені концепції</li>
+        </ul>
+        <p style="margin-top: 10px; font-size: 1.15em;"><strong>🏆 Ви вже можете будувати справжні вебзастосунки! 🚀</strong></p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 27: Домашнє завдання
+           ======================================== -->
+      <section>
+        <h2>📚 ДОМАШНЄ ЗАВДАННЯ</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 1400px; margin: 10px auto;">
+          <div>
+            <p style="font-weight: 700; font-size: 1.1em; margin-bottom: 12px;">🎯 Базовий рівень (обов'язково):</p>
+            <div class="concept-card green" style="margin-bottom: 12px;">
+              <ol style="font-size: 0.95em; padding-left: 20px; margin: 0;">
+                <li style="margin: 8px 0;">Створіть Todo List із лекції у файлі <code>todo.html</code></li>
+                <li style="margin: 8px 0;">Додайте функцію «Очистити виконані» (видаляє всі завдання з <code>виконано: true</code>)</li>
+                <li style="margin: 8px 0;">Додайте відображення дати створення для кожного завдання</li>
+              </ol>
+            </div>
+          </div>
+          <div>
+            <p style="font-weight: 700; font-size: 1.1em; margin-bottom: 12px;">⭐ Підвищений рівень (за бажанням):</p>
+            <div class="concept-card blue" style="margin-bottom: 12px;">
+              <ol style="font-size: 0.95em; padding-left: 20px; margin: 0;">
+                <li style="margin: 8px 0;">Додайте фільтри: «Всі», «Активні», «Виконані»</li>
+                <li style="margin: 8px 0;">Додайте пріоритети (🔴 Важливо / 🟡 Звичайне / 🟢 Незначне)</li>
+                <li style="margin: 8px 0;">Зробіть редагування завдання подвійним кліком</li>
+              </ol>
+            </div>
+            <div class="concept-card yellow">
+              <p style="font-size: 0.9em;">
+                🔗 <strong>Корисні ресурси:</strong><br>
+                <code>javascript.info/uk</code> — підручник українською<br>
+                <code>developer.mozilla.org</code> — документація MDN<br>
+                <code>codepen.io</code> — спробуйте в браузері
+              </p>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top: 10px; font-size: 1.1em;"><strong>🙋 Питання? Пишіть у чат або на наступному занятті! 💬</strong></p>
+      </section>
+
+
+    </div>
+  </div>
+
+  <!-- Reveal.js та плагіни -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+
+  <!-- canvas-confetti для фінальних слайдів -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Ініціалізація Reveal.js -->
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'slide',
+      slideNumber: true,
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      plugins: [RevealHighlight]
+    });
+
+    // Конфеті на слайдах з класом confetti-slide
+    Reveal.on('slidechanged', event => {
+      if (event.currentSlide && event.currentSlide.classList.contains('confetti-slide')) {
+        setTimeout(() => {
+          if (typeof confetti === 'function') {
+            confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 },
+              colors: ['#4285F4', '#34A853', '#FBBC04', '#EA4335'] });
+          }
+        }, 400);
+      }
+    });
+
+    // ================================================
+    // ПРИКЛАД 1: Лічильник кнопки
+    // ================================================
+    let demo1Count = 0;
+    function jsDemo1Click() {
+      demo1Count++;
+      const out = document.getElementById('demo1-output');
+      if (out) out.textContent = 'Натиснуто: ' + demo1Count + ' разів' + (demo1Count >= 5 ? ' 🎉' : '');
+    }
+    function jsDemo1Reset() {
+      demo1Count = 0;
+      const out = document.getElementById('demo1-output');
+      if (out) out.textContent = 'Натиснуто: 0 разів';
+    }
+
+    // ================================================
+    // ПРИКЛАД 2: Перевірка email
+    // ================================================
+    function jsDemo2Check(input) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const msg = document.getElementById('demo2-msg');
+      if (!input.value) {
+        input.className = '';
+        if (msg) msg.textContent = '';
+        return;
+      }
+      if (emailRegex.test(input.value)) {
+        input.className = 'valid';
+        if (msg) { msg.textContent = '✅ Email коректний!'; msg.style.color = '#34A853'; }
+      } else {
+        input.className = 'invalid';
+        if (msg) { msg.textContent = '❌ Невірний формат email'; msg.style.color = '#EA4335'; }
+      }
+    }
+
+    // ================================================
+    // ПРИКЛАД 3: Годинник
+    // ================================================
+    function updateClock() {
+      const el = document.getElementById('demo3-clock');
+      if (!el) return;
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      el.textContent = h + ':' + m + ':' + s;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ================================================
+    // ДЕМО: МАСИВ ОБ'ЄКТІВ
+    // ================================================
+    const demoGoods = [
+      { id: 1, name: "Ноутбук",    price: 25000, available: true  },
+      { id: 2, name: "Клавіатура", price: 1200,  available: true  },
+      { id: 3, name: "Монітор",    price: 12000, available: false },
+      { id: 4, name: "Мишка",      price: 650,   available: true  }
+    ];
+
+    function objDemo() {
+      const out = document.getElementById('obj-output');
+      if (!out) return;
+      let result = '';
+      demoGoods.forEach(g => {
+        const status = g.available ? '✅' : '❌';
+        result += `${status} ${g.name} — ${g.price.toLocaleString('uk-UA')}₴\n`;
+      });
+      const available = demoGoods.filter(g => g.available);
+      result += `\nДоступних товарів: ${available.length} з ${demoGoods.length}`;
+      out.textContent = result;
+    }
+
+    // ================================================
+    // ДЕМО: ASYNC / AWAIT
+    // ================================================
+    function fakeWeatherAPI() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const cities = [
+            { city: 'Київ',   temp: 15, desc: 'Хмарно ☁️' },
+            { city: 'Львів',  temp: 12, desc: 'Дощ 🌧️'   },
+            { city: 'Одеса',  temp: 19, desc: 'Сонячно ☀️' }
+          ];
+          resolve(cities[Math.floor(Math.random() * cities.length)]);
+        }, 2000);
+      });
+    }
+
+    async function asyncDemo() {
+      const out = document.getElementById('async-output');
+      if (!out) return;
+      out.style.color = '#FBBC04';
+      out.textContent = '⏳ Запит відправлено...\n(чекаємо 2 секунди)';
+      const weather = await fakeWeatherAPI();
+      out.style.color = '#34A853';
+      out.textContent = `✅ Відповідь отримана!\n🌤️ ${weather.city}: ${weather.temp}°C — ${weather.desc}`;
+    }
+
+    // ================================================
+    // ДЕМО: ДИНАМІЧНЕ ДОДАВАННЯ DOM-ЕЛЕМЕНТІВ
+    // ================================================
+    const domNames = ['Оксана Петренко', 'Іван Коваль', 'Юлія Мельник', 'Андрій Шевченко', 'Марія Бондар'];
+    const domRoles = ['Студентка, 2 курс', 'Викладач, Економіка', 'Студентка, 3 курс', 'Аспірант', 'Деканат'];
+    let domIdx = 0;
+
+    function domAddCard() {
+      const container = document.getElementById('dom-cards');
+      if (!container) return;
+      const idx = domIdx % domNames.length;
+      const card = document.createElement('div');
+      card.style.cssText = 'background:#E3F2FD;border:2px solid #4285F4;border-radius:10px;padding:12px 16px;font-size:0.9em;position:relative;';
+      card.innerHTML = `<strong>👤 ${domNames[idx]}</strong><br><span style="color:#555;font-size:0.9em;">${domRoles[idx]}</span>
+        <button onclick="this.parentElement.remove()" style="position:absolute;top:6px;right:6px;background:#EA4335;color:#fff;border:none;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:0.8em;">✕</button>`;
+      container.appendChild(card);
+      domIdx++;
+    }
+
+    function domClearCards() {
+      const container = document.getElementById('dom-cards');
+      if (container) { container.innerHTML = ''; domIdx = 0; }
+    }
+
+    // ================================================
+    // ДЕМО: LOCALSTORAGE
+    // ================================================
+    function lsPreview(input) {
+      input.style.borderColor = input.value ? '#4285F4' : '#ccc';
+    }
+
+    function lsSave() {
+      const input = document.getElementById('ls-input');
+      const out = document.getElementById('ls-output');
+      if (!input || !out) return;
+      const val = input.value.trim();
+      if (!val) { out.style.color = '#EA4335'; out.textContent = '❌ Поле порожнє!'; return; }
+      localStorage.setItem('lectureDemo_name', val);
+      out.style.color = '#34A853';
+      out.textContent = `✅ Збережено: "${val}"`;
+    }
+
+    function lsLoad() {
+      const out = document.getElementById('ls-output');
+      if (!out) return;
+      const val = localStorage.getItem('lectureDemo_name');
+      if (val) {
+        out.style.color = '#4285F4';
+        out.textContent = `📖 У сховищі: "${val}"`;
+      } else {
+        out.style.color = '#EA4335';
+        out.textContent = '❌ Нічого не збережено';
+      }
+    }
+
+    function lsClear() {
+      localStorage.removeItem('lectureDemo_name');
+      const out = document.getElementById('ls-output');
+      const input = document.getElementById('ls-input');
+      if (out) { out.style.color = '#EA4335'; out.textContent = '🗑️ Видалено зі сховища'; }
+      if (input) { input.value = ''; input.style.borderColor = '#ccc'; }
+    }
+
+    // ================================================
+    // ДЕМО: TODO LIST
+    // ================================================
+    let todos = [];
+
+    function todoRender() {
+      const list = document.getElementById('todo-list');
+      const stats = document.getElementById('todo-stats');
+      if (!list) return;
+      list.innerHTML = '';
+      todos.forEach(t => {
+        const li = document.createElement('li');
+        if (t.done) li.classList.add('done');
+        li.innerHTML = `
+          <span class="check" onclick="todoToggle(${t.id})">${t.done ? '✅' : '⬜'}</span>
+          ${t.text}
+          <button onclick="todoDelete(${t.id})">✕</button>
+        `;
+        list.appendChild(li);
+      });
+      if (stats) {
+        const rem = todos.filter(t => !t.done).length;
+        stats.textContent = todos.length ? `Залишилось: ${rem} з ${todos.length}` : '';
+      }
+      localStorage.setItem('lecture2_todos', JSON.stringify(todos));
+    }
+
+    function todoAdd() {
+      const input = document.getElementById('todo-input');
+      if (!input) return;
+      const text = input.value.trim();
+      if (!text) return;
+      todos.push({ id: Date.now(), text, done: false });
+      todoRender();
+      input.value = '';
+    }
+
+    function todoToggle(id) {
+      const t = todos.find(x => x.id === id);
+      if (t) t.done = !t.done;
+      todoRender();
+    }
+
+    function todoDelete(id) {
+      todos = todos.filter(x => x.id !== id);
+      todoRender();
+    }
+
+    // Завантажити збережені Todo при старті
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('lecture2_todos');
+      if (saved) {
+        try { todos = JSON.parse(saved); } catch(e) { todos = []; }
+      }
+      todoRender();
+    });
+
+    console.log('⚡ Презентація «JavaScript Лекції 1–2» завантажена!');
+    console.log('📍 Використовуйте стрілки для навігації між слайдами');
+  </script>
+</body>
+</html>
