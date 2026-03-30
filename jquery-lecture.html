@@ -282,6 +282,22 @@
       font-weight: 600; font-size: 0.9em; min-width: 130px;
     }
     .step-arrow { font-size: 1.8em; color: var(--jq-blue); }
+
+    /* Вертикальний скролінг */
+    .reveal .slides section {
+      overflow-y: auto !important;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0,0,0,0.18) transparent;
+    }
+    .reveal .slides section::-webkit-scrollbar { width: 5px; }
+    .reveal .slides section::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 4px; }
+
+    /* Compact spacing for dense slides */
+    .concept-card { padding: 14px 16px !important; }
+    .agenda-item { padding: 10px 18px !important; margin: 5px 0 !important; }
+    .tl-item { margin: 8px 0 !important; }
+    .tl-text { padding: 7px 14px !important; }
+    .summary-list li { padding: 10px 18px !important; margin: 6px 0 !important; }
   </style>
 </head>
 <body>
@@ -1354,7 +1370,7 @@ $(function() {
            ======================================== -->
       <section class="confetti-slide">
         <h2>✅ ПІДСУМКИ ЛЕКЦІЇ</h2>
-        <ul class="summary-list" style="margin-top: 15px;">
+        <ul class="summary-list" style="margin-top: 8px;">
           <li>🎯 <strong>jQuery</strong> — бібліотека JS, мета якої: «Write Less, Do More» — спростити роботу з вебсторінками</li>
           <li>💲 <strong>$() і CSS-селектори</strong> — серце jQuery; знайти елемент так само просто, як написати CSS-правило</li>
           <li>🔗 <strong>Chaining</strong> — ланцюговий виклик методів дозволяє писати лаконічний читабельний код</li>

@@ -341,38 +341,38 @@
       <section>
         <h2>🧠 ЛЕКЦІЯ 1 — КЛЮЧОВІ ІДЕЇ</h2>
         <div class="review-grid">
-          <div class="review-card" style="border-color: var(--google-blue);">
+          <div class="review-card" style="border-color: var(--google-blue); padding: 12px;">
             <span class="rc-icon">⚡</span>
             <strong>JavaScript — мова вебу</strong>
             <span>97% сайтів, найпопулярніша мова у світі</span>
           </div>
-          <div class="review-card" style="border-color: #F0A500;">
+          <div class="review-card" style="border-color: #F0A500; padding: 12px;">
             <span class="rc-icon">🏠</span>
             <strong>Три шари сайту</strong>
             <span>HTML — структура, CSS — дизайн, JS — інтерактивність</span>
           </div>
-          <div class="review-card" style="border-color: var(--google-green);">
+          <div class="review-card" style="border-color: var(--google-green); padding: 12px;">
             <span class="rc-icon">⚙️</span>
             <strong>JS-двигун</strong>
             <span>Браузер читає та виконує код через V8/SpiderMonkey</span>
           </div>
-          <div class="review-card" style="border-color: var(--google-red);">
+          <div class="review-card" style="border-color: var(--google-red); padding: 12px;">
             <span class="rc-icon">📦</span>
             <strong>Змінні та функції</strong>
             <span>let/const для даних, function для дій</span>
           </div>
-          <div class="review-card" style="border-color: #7B1FA2;">
+          <div class="review-card" style="border-color: #7B1FA2; padding: 12px;">
             <span class="rc-icon">🌳</span>
             <strong>DOM</strong>
             <span>Браузер перетворює HTML на дерево об'єктів, JS керує ним</span>
           </div>
-          <div class="review-card" style="border-color: #00897B;">
+          <div class="review-card" style="border-color: #00897B; padding: 12px;">
             <span class="rc-icon">🖱️</span>
             <strong>Події (Events)</strong>
             <span>JS реагує на кліки, введення, прокручування тощо</span>
           </div>
         </div>
-        <div class="box" style="max-width: 1100px; margin-top: 15px;">
+        <div class="box" style="max-width: 1100px; margin-top: 8px;">
           <p style="font-size: 1em;">💡 <strong>Сьогодні</strong> ми йдемо глибше: вивчаємо складніші структури даних, час, пам'ять і збираємо все разом у реальний проект.</p>
         </div>
       </section>
@@ -393,7 +393,7 @@
         <h2>📋 МАСИВИ — СПИСКИ ДАНИХ</h2>
         <div class="compare-row">
           <div>
-            <div class="concept-card blue" style="margin-bottom: 15px;">
+            <div class="concept-card blue" style="margin-bottom: 10px;">
               <p><strong>Масив = пронумерований список</strong></p>
               <p style="font-size: 0.9em; margin-top: 8px;">
                 Уявіть список покупок: кожному товару присвоєно порядковий номер (індекс).
@@ -410,7 +410,7 @@
               </ul>
             </div>
           </div>
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">// Масив — квадратні дужки []
 const студенти = ["Оля", "Іван", "Юля", "Андрій"];
 
@@ -443,7 +443,7 @@ console.log(студенти.length); // → 5
         <h2>🗂️ ОБ'ЄКТИ — ОПИС СУТНОСТЕЙ</h2>
         <div class="compare-row">
           <div>
-            <div class="concept-card yellow" style="margin-bottom: 15px;">
+            <div class="concept-card yellow" style="margin-bottom: 10px;">
               <p><strong>Об'єкт = «паспорт» або «картка»</strong></p>
               <p style="font-size: 0.9em; margin-top: 8px;">
                 Набір пар «властивість: значення» — як анкета з полями.<br><br>
@@ -460,7 +460,7 @@ console.log(студенти.length); // → 5
               </ul>
             </div>
           </div>
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">// Об'єкт — фігурні дужки {}
 const студент = {
   ім'я: "Оксана Петренко",
@@ -491,7 +491,7 @@ console.log(інфо);
       <section>
         <h2>🔗 МАСИВ ОБ'ЄКТІВ — ЯК ДАНІ З СЕРВЕРА</h2>
         <div class="compare-row">
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">// Список товарів інтернет-магазину
 const товари = [
   { id: 1, назва: "Ноутбук",    ціна: 25000, вНаявності: true  },
@@ -544,7 +544,7 @@ console.log(доступні.length); // → 2
         <h2>🔄 СИНХРОННЕ vs АСИНХРОННЕ</h2>
         <div class="compare-row">
           <div>
-            <div class="concept-card red" style="margin-bottom: 15px;">
+            <div class="concept-card red" style="margin-bottom: 10px;">
               <p><strong>🚶 Синхронне — «черга в магазині»</strong></p>
               <p style="font-size: 0.9em; margin-top: 8px;">
                 Кожна операція чекає завершення попередньої.<br>
@@ -558,7 +558,7 @@ const дані = завантажитиДані(); // чекаємо...
             </div>
           </div>
           <div>
-            <div class="concept-card green" style="margin-bottom: 15px;">
+            <div class="concept-card green" style="margin-bottom: 10px;">
               <p><strong>🏃 Асинхронне — «замовлення у ресторані»</strong></p>
               <p style="font-size: 0.9em; margin-top: 8px;">
                 Замовив → займаєшся іншим → офіціант приносить страву, коли готово.<br>
@@ -588,7 +588,7 @@ const дані = завантажитиДані(); // чекаємо...
         <h2>🤝 PROMISE — «ОБІЦЯНКА» МАЙБУТНЬОГО РЕЗУЛЬТАТУ</h2>
         <div class="compare-row">
           <div>
-            <div class="concept-card yellow" style="margin-bottom: 15px;">
+            <div class="concept-card yellow" style="margin-bottom: 10px;">
               <p><strong>Promise = «талон очікування»</strong></p>
               <p style="font-size: 0.9em; margin-top: 8px;">
                 Як талон у лікарні: ви отримуєте <em>обіцянку</em> прийому.<br>
@@ -601,7 +601,7 @@ const дані = завантажитиДані(); // чекаємо...
               </ul>
             </div>
           </div>
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">// fetch повертає Promise
 fetch('https://api.example.com/students')
   .then(відповідь => відповідь.json())  // ✅ успіх: перетворити
@@ -636,7 +636,7 @@ fetch('https://api.example.com/students')
         <h2>✨ ASYNC/AWAIT — ЧИТАБЕЛЬНИЙ АСИНХРОННИЙ КОД</h2>
         <div class="compare-row">
           <div>
-            <div class="concept-card blue" style="margin-bottom: 15px;">
+            <div class="concept-card blue" style="margin-bottom: 10px;">
               <p><strong>async/await — «асинхронний код, схожий на синхронний»</strong></p>
               <p style="font-size: 0.9em; margin-top: 8px;">
                 Ключове слово <code>await</code> «призупиняє» виконання функції до отримання результату,
@@ -686,7 +686,7 @@ fetch('https://api.example.com/students')
       <section>
         <h2>🌍 ASYNC/AWAIT — ЖИВИЙ ПРИКЛАД</h2>
         <div class="compare-row">
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <p style="margin-bottom: 8px; font-weight: 700;">Імітація завантаження даних:</p>
             <pre><code class="language-javascript">// Функція, яка «симулює» запит до сервера
 function отриматиДані() {
@@ -825,7 +825,7 @@ form.addEventListener('submit', fn);</code></pre>
       <section>
         <h2>➕ СТВОРЕННЯ ЕЛЕМЕНТІВ ДИНАМІЧНО</h2>
         <div class="compare-row">
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">function додатиКартку(ім'я, роль) {
   // 1. Створюємо новий елемент
   const картка = document.createElement('div');
@@ -882,7 +882,7 @@ form.addEventListener('submit', fn);</code></pre>
         <h2>💾 LOCALSTORAGE — «БЛОКНОТ» БРАУЗЕРА</h2>
         <div class="compare-row">
           <div>
-            <div class="concept-card blue" style="margin-bottom: 15px;">
+            <div class="concept-card blue" style="margin-bottom: 10px;">
               <p><strong>localStorage = постійне сховище в браузері</strong></p>
               <p style="font-size: 0.9em; margin-top: 8px;">
                 Дані зберігаються навіть після закриття вкладки або браузера.
@@ -903,7 +903,7 @@ form.addEventListener('submit', fn);</code></pre>
               </ul>
             </div>
           </div>
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">// ✏️ Записати дані
 localStorage.setItem('ім'я', 'Оксана');
 localStorage.setItem('тема', 'темна');
@@ -937,7 +937,7 @@ console.log(config.мова); // → "uk"</code></pre>
       <section>
         <h2>💾 LOCALSTORAGE — ЖИВИЙ ПРИКЛАД</h2>
         <div class="compare-row">
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">// Зберегти ім'я користувача
 function зберегтиІм'я(ім'я) {
   localStorage.setItem('userName', ім'я);
@@ -996,7 +996,7 @@ window.addEventListener('load', привітати);</code></pre>
         <h2>🗒️ TODO LIST — ЩО МИ БУДУЄМО?</h2>
         <div class="compare-row">
           <div>
-            <div class="concept-card blue" style="margin-bottom: 15px;">
+            <div class="concept-card blue" style="margin-bottom: 10px;">
               <p><strong>Функціональність застосунку:</strong></p>
               <ul style="font-size: 0.95em; margin-top: 8px;">
                 <li>➕ Додавати нові завдання</li>
@@ -1038,7 +1038,7 @@ window.addEventListener('load', привітати);</code></pre>
         <h2>📐 КРОК 1: СТРУКТУРА ДАНИХ</h2>
         <div class="compare-row">
           <div>
-            <div class="concept-card blue" style="margin-bottom: 15px;">
+            <div class="concept-card blue" style="margin-bottom: 10px;">
               <p><strong>Спочатку — дані, потім — інтерфейс</strong></p>
               <p style="font-size: 0.9em; margin-top: 8px;">
                 Хороший розробник спочатку продумує, як зберігати дані, а потім як їх відображати.
@@ -1055,7 +1055,7 @@ window.addEventListener('load', привітати);</code></pre>
               </ul>
             </div>
           </div>
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">// Масив завдань (головний стан застосунку)
 let завдання = [];
 
@@ -1085,7 +1085,7 @@ function створитиЗавдання(текст) {
       <section>
         <h2>🖥️ КРОК 2: ВІДОБРАЖЕННЯ СПИСКУ</h2>
         <div class="compare-row">
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">function відобразитиСписок() {
   const список = document.getElementById('список');
 
@@ -1116,7 +1116,7 @@ function створитиЗавдання(текст) {
 }</code></pre>
           </div>
           <div>
-            <div class="concept-card teal" style="margin-bottom: 15px;">
+            <div class="concept-card teal" style="margin-bottom: 10px;">
               <p><strong>💡 Ключовий принцип: «Рендеринг»</strong></p>
               <p style="font-size: 0.9em; margin-top: 8px;">
                 Щоразу, коли стан даних змінюється — перемальовуємо весь список.
@@ -1145,7 +1145,7 @@ function створитиЗавдання(текст) {
       <section>
         <h2>➕🗑️ КРОК 3: ДОДАВАННЯ ТА ВИДАЛЕННЯ</h2>
         <div class="compare-row">
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">// ➕ Додати завдання
 function додатиЗавдання() {
   const поле = document.getElementById('поле');
@@ -1178,7 +1178,7 @@ function видалити(id) {
   відобразитиСписок();
 }</code></pre>
           </div>
-          <div class="code-block" style="font-size: 1.05em;">
+          <div class="code-block" style="font-size: 0.95em;">
             <pre><code class="language-javascript">// ✅ Переключити стан виконання
 function переключити(id) {
   const завд = завдання.find(з => з.id === id);
@@ -1250,7 +1250,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });</code></pre>
           </div>
           <div>
-            <div class="concept-card green" style="margin-bottom: 15px;">
+            <div class="concept-card green" style="margin-bottom: 10px;">
               <p><strong>🏗️ Архітектура готового застосунку:</strong></p>
               <div class="step-flow" style="flex-direction: column; gap: 8px; margin: 12px 0; align-items: flex-start;">
                 <div style="font-size: 0.9em; background: #E8F5E9; padding: 8px 14px; border-radius: 8px; width: 100%;">📋 <strong>Дані</strong> — масив об'єктів у змінній</div>
@@ -1274,7 +1274,7 @@ document.addEventListener('DOMContentLoaded', function() {
            ======================================== -->
       <section class="confetti-slide">
         <h2>✅ ПІДСУМКИ ЛЕКЦІЇ 2</h2>
-        <ul class="summary-list" style="margin-top: 15px;">
+        <ul class="summary-list" style="margin-top: 10px;">
           <li>🗂️ <strong>Масиви</strong> — зберігають списки даних; <strong>об'єкти</strong> — описують сутності з полями</li>
           <li>⏳ <strong>Асинхронність</strong> — JS не блокує браузер під час очікування відповіді від сервера</li>
           <li>🤝 <strong>Promise / async·await</strong> — зручний спосіб працювати з відкладеними результатами</li>
@@ -1282,7 +1282,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <li>💾 <strong>localStorage</strong> — дозволяє зберігати дані між сесіями прямо в браузері</li>
           <li>🛠️ <strong>Todo List</strong> — реальний міні-проект, що поєднує всі вивчені концепції</li>
         </ul>
-        <p style="margin-top: 30px; font-size: 1.15em;"><strong>🏆 Ви вже можете будувати справжні вебзастосунки! 🚀</strong></p>
+        <p style="margin-top: 10px; font-size: 1.15em;"><strong>🏆 Ви вже можете будувати справжні вебзастосунки! 🚀</strong></p>
       </section>
 
       <!-- ========================================
@@ -1290,7 +1290,7 @@ document.addEventListener('DOMContentLoaded', function() {
            ======================================== -->
       <section>
         <h2>📚 ДОМАШНЄ ЗАВДАННЯ</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1400px; margin: 20px auto;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 1400px; margin: 10px auto;">
           <div>
             <p style="font-weight: 700; font-size: 1.1em; margin-bottom: 12px;">🎯 Базовий рівень (обов'язково):</p>
             <div class="concept-card green" style="margin-bottom: 12px;">
@@ -1320,7 +1320,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
         </div>
-        <p style="margin-top: 20px; font-size: 1.1em;"><strong>🙋 Питання? Пишіть у чат або на наступному занятті! 💬</strong></p>
+        <p style="margin-top: 10px; font-size: 1.1em;"><strong>🙋 Питання? Пишіть у чат або на наступному занятті! 💬</strong></p>
       </section>
 
     </div>
