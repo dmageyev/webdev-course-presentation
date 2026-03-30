@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery: Магія для Веброзробки | Лекція для студентів</title>
+  <meta name="description" content="Інтерактивна презентація про бібліотеку jQuery для студентів університету не ІТ-напрямку">
+  <meta name="author" content="Курс веброзробки">
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+
+  <!-- Highlight.js для підсвітки коду -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- Кастомні стилі -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* Стилі специфічні для цієї презентації */
+    .gradient-jquery {
+      background: linear-gradient(135deg, #0769AD, #1e90ff) !important;
+      color: #ffffff !important;
+    }
+    .gradient-jquery h1,
+    .gradient-jquery h2,
+    .gradient-jquery h3,
+    .gradient-jquery p {
+      color: #ffffff !important;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1600px;
+      margin: 20px auto;
+      text-align: left;
+    }
+
+    .comparison-bad {
+      background: #fff0f0;
+      border: 3px solid #EA4335;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .comparison-good {
+      background: #f0fff0;
+      border: 3px solid #34A853;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .comparison-bad h3 {
+      color: #EA4335 !important;
+    }
+
+    .comparison-good h3 {
+      color: #34A853 !important;
+    }
+
+    .stat-card {
+      background: #f8f9fa;
+      border: 3px solid #4285F4;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-card .stat-number {
+      font-size: 2em;
+      font-weight: 800;
+      color: #4285F4;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.85em;
+      color: #5f6368;
+      margin-top: 5px;
+    }
+
+    .selector-table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      font-size: 0.88em;
+      max-width: 1200px;
+    }
+
+    .selector-table th,
+    .selector-table td {
+      border: 2px solid #e8eaed;
+      padding: 12px 18px;
+      text-align: left;
+    }
+
+    .selector-table th {
+      background: #4285F4;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .selector-table tr:nth-child(even) td {
+      background: #f8f9fa;
+    }
+
+    .selector-table code {
+      background: #e8f0fe;
+      padding: 3px 8px;
+      border-radius: 5px;
+      color: #1a73e8;
+    }
+
+    .formula-block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin: 30px auto;
+      max-width: 1400px;
+      flex-wrap: wrap;
+    }
+
+    .formula-step {
+      padding: 25px 30px;
+      border-radius: 15px;
+      text-align: center;
+      min-width: 220px;
+    }
+
+    .formula-step .step-icon {
+      font-size: 2.5em;
+    }
+
+    .formula-step .step-title {
+      font-size: 1.1em;
+      font-weight: 700;
+      margin: 10px 0 5px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .formula-step .step-code {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.9em;
+      background: rgba(255,255,255,0.5);
+      padding: 5px 10px;
+      border-radius: 8px;
+    }
+
+    .formula-arrow {
+      font-size: 2.5em;
+      color: #4285F4;
+      padding: 0 10px;
+    }
+
+    .fs-select { background: #e8f0fe; border: 3px solid #4285F4; }
+    .fs-action { background: #e6f4ea; border: 3px solid #34A853; }
+    .fs-result { background: #fce8e6; border: 3px solid #EA4335; }
+
+    .ajax-flow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin: 25px auto;
+      flex-wrap: wrap;
+      max-width: 1400px;
+    }
+
+    .ajax-step {
+      padding: 20px 25px;
+      border-radius: 12px;
+      text-align: center;
+      min-width: 180px;
+      font-size: 0.9em;
+    }
+
+    .ajax-step .ajax-icon { font-size: 2.2em; }
+    .ajax-step .ajax-name { font-weight: 700; margin-top: 8px; font-family: 'Montserrat', sans-serif; }
+    .ajax-step .ajax-desc { font-size: 0.85em; color: #5f6368; margin-top: 4px; }
+    .ajax-arrow { font-size: 2em; color: #4285F4; padding: 0 8px; }
+
+    .resource-card {
+      background: #f8f9fa;
+      border: 2px solid #e8eaed;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-4px);
+      border-color: #4285F4;
+    }
+
+    .resource-card .res-icon { font-size: 2.5em; }
+    .resource-card .res-name { font-weight: 700; margin-top: 8px; font-family: 'Montserrat', sans-serif; }
+    .resource-card .res-url { font-size: 0.8em; color: #1a73e8; margin-top: 4px; font-family: 'Roboto Mono', monospace; }
+
+    .vs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      max-width: 1400px;
+      margin: 20px auto;
+    }
+
+    .vs-use {
+      background: #e6f4ea;
+      border: 3px solid #34A853;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .vs-skip {
+      background: #fff8e1;
+      border: 3px solid #FBBC04;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .vs-use h3 { color: #34A853 !important; }
+    .vs-skip h3 { color: #e37400 !important; }
+
+    .summary-list {
+      text-align: left;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .summary-item {
+      padding: 18px 24px;
+      margin: 12px 0;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      border-left: 6px solid rgba(255,255,255,0.7);
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ========================================
+           СЛАЙД 1: Титульний
+           ======================================== -->
+      <section class="gradient-jquery">
+        <div class="emoji" style="font-size: 4em;">⚡</div>
+        <h1 style="font-size: 3em; margin-top: 10px;">jQuery</h1>
+        <h2>МАГІЯ ДЛЯ ВЕБРОЗРОБКИ</h2>
+        <p style="font-size: 1.3em; margin-top: 40px;">📚 Бібліотека JavaScript для студентів університету 🎓</p>
+        <p style="font-size: 1.1em; margin-top: 40px;"><small>💻 2026 • Університетська лекція</small></p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 2: Порядок денний
+           ======================================== -->
+      <section>
+        <h2>📅 ПЛАН ЛЕКЦІЇ</h2>
+        <div class="agenda" style="max-width: 1200px;">
+          <div class="agenda-item">🎯 Мета технології: навіщо jQuery? <span>15&nbsp;хв</span></div>
+          <div class="agenda-item">⚙️ Загальні принципи реалізації <span>20&nbsp;хв</span></div>
+          <div class="agenda-item">💻 Шляхи використання з прикладами <span>20&nbsp;хв</span></div>
+          <div class="agenda-item">❓ Вікторина + Підсумки + Ресурси <span>5&nbsp;хв</span></div>
+        </div>
+        <p style="margin-top: 30px;"><small>РАЗОМ: ~60 хвилин | Будемо продуктивні! 💪</small></p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 3: Розділ — МЕТА ТЕХНОЛОГІЇ
+           ======================================== -->
+      <section class="gradient-green-blue">
+        <div class="emoji" style="font-size: 5em;">🎯</div>
+        <h1 style="margin-top: 30px;">ЧАСТИНА 1</h1>
+        <h2>МЕТА ТЕХНОЛОГІЇ</h2>
+        <h3>НАВІЩО jQuery?</h3>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 4: Проблема — Vanilla JS vs jQuery
+           ======================================== -->
+      <section>
+        <h2>⚡ ПРОБЛЕМА: КОД БЕЗ jQuery VS З jQuery</h2>
+        <p style="font-size: 1em; margin: 10px 0;"><strong>Задача:</strong> при кліку на кнопку — сховати її та змінити колір</p>
+
+        <div class="comparison-grid">
+          <div class="comparison-bad">
+            <h3 style="font-size: 1em; margin-bottom: 10px;">❌ Vanilla JS — 10+ рядків:</h3>
+            <pre style="font-size: 0.6em; margin: 0;"><code class="language-javascript">document.addEventListener('DOMContentLoaded',
+  function() {
+    var buttons =
+      document.getElementsByClassName('btn');
+    for (var i = 0; i &lt; buttons.length; i++) {
+      buttons[i].addEventListener('click',
+        function() {
+          this.style.backgroundColor = 'red';
+          this.style.display = 'none';
+        }
+      );
+    }
+  }
+);</code></pre>
+          </div>
+
+          <div class="comparison-good">
+            <h3 style="font-size: 1em; margin-bottom: 10px;">✅ jQuery — 3 рядки:</h3>
+            <pre style="font-size: 0.6em; margin: 0;"><code class="language-javascript">$(function() {
+  $('.btn').click(function() {
+    $(this).css('background', 'red').hide();
+  });
+});</code></pre>
+            <p style="font-size: 0.85em; margin-top: 12px; color: #34A853;">
+              <strong>І ОБИДВА РОБЛЯТЬ ТЕ САМЕ! 🎯</strong>
+            </p>
+          </div>
+        </div>
+
+        <p style="margin-top: 15px; font-size: 1.1em;">
+          💡 jQuery скорочує обсяг коду у <span class="highlight">3–5 разів</span>
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 5: Що таке jQuery?
+           ======================================== -->
+      <section>
+        <h2>❓ ЩО ТАКЕ jQuery?</h2>
+
+        <div class="box" style="max-width: 1200px; margin-top: 20px;">
+          <p style="font-size: 1.3em;">
+            <strong>jQuery</strong> — це <span class="highlight">безкоштовна бібліотека JavaScript</span>,<br>
+            яка спрощує роботу з вебсторінками
+          </p>
+        </div>
+
+        <div class="grid-3" style="margin-top: 25px; max-width: 1300px; margin-left: auto; margin-right: auto;">
+          <div>
+            <p style="font-size: 2em;">📦</p>
+            <strong>Бібліотека</strong><br>
+            <small>= набір готових рішень</small>
+          </div>
+          <div>
+            <p style="font-size: 2em;">✍️</p>
+            <strong>"Write Less,<br>Do More"</strong><br>
+            <small>Офіційне гасло</small>
+          </div>
+          <div>
+            <p style="font-size: 2em;">🆓</p>
+            <strong>Безкоштовна</strong><br>
+            <small>Open Source, MIT ліцензія</small>
+          </div>
+        </div>
+
+        <div class="box" style="max-width: 1100px; margin-top: 20px; background: #e8f0fe; border-color: #4285F4;">
+          <p style="font-size: 1.1em;">
+            🧰 <strong>Аналогія:</strong> jQuery — як набір інструментів IKEA.<br>
+            Замість того, щоб виготовляти кожен болт вручну — беремо готовий!
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 6: Навіщо jQuery виник?
+           ======================================== -->
+      <section>
+        <h2>🕰️ НАВІЩО jQuery ВИНИК?</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1400px; margin: 20px auto;">
+          <div class="box" style="background: #fff0f0; border-color: #EA4335;">
+            <h3 style="color: #EA4335 !important; font-size: 1em;">🚨 ПРОБЛЕМА (2000-ні):</h3>
+            <ul style="text-align: left; font-size: 0.9em; line-height: 1.8;">
+              <li>Браузерні війни: IE, Firefox, Opera</li>
+              <li>Одний і той самий JS-код<br>працював <strong>по-різному</strong> у браузерах</li>
+              <li>Розробники писали купу<br><em>"перевірок на браузер"</em></li>
+              <li>Код ставав складним і довгим</li>
+            </ul>
+          </div>
+
+          <div class="box" style="background: #f0fff0; border-color: #34A853;">
+            <h3 style="color: #34A853 !important; font-size: 1em;">✅ РІШЕННЯ (jQuery, 2006):</h3>
+            <ul style="text-align: left; font-size: 0.9em; line-height: 1.8;">
+              <li><strong>John Resig</strong> (американський розробник)</li>
+              <li>Один код → всі браузери</li>
+              <li>jQuery "переклав" різні браузерні API<br>на єдину уніфіковану мову</li>
+              <li>Скоротив обсяг коду у рази</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="box" style="max-width: 1200px; background: #e8f0fe; border-color: #4285F4; margin-top: 10px;">
+          <p style="font-size: 1.1em;">
+            🌉 <strong>jQuery = Міст між розробником і всіма браузерами</strong>
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 7: jQuery сьогодні
+           ======================================== -->
+      <section>
+        <h2>📊 jQuery СЬОГОДНІ</h2>
+
+        <div class="grid-3" style="max-width: 1400px; margin: 25px auto;">
+          <div class="stat-card">
+            <div class="stat-number">77%</div>
+            <div class="stat-label">усіх сайтів у світі<br>використовують jQuery<br><em>(W3Techs, 2024)</em></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">95%</div>
+            <div class="stat-label">серед сайтів,<br>що використовують<br>будь-яку JS-бібліотеку</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">#1</div>
+            <div class="stat-label">найпопулярніша<br>JS-бібліотека<br>в історії веброзробки</div>
+          </div>
+        </div>
+
+        <div class="box" style="max-width: 1300px; margin-top: 20px; text-align: left;">
+          <h3 style="font-size: 1em;">🏢 Де зустрічається jQuery:</h3>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 12px; text-align: center; font-size: 0.9em;">
+            <div>🌐<br><strong>WordPress</strong><br><small>40% всього Інтернету</small></div>
+            <div>🅱️<br><strong>Bootstrap</strong><br><small>Популярний UI-фреймворк</small></div>
+            <div>🏛️<br><strong>Держсайти</strong><br><small>Банки, університети</small></div>
+            <div>🛒<br><strong>Інтернет-магазини</strong><br><small>Shopify, WooCommerce</small></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 8: Розділ — ПРИНЦИПИ РЕАЛІЗАЦІЇ
+           ======================================== -->
+      <section class="gradient-blue-purple">
+        <div class="emoji" style="font-size: 5em;">⚙️</div>
+        <h1 style="margin-top: 30px;">ЧАСТИНА 2</h1>
+        <h2>ЗАГАЛЬНІ ПРИНЦИПИ<br>РЕАЛІЗАЦІЇ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 9: Як підключити jQuery
+           ======================================== -->
+      <section>
+        <h2>🔌 ЯК ПІДКЛЮЧИТИ jQuery</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1500px; margin: 20px auto;">
+          <div class="box" style="background: #e8f0fe; border-color: #4285F4;">
+            <h3 style="font-size: 1em;">⭐ Спосіб 1: CDN (рекомендовано)</h3>
+            <p style="font-size: 0.85em; margin-bottom: 10px;">Підключення через Інтернет — нічого не треба завантажувати</p>
+            <pre style="font-size: 0.65em;"><code class="language-html">&lt;!-- Додайте перед &lt;/body&gt; --&gt;
+&lt;script
+  src="https://code.jquery.com/jquery-3.7.0.min.js"&gt;
+&lt;/script&gt;
+
+&lt;!-- Ваш код після підключення --&gt;
+&lt;script&gt;
+  $(function() {
+    // Ваш jQuery-код тут
+  });
+&lt;/script&gt;</code></pre>
+          </div>
+
+          <div class="box">
+            <h3 style="font-size: 1em;">📥 Спосіб 2: Локальний файл</h3>
+            <p style="font-size: 0.85em; margin-bottom: 10px;">Завантажити файл jquery.min.js на власний сервер</p>
+            <pre style="font-size: 0.65em;"><code class="language-html">&lt;!-- Файл поруч з вашим HTML --&gt;
+&lt;script src="js/jquery.min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  $(function() {
+    // Ваш jQuery-код тут
+  });
+&lt;/script&gt;</code></pre>
+            <p style="font-size: 0.8em; margin-top: 10px; color: #5f6368;">
+              Для більшості задач — CDN простіше ✅
+            </p>
+          </div>
+        </div>
+
+        <div class="box" style="max-width: 1000px; margin-top: 10px; background: #fff8e1; border-color: #FBBC04;">
+          <p style="font-size: 1em;">
+            🔌 <strong>Аналогія:</strong> CDN — як розетка в стіні.
+            Підключив один кабель — і все обладнання працює!
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 10: Принцип — Селектор $()
+           ======================================== -->
+      <section>
+        <h2>🔍 ПРИНЦИП 1: СЕЛЕКТОР <code>$()</code></h2>
+        <p style="font-size: 1.1em; margin-bottom: 15px;">
+          <span class="highlight">$ = псевдонім jQuery()</span> — функція для <strong>пошуку елементів</strong> на сторінці
+        </p>
+
+        <table class="selector-table">
+          <thead>
+            <tr>
+              <th>Синтаксис</th>
+              <th>Що шукає</th>
+              <th>CSS-аналог</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>$('#logo')</code></td>
+              <td>Елемент з <strong>id="logo"</strong></td>
+              <td><code>#logo { ... }</code></td>
+            </tr>
+            <tr>
+              <td><code>$('.btn')</code></td>
+              <td>Всі елементи з <strong>class="btn"</strong></td>
+              <td><code>.btn { ... }</code></td>
+            </tr>
+            <tr>
+              <td><code>$('p')</code></td>
+              <td>Всі параграфи <strong>&lt;p&gt;</strong></td>
+              <td><code>p { ... }</code></td>
+            </tr>
+            <tr>
+              <td><code>$('a.active')</code></td>
+              <td>Посилання з класом <strong>"active"</strong></td>
+              <td><code>a.active { ... }</code></td>
+            </tr>
+            <tr>
+              <td><code>$('ul li')</code></td>
+              <td>Всі <strong>&lt;li&gt;</strong> всередині <strong>&lt;ul&gt;</strong></td>
+              <td><code>ul li { ... }</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="box" style="max-width: 1000px; margin-top: 15px; background: #e8f0fe; border-color: #4285F4;">
+          <p style="font-size: 1em;">
+            💡 <strong>Аналогія:</strong> <code>$('#title')</code> — як сказати другу:<br>
+            <em>"Знайди мені людину на ім'я Title у цій кімнаті"</em>
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 11: Принцип — $(document).ready()
+           ======================================== -->
+      <section>
+        <h2>⏳ ПРИНЦИП 2: <code>$(document).ready()</code></h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+          Запускає код лише після того, як <strong>вся сторінка завантажена</strong>
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; max-width: 1500px; margin: 0 auto;">
+          <div class="code-block">
+            <h3 style="font-size: 1em;">📝 Повна форма:</h3>
+            <pre style="font-size: 0.7em;"><code class="language-javascript">$(document).ready(function() {
+
+  // Ваш jQuery-код тут.
+  // Виконується тільки коли
+  // HTML-сторінка повністю завантажена
+
+  $('#btn').click(function() {
+    alert('Готово!');
+  });
+
+});</code></pre>
+          </div>
+
+          <div class="code-block" style="border-color: #34A853;">
+            <h3 style="font-size: 1em;">⚡ Скорочена форма (те саме):</h3>
+            <pre style="font-size: 0.7em;"><code class="language-javascript">$(function() {
+
+  // Ідентичний результат!
+  // Більшість розробників
+  // використовують саме цю форму.
+
+  $('#btn').click(function() {
+    alert('Готово!');
+  });
+
+});</code></pre>
+          </div>
+        </div>
+
+        <div class="box" style="max-width: 1100px; margin-top: 15px; background: #fff8e1; border-color: #FBBC04;">
+          <p style="font-size: 1em;">
+            ☕ <strong>Аналогія:</strong> Спочатку повністю завантажити сторінку —
+            потім починати з нею взаємодіяти. Як чекати, поки кава заварилась!
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 12: Принцип — Ланцюжки методів
+           ======================================== -->
+      <section>
+        <h2>🔗 ПРИНЦИП 3: ЛАНЦЮЖКИ МЕТОДІВ (CHAINING)</h2>
+        <p style="font-size: 1.1em; margin-bottom: 15px;">Методи можна <strong>об'єднувати в ланцюжок</strong> — кожен виконується з результатом попереднього</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1600px; margin: 0 auto;">
+          <div class="code-block">
+            <h3 style="font-size: 0.9em; color: #EA4335 !important;">❌ Без ланцюжка (4 окремі рядки):</h3>
+            <pre style="font-size: 0.65em;"><code class="language-javascript">$('#box').css('color', 'white');
+$('#box').css('background', '#4285F4');
+$('#box').html('Привіт, jQuery!');
+$('#box').fadeIn(600);</code></pre>
+          </div>
+
+          <div class="code-block" style="border-color: #34A853;">
+            <h3 style="font-size: 0.9em; color: #34A853 !important;">✅ З ланцюжком (1 рядок):</h3>
+            <pre style="font-size: 0.65em;"><code class="language-javascript">$('#box')
+  .css('color', 'white')
+  .css('background', '#4285F4')
+  .html('Привіт, jQuery!')
+  .fadeIn(600);</code></pre>
+          </div>
+        </div>
+
+        <div class="box" style="max-width: 1100px; margin-top: 15px; background: #e8f0fe; border-color: #4285F4;">
+          <p style="font-size: 1em;">
+            🏭 <strong>Аналогія:</strong> Конвеєр на заводі — деталь проходить через
+            фарбування → шліфування → пакування → відправлення, не виходячи з лінії
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 13: Формула дії jQuery
+           ======================================== -->
+      <section>
+        <h2>📐 ФОРМУЛА JQUERY-ДІЇ</h2>
+        <p style="font-size: 1.1em; margin-bottom: 25px;">Кожна jQuery-команда будується за однією схемою:</p>
+
+        <div class="formula-block">
+          <div class="formula-step fs-select">
+            <div class="step-icon">🔍</div>
+            <div class="step-title">ВИБРАТИ</div>
+            <div class="step-code">$('елемент')</div>
+          </div>
+          <div class="formula-arrow">→</div>
+          <div class="formula-step fs-action">
+            <div class="step-icon">⚡</div>
+            <div class="step-title">ДІЯ</div>
+            <div class="step-code">.метод()</div>
+          </div>
+          <div class="formula-arrow">→</div>
+          <div class="formula-step fs-result">
+            <div class="step-icon">✅</div>
+            <div class="step-title">РЕЗУЛЬТАТ</div>
+            <div class="step-code">зміна на сторінці</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; max-width: 1400px; margin: 20px auto; font-size: 0.9em;">
+          <div class="code-block">
+            <code>$('p').hide();</code><br>
+            <small>Сховати всі параграфи</small>
+          </div>
+          <div class="code-block">
+            <code>$('#title').text('Привіт');</code><br>
+            <small>Змінити текст заголовка</small>
+          </div>
+          <div class="code-block">
+            <code>$('.btn').fadeIn(500);</code><br>
+            <small>Плавно показати кнопки</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 14: Розділ — ПРАКТИКА
+           ======================================== -->
+      <section class="gradient-gold">
+        <div class="emoji" style="font-size: 5em;">💻</div>
+        <h1 style="margin-top: 30px;">ЧАСТИНА 3</h1>
+        <h2>ШЛЯХИ ВИКОРИСТАННЯ<br>З ПРИКЛАДАМИ</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 15: Маніпуляція вмістом
+           ======================================== -->
+      <section>
+        <h2>📝 МАНІПУЛЯЦІЯ ВМІСТОМ</h2>
+
+        <div class="split-screen" style="max-width: 1600px; margin: 20px auto;">
+          <div class="code-side">
+            <h3 style="font-size: 1em;">КОД:</h3>
+            <pre style="font-size: 0.6em;"><code class="language-javascript">// Встановити HTML-вміст (з тегами):
+$('#title').html('&lt;b&gt;Новий заголовок!&lt;/b&gt;');
+
+// Встановити лише текст (без тегів):
+$('#subtitle').text('Простий текст');
+
+// Отримати поточний текст:
+var current = $('#subtitle').text();
+console.log(current); // "Простий текст"
+
+// Поле вводу (input) — .val():
+$('#email').val('user@example.com');
+
+// Отримати значення з поля:
+var email = $('#email').val();
+console.log(email); // "user@example.com"</code></pre>
+          </div>
+
+          <div class="result-side" style="text-align: left;">
+            <h3 style="font-size: 1em;">МЕТОДИ:</h3>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+              <div class="code-block" style="margin: 0;">
+                <code>.html()</code><br>
+                <small>Змінює HTML-вміст елемента<br>(може містити теги)</small>
+              </div>
+              <div class="code-block" style="margin: 0; border-color: #34A853;">
+                <code>.text()</code><br>
+                <small>Змінює тільки текст<br>(теги ігноруються)</small>
+              </div>
+              <div class="code-block" style="margin: 0; border-color: #FBBC04;">
+                <code>.val()</code><br>
+                <small>Значення поля форми<br>(input, textarea, select)</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 16: Стилі та CSS-класи
+           ======================================== -->
+      <section>
+        <h2>🎨 СТИЛІ ТА CSS-КЛАСИ</h2>
+
+        <div class="split-screen" style="max-width: 1600px; margin: 20px auto;">
+          <div class="code-side">
+            <h3 style="font-size: 1em;">КОД:</h3>
+            <pre style="font-size: 0.6em;"><code class="language-javascript">// Встановити один стиль:
+$('.box').css('background-color', '#4285F4');
+
+// Встановити кілька стилів одразу:
+$('.box').css({
+  'background': '#4285F4',
+  'color': 'white',
+  'border-radius': '10px'
+});
+
+// Додати CSS-клас:
+$('.btn').addClass('active');
+
+// Видалити CSS-клас:
+$('.btn').removeClass('active');
+
+// Перемкнути (є — видали, нема — додай):
+$('.btn').toggleClass('active');</code></pre>
+          </div>
+
+          <div class="result-side" style="text-align: left;">
+            <h3 style="font-size: 1em;">МЕТОДИ:</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+              <div class="code-block" style="margin: 0;">
+                <code>.css()</code><br>
+                <small>Встановлює inline-стилі</small>
+              </div>
+              <div class="code-block" style="margin: 0; border-color: #34A853;">
+                <code>.addClass()</code><br>
+                <small>Додає CSS-клас до елемента</small>
+              </div>
+              <div class="code-block" style="margin: 0; border-color: #EA4335;">
+                <code>.removeClass()</code><br>
+                <small>Видаляє CSS-клас</small>
+              </div>
+              <div class="code-block" style="margin: 0; border-color: #FBBC04;">
+                <code>.toggleClass()</code><br>
+                <small>⭐ Додає або видаляє клас<br>(залежно від наявності)</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 17: Обробка подій
+           ======================================== -->
+      <section>
+        <h2>🖱️ ОБРОБКА ПОДІЙ</h2>
+        <p style="font-size: 1em; margin-bottom: 15px;">
+          <strong>Подія</strong> — це будь-яка дія користувача: клік, наведення, введення тексту
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1600px; margin: 0 auto;">
+          <div class="code-block">
+            <h3 style="font-size: 0.9em;">🖱️ Клік по кнопці:</h3>
+            <pre style="font-size: 0.6em;"><code class="language-javascript">$('#btn').click(function() {
+  alert('Кнопку натиснуто!');
+  $(this).text('Натиснуто ✅');
+});</code></pre>
+          </div>
+
+          <div class="code-block" style="border-color: #34A853;">
+            <h3 style="font-size: 0.9em;">🏷️ Наведення миші:</h3>
+            <pre style="font-size: 0.6em;"><code class="language-javascript">$('.card').hover(
+  // Миша НАЇХАЛА:
+  function() {
+    $(this).addClass('highlighted');
+  },
+  // Миша ПІШЛА:
+  function() {
+    $(this).removeClass('highlighted');
+  }
+);</code></pre>
+          </div>
+
+          <div class="code-block" style="border-color: #FBBC04;">
+            <h3 style="font-size: 0.9em;">⌨️ Введення тексту:</h3>
+            <pre style="font-size: 0.6em;"><code class="language-javascript">$('#search').on('input', function() {
+  var query = $(this).val();
+  $('#result').text('Пошук: ' + query);
+});</code></pre>
+          </div>
+
+          <div class="code-block" style="border-color: #EA4335;">
+            <h3 style="font-size: 0.9em;">📋 Відправка форми:</h3>
+            <pre style="font-size: 0.6em;"><code class="language-javascript">$('#form').on('submit', function(e) {
+  e.preventDefault(); // Зупинити перезавантаження
+  var name = $('#name').val();
+  alert('Дякуємо, ' + name + '!');
+});</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 18: Анімації
+           ======================================== -->
+      <section>
+        <h2>✨ АНІМАЦІЇ</h2>
+        <p style="font-size: 1em; margin-bottom: 15px;">jQuery надає готові анімації — жодного CSS не потрібно!</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1600px; margin: 0 auto;">
+          <div class="code-block">
+            <h3 style="font-size: 0.9em;">👁️ Показати / Сховати:</h3>
+            <pre style="font-size: 0.65em;"><code class="language-javascript">$('#box').show();         // Показати
+$('#box').hide();         // Сховати
+$('#box').toggle();       // Перемкнути стан</code></pre>
+          </div>
+
+          <div class="code-block" style="border-color: #34A853;">
+            <h3 style="font-size: 0.9em;">🌅 Плавне зникнення:</h3>
+            <pre style="font-size: 0.65em;"><code class="language-javascript">$('#box').fadeIn(500);    // З'явитись за 0.5с
+$('#box').fadeOut(500);   // Зникнути за 0.5с
+$('#box').fadeToggle(300);// Перемкнути</code></pre>
+          </div>
+
+          <div class="code-block" style="border-color: #FBBC04;">
+            <h3 style="font-size: 0.9em;">📖 Розгортання:</h3>
+            <pre style="font-size: 0.65em;"><code class="language-javascript">$('#menu').slideDown(400);   // Розкрити вниз
+$('#menu').slideUp(400);     // Закрити вгору
+$('#menu').slideToggle(300); // Перемкнути</code></pre>
+          </div>
+
+          <div class="code-block" style="border-color: #EA4335;">
+            <h3 style="font-size: 0.9em;">🎨 Довільна анімація:</h3>
+            <pre style="font-size: 0.65em;"><code class="language-javascript">$('#box').animate({
+  width: '300px',
+  opacity: 0.5,
+  marginLeft: '50px'
+}, 800); // тривалість 0.8 сек</code></pre>
+          </div>
+        </div>
+
+        <p style="margin-top: 15px; font-size: 1em;">
+          💡 Число в дужках — <strong>тривалість у мілісекундах</strong> (1000 мс = 1 секунда)
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 19: AJAX
+           ======================================== -->
+      <section>
+        <h2>🌐 AJAX — ДАНІ БЕЗ ПЕРЕЗАВАНТАЖЕННЯ</h2>
+
+        <div class="ajax-flow">
+          <div class="ajax-step" style="background: #e8f0fe; border: 2px solid #4285F4;">
+            <div class="ajax-icon">🧑‍💻</div>
+            <div class="ajax-name">Браузер</div>
+            <div class="ajax-desc">Робить запит<br>через $.get()</div>
+          </div>
+          <div class="ajax-arrow">→</div>
+          <div class="ajax-step" style="background: #e6f4ea; border: 2px solid #34A853;">
+            <div class="ajax-icon">🤵</div>
+            <div class="ajax-name">jQuery (AJAX)</div>
+            <div class="ajax-desc">Виступає<br>"офіціантом"</div>
+          </div>
+          <div class="ajax-arrow">→</div>
+          <div class="ajax-step" style="background: #fce8e6; border: 2px solid #EA4335;">
+            <div class="ajax-icon">🖥️</div>
+            <div class="ajax-name">Сервер</div>
+            <div class="ajax-desc">Повертає<br>дані (JSON)</div>
+          </div>
+          <div class="ajax-arrow">→</div>
+          <div class="ajax-step" style="background: #fff8e1; border: 2px solid #FBBC04;">
+            <div class="ajax-icon">✅</div>
+            <div class="ajax-name">Сторінка</div>
+            <div class="ajax-desc">Оновлюється<br>БЕЗ перезавантаження</div>
+          </div>
+        </div>
+
+        <div class="split-screen" style="max-width: 1500px; margin: 15px auto;">
+          <div class="code-side">
+            <h3 style="font-size: 0.9em;">Отримати дані (GET):</h3>
+            <pre style="font-size: 0.6em;"><code class="language-javascript">$.get('/api/weather', function(data) {
+  $('#temperature')
+    .text(data.temp + '°C');
+});</code></pre>
+          </div>
+          <div class="code-side">
+            <h3 style="font-size: 0.9em;">Де AJAX зустрічається:</h3>
+            <ul style="font-size: 0.85em; text-align: left; margin: 5px 0;">
+              <li>🔍 Пошук Google (підказки)</li>
+              <li>💬 Онлайн-чати (нові повідомлення)</li>
+              <li>👍 Лайки у соцмережах</li>
+              <li>🌤️ Погодні віджети</li>
+              <li>🛒 Кошик в інтернет-магазині</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 20: Реальний приклад — Акордеон FAQ
+           ======================================== -->
+      <section>
+        <h2>🎯 РЕАЛЬНИЙ ПРИКЛАД: АКОРДЕОН FAQ</h2>
+        <p style="font-size: 1em; margin-bottom: 15px;">
+          Типовий елемент інтерфейсу: список питань, що розгортаються при кліку
+        </p>
+
+        <div class="split-screen" style="max-width: 1600px; margin: 0 auto;">
+          <div class="code-side">
+            <h3 style="font-size: 0.9em;">КОД:</h3>
+            <pre style="font-size: 0.6em;"><code class="language-html">&lt;!-- HTML структура --&gt;
+&lt;div class="faq"&gt;
+  &lt;div class="faq-question"&gt;
+    📌 Що таке jQuery?
+  &lt;/div&gt;
+  &lt;div class="faq-answer" style="display:none"&gt;
+    jQuery — це JS-бібліотека...
+  &lt;/div&gt;
+
+  &lt;div class="faq-question"&gt;
+    📌 Чи jQuery безкоштовний?
+  &lt;/div&gt;
+  &lt;div class="faq-answer" style="display:none"&gt;
+    Так, повністю безкоштовний!
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <pre style="font-size: 0.6em; margin-top: 10px;"><code class="language-javascript">// jQuery — лише 3 рядки!
+$('.faq-question').click(function() {
+  $(this).next('.faq-answer')
+         .slideToggle(300);
+});</code></pre>
+          </div>
+
+          <div class="result-side" style="text-align: left; padding: 15px;">
+            <h3 style="font-size: 0.9em;">РЕЗУЛЬТАТ:</h3>
+            <div style="margin-top: 10px;">
+              <div style="background: #e8f0fe; padding: 12px; border-radius: 8px; margin-bottom: 5px; cursor: pointer; font-weight: 600; font-size: 0.85em;">
+                📌 Що таке jQuery? ▼
+              </div>
+              <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-size: 0.8em; border-left: 4px solid #4285F4;">
+                jQuery — це JS-бібліотека, яка спрощує маніпуляції з DOM та обробку подій.
+              </div>
+
+              <div style="background: #e8f0fe; padding: 12px; border-radius: 8px; margin-bottom: 5px; cursor: pointer; font-weight: 600; font-size: 0.85em;">
+                📌 Чи jQuery безкоштовний? ▶
+              </div>
+
+              <div style="background: #e8f0fe; padding: 12px; border-radius: 8px; margin-bottom: 5px; cursor: pointer; font-weight: 600; font-size: 0.85em;">
+                📌 Де використовується jQuery? ▶
+              </div>
+            </div>
+
+            <div style="margin-top: 15px; background: #e6f4ea; padding: 10px; border-radius: 8px;">
+              <p style="font-size: 0.8em; color: #34A853;"><strong>✅ Де зустрічається:</strong></p>
+              <p style="font-size: 0.75em;">Сторінки "Питання і відповіді", технічна документація, корпоративні сайти</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 21: Реальний приклад — Галерея
+           ======================================== -->
+      <section>
+        <h2>🖼️ РЕАЛЬНИЙ ПРИКЛАД: ГАЛЕРЕЯ ЗОБРАЖЕНЬ</h2>
+        <p style="font-size: 1em; margin-bottom: 15px;">
+          Клік на мініатюру → відображення великого фото — лише 5 рядків коду!
+        </p>
+
+        <div class="split-screen" style="max-width: 1600px; margin: 0 auto;">
+          <div class="code-side">
+            <h3 style="font-size: 0.9em;">КОД:</h3>
+            <pre style="font-size: 0.65em;"><code class="language-html">&lt;!-- HTML структура --&gt;
+&lt;div class="gallery"&gt;
+  &lt;img class="thumb"
+    src="photo1_small.jpg"
+    data-full="photo1_large.jpg"&gt;
+  &lt;img class="thumb"
+    src="photo2_small.jpg"
+    data-full="photo2_large.jpg"&gt;
+&lt;/div&gt;
+
+&lt;img id="preview" src="" style="display:none"&gt;</code></pre>
+
+            <pre style="font-size: 0.65em; margin-top: 10px;"><code class="language-javascript">// jQuery:
+$('.thumb').click(function() {
+  var bigSrc = $(this).data('full');
+  $('#preview')
+    .attr('src', bigSrc)
+    .fadeIn(400);
+});</code></pre>
+          </div>
+
+          <div class="result-side" style="text-align: left; padding: 15px;">
+            <h3 style="font-size: 0.9em;">ПРИНЦИП РОБОТИ:</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+              <div style="background: #e8f0fe; padding: 10px; border-radius: 8px; font-size: 0.8em;">
+                <strong>1.</strong> <code>$('.thumb').click()</code><br>
+                <span style="color: #5f6368;">— Слухаємо клік на будь-якій мініатюрі</span>
+              </div>
+              <div style="background: #e6f4ea; padding: 10px; border-radius: 8px; font-size: 0.8em;">
+                <strong>2.</strong> <code>$(this).data('full')</code><br>
+                <span style="color: #5f6368;">— Беремо адресу великого фото з атрибута data-full</span>
+              </div>
+              <div style="background: #fff8e1; padding: 10px; border-radius: 8px; font-size: 0.8em;">
+                <strong>3.</strong> <code>.attr('src', bigSrc)</code><br>
+                <span style="color: #5f6368;">— Встановлюємо нове зображення</span>
+              </div>
+              <div style="background: #fce8e6; padding: 10px; border-radius: 8px; font-size: 0.8em;">
+                <strong>4.</strong> <code>.fadeIn(400)</code><br>
+                <span style="color: #5f6368;">— Плавно показуємо великий preview</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 22: Вікторина
+           ======================================== -->
+      <section class="quiz-slide">
+        <h2>❓ ВІКТОРИНА</h2>
+        <div class="box" style="max-width: 900px; margin-top: 25px;">
+          <h3 style="color: #202124; font-size: 1.2em;">
+            Що означає знак <code>$</code> у jQuery-коді?
+          </h3>
+        </div>
+
+        <div class="quiz-options" style="max-width: 750px;">
+          <div class="quiz-option">A) Це платна бібліотека (знак долара 💵)</div>
+          <div class="quiz-option">B) Псевдонім функції <code>jQuery()</code> для вибору елементів</div>
+          <div class="quiz-option">C) Спеціальний HTML-атрибут для стилів</div>
+        </div>
+
+        <p style="margin-top: 30px; font-size: 1.4em;">
+          <strong>ВІДПОВІДАЙТЕ ЛІТЕРОЮ В ЧАТІ! ⏱️ 20 секунд</strong>
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 23: Відповідь на вікторину (+ confetti)
+           ======================================== -->
+      <section class="answer-slide">
+        <div class="emoji" style="font-size: 3em;">✅</div>
+        <h2 style="color: #34A853; margin-top: 12px; font-size: 1.4em;">ПРАВИЛЬНА ВІДПОВІДЬ:</h2>
+        <h1 style="color: #34A853; font-size: 2em;">B) Псевдонім функції <code>jQuery()</code></h1>
+
+        <div class="box" style="max-width: 1300px; margin-top: 20px; text-align: left;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+              <h3 style="font-size: 1em;">✅ ПРАВИЛЬНО — чому B?</h3>
+              <ul style="font-size: 0.9em;">
+                <li><code>$</code> = <code>jQuery</code> — це те саме!</li>
+                <li><code>$('#id')</code> = <code>jQuery('#id')</code></li>
+                <li>Знак <code>$</code> — це просто<br><strong>скорочення для зручності</strong></li>
+              </ul>
+            </div>
+            <div>
+              <h3 style="font-size: 1em;">❌ НЕПРАВИЛЬНО — чому не A і C?</h3>
+              <ul style="font-size: 0.9em;">
+                <li>jQuery <strong>безкоштовна</strong> — $-долар тут ні до чого</li>
+                <li><code>$</code> — це JavaScript-ідентифікатор,<br>не HTML-атрибут</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-block" style="margin-top: 15px;">
+            <pre style="font-size: 0.7em;"><code class="language-javascript">// Ці два рядки ідентичні:
+jQuery('#title').text('Привіт!');
+$('#title').text('Привіт!');     // Так пишуть всі 😉</code></pre>
+          </div>
+        </div>
+
+        <h2 style="margin-top: 15px; color: #34A853; font-size: 1.5em;">МОЛОДЦІ! 👏🎉</h2>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 24: jQuery vs Сучасний JS
+           ======================================== -->
+      <section>
+        <h2>⚖️ jQuery vs СУЧАСНИЙ JAVASCRIPT</h2>
+        <p style="font-size: 1em; margin-bottom: 20px;">
+          jQuery — чудовий інструмент, але потрібно розуміти, <strong>коли його варто використовувати</strong>
+        </p>
+
+        <div class="vs-grid">
+          <div class="vs-use">
+            <h3 style="font-size: 1em;">✅ ВИКОРИСТОВУЙТЕ jQuery, коли:</h3>
+            <ul style="font-size: 0.85em; line-height: 2;">
+              <li>🔧 Працюєте з <strong>legacy-кодом</strong> (старим)</li>
+              <li>🌐 Проекти на <strong>WordPress / Bootstrap</strong></li>
+              <li>🚀 Швидке прототипування без фреймворків</li>
+              <li>🏛️ Підтримка <strong>старих браузерів</strong> обов'язкова</li>
+              <li>📚 <strong>Вивчаєте DOM</strong> і хочете простіший старт</li>
+            </ul>
+          </div>
+
+          <div class="vs-skip">
+            <h3 style="font-size: 1em;">⚠️ ПОДУМАЙТЕ ДВІЧІ, коли:</h3>
+            <ul style="font-size: 0.85em; line-height: 2;">
+              <li>⚛️ Будуєте SPA на <strong>React / Vue / Angular</strong></li>
+              <li>⚡ Критична <strong>продуктивність</strong> (завантаження файлу)</li>
+              <li>🧠 Вивчаєте <strong>сучасний ES6+</strong> з нуля</li>
+              <li>📱 Мобільний додаток (нативний)</li>
+              <li>🛠️ Простий скрипт з 1–2 DOM-операціями</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="box" style="max-width: 1200px; margin-top: 15px; background: #e8f0fe; border-color: #4285F4;">
+          <p style="font-size: 1em;">
+            🎓 <strong>Висновок для початківців:</strong> jQuery — відмінний старт.
+            Зрозумівши jQuery, легше освоїти сучасні фреймворки!
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 25: Підсумки + Ресурси + Дякую
+           ======================================== -->
+      <section class="confetti-slide">
+        <h2>🏆 ПІДСУМКИ ЛЕКЦІЇ</h2>
+
+        <ul class="summary-list" style="margin-top: 15px;">
+          <li class="summary-item">
+            ⚡ <strong>jQuery</strong> — JS-бібліотека, яка скорочує код у 3–5 разів
+          </li>
+          <li class="summary-item">
+            🔍 Основа — <strong>селектор <code>$()</code></strong>, дія, результат
+          </li>
+          <li class="summary-item">
+            🎨 Дозволяє: маніпулювати вмістом, стилями, подіями та анімаціями
+          </li>
+          <li class="summary-item">
+            🌐 <strong>AJAX</strong> — оновлення даних без перезавантаження сторінки
+          </li>
+          <li class="summary-item">
+            📊 Використовується на <strong>77% всіх сайтів</strong> у світі
+          </li>
+        </ul>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 1400px; margin: 20px auto;">
+          <div class="resource-card">
+            <div class="res-icon">🏠</div>
+            <div class="res-name">jQuery.com</div>
+            <div class="res-url">jquery.com</div>
+          </div>
+          <div class="resource-card">
+            <div class="res-icon">📚</div>
+            <div class="res-name">W3Schools</div>
+            <div class="res-url">w3schools.com/jquery</div>
+          </div>
+          <div class="resource-card">
+            <div class="res-icon">🧪</div>
+            <div class="res-name">JSFiddle</div>
+            <div class="res-url">jsfiddle.net</div>
+          </div>
+          <div class="resource-card">
+            <div class="res-icon">☁️</div>
+            <div class="res-name">cdnjs</div>
+            <div class="res-url">cdnjs.com</div>
+          </div>
+        </div>
+
+        <hr style="border-color: rgba(255,255,255,0.4); margin: 15px 0;">
+
+        <h1 style="font-size: 2em; margin: 5px 0;">🎉 ДЯКУЮ ЗА УВАГУ!</h1>
+        <h3 style="font-size: 1.1em;">Тепер ви знаєте, що таке jQuery! 💻⚡</h3>
+        <div style="font-size: 1.8em; margin-top: 10px;">💙💛</div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+  <!-- Highlight.js plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // ================================================
+    // Ініціалізація Reveal.js
+    // ================================================
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'slide',
+      slideNumber: true,
+
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+
+      plugins: [RevealHighlight]
+    });
+
+    // ================================================
+    // КОНФЕТІ
+    // ================================================
+    function showConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#0769AD', '#34A853', '#FBBC04', '#EA4335']
+        });
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ['#0769AD', '#34A853', '#FBBC04', '#EA4335']
+          });
+        }, 250);
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ['#0769AD', '#34A853', '#FBBC04', '#EA4335']
+          });
+        }, 400);
+      }
+    }
+
+    // ================================================
+    // АВТОЗАПУСК КОНФЕТІ НА ПОТРІБНИХ СЛАЙДАХ
+    // Слайд 23 — відповідь на вікторину (індекс 22)
+    // Слайд 25 — завершення (індекс 24)
+    // ================================================
+    Reveal.on('slidechanged', event => {
+      if (event.indexh === 22) {
+        setTimeout(() => showConfetti(), 500);
+      }
+      if (event.indexh === 24) {
+        setTimeout(() => showConfetti(), 500);
+      }
+    });
+
+    // ================================================
+    // ІНТЕРАКТИВНІСТЬ ВІКТОРИНИ
+    // ================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      const quizOptions = document.querySelectorAll('.quiz-option');
+      quizOptions.forEach(option => {
+        option.addEventListener('click', function () {
+          quizOptions.forEach(opt => {
+            opt.style.background = '';
+            opt.style.color = '';
+          });
+          this.style.background = '#0769AD';
+          this.style.color = '#FFFFFF';
+        });
+      });
+
+      if (typeof hljs !== 'undefined') {
+        document.querySelectorAll('pre code').forEach(block => {
+          hljs.highlightElement(block);
+        });
+      }
+    });
+
+    console.log('⚡ jQuery лекція завантажена!');
+    console.log('📍 Навігація: стрілки ← →, пробіл, F — повноекранний, S — режим доповідача');
+  </script>
+</body>
+</html>
