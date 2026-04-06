@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мова програмування PHP | Курс для студентів ВНЗ</title>
+  <meta name="description" content="Інтерактивна презентація 'Мова програмування PHP' для студентів ВНЗ не ІТ напрямку">
+  <meta name="author" content="Курс веб-розробки">
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+
+  <!-- Highlight.js для підсвітки коду -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- Кастомні стилі -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* PHP-специфічні стилі */
+    :root {
+      --php-blue: #4F5B93;
+      --php-light: #8892BF;
+      --php-dark: #232531;
+    }
+
+    .gradient-php {
+      background: linear-gradient(135deg, #4F5B93, #232531) !important;
+      color: #fff !important;
+    }
+    .gradient-php h1,
+    .gradient-php h2,
+    .gradient-php h3,
+    .gradient-php p {
+      color: #fff !important;
+    }
+
+    .gradient-php-light {
+      background: linear-gradient(135deg, #8892BF, #4F5B93) !important;
+      color: #fff !important;
+    }
+    .gradient-php-light h1,
+    .gradient-php-light h2,
+    .gradient-php-light h3,
+    .gradient-php-light p {
+      color: #fff !important;
+    }
+
+    .php-elephant {
+      font-size: 3.5em;
+    }
+
+    /* Картки для use-cases */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin: 30px auto;
+      max-width: 1400px;
+    }
+
+    .card {
+      background: #F8F9FA;
+      border: 2px solid #e0e0e0;
+      border-radius: 16px;
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    .card .card-icon {
+      font-size: 2.5em;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 1.2em;
+      margin: 8px 0;
+    }
+
+    .card p {
+      font-size: 1em;
+      color: #555;
+      margin: 0;
+    }
+
+    .card.accent-php {
+      border-color: var(--php-blue);
+      background: #EEEEF8;
+    }
+
+    /* Flow diagram */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: nowrap;
+      margin: 30px auto;
+    }
+
+    .flow-box {
+      background: #F8F9FA;
+      border: 3px solid var(--php-blue);
+      border-radius: 14px;
+      padding: 20px 24px;
+      text-align: center;
+      min-width: 160px;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    .flow-arrow {
+      font-size: 2em;
+      color: var(--php-blue);
+      padding: 0 10px;
+    }
+
+    /* Порівняння двох колонок */
+    .compare-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 1400px;
+      margin: 20px auto;
+      text-align: left;
+    }
+
+    .compare-col {
+      background: #F8F9FA;
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .compare-col.left {
+      border-left: 6px solid #EA4335;
+    }
+
+    .compare-col.right {
+      border-left: 6px solid #34A853;
+    }
+
+    .compare-col h3 {
+      margin-top: 0;
+    }
+
+    /* Відомі сайти */
+    .sites-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1400px;
+      margin: 30px auto;
+    }
+
+    .site-card {
+      background: #F8F9FA;
+      border: 2px solid #e0e0e0;
+      border-radius: 14px;
+      padding: 24px 16px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .site-card .site-icon {
+      font-size: 2.8em;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    /* Переваги */
+    .pros-list {
+      text-align: left;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pro-item {
+      padding: 16px 20px;
+      margin: 12px 0;
+      background: #E8F5E9;
+      border-radius: 10px;
+      border-left: 5px solid #34A853;
+      font-size: 1.2em;
+    }
+
+    /* Ресурси */
+    .resources-list {
+      text-align: left;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .resource-item {
+      padding: 16px 20px;
+      margin: 12px 0;
+      background: #E3F2FD;
+      border-radius: 10px;
+      border-left: 5px solid var(--php-blue);
+      font-size: 1.2em;
+    }
+
+    .resource-item a {
+      color: var(--php-blue);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    /* Таймер перерви (php version) */
+    .break-php {
+      background: linear-gradient(135deg, #4F5B93, #8892BF) !important;
+      color: #fff !important;
+    }
+
+    .break-php h2,
+    .break-php h3,
+    .break-php p {
+      color: #fff !important;
+    }
+
+    /* Career roles */
+    .career-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1400px;
+      margin: 20px auto;
+    }
+
+    .career-card {
+      background: #F8F9FA;
+      border: 2px solid var(--php-blue);
+      border-radius: 14px;
+      padding: 22px 16px;
+      text-align: center;
+    }
+
+    .career-card .career-icon {
+      font-size: 2.2em;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .career-card h3 {
+      font-size: 1.15em;
+      margin: 8px 0;
+    }
+
+    .career-card p {
+      font-size: 0.95em;
+      color: #555;
+    }
+
+    /* Summary */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      max-width: 1200px;
+      margin: 20px auto;
+      text-align: left;
+    }
+
+    .summary-item {
+      background: #F8F9FA;
+      border-left: 5px solid var(--php-blue);
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-size: 1.1em;
+    }
+
+    /* CMS */
+    .cms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 24px auto;
+    }
+
+    .cms-card {
+      background: #F8F9FA;
+      border: 2px solid var(--php-blue);
+      border-radius: 14px;
+      padding: 26px 20px;
+      text-align: center;
+    }
+
+    .cms-card .cms-icon {
+      font-size: 2.6em;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    /* History timeline */
+    .timeline {
+      max-width: 900px;
+      margin: 20px auto;
+      text-align: left;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin: 16px 0;
+    }
+
+    .timeline-year {
+      background: var(--php-blue);
+      color: #fff;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      min-width: 80px;
+      text-align: center;
+      font-size: 1.1em;
+      flex-shrink: 0;
+    }
+
+    .timeline-text {
+      background: #F8F9FA;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 1.1em;
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ========================================
+           СЛАЙД 1: Титульний
+           ======================================== -->
+      <section class="gradient-php">
+        <p class="php-elephant">🐘</p>
+        <h1 style="font-size: 3em; margin: 10px 0;">МОВА ПРОГРАМУВАННЯ</h1>
+        <h1 style="font-size: 4em; letter-spacing: 4px; margin: 0;">PHP</h1>
+        <p style="font-size: 1.4em; margin-top: 30px; color: #c5c8e0 !important;">
+          Від простих сторінок до великих вебсервісів
+        </p>
+        <p style="margin-top: 60px; font-size: 1.1em; color: #a0a4bf !important;">
+          Курс "Веб-розробка" • Для студентів не-ІТ спеціальностей
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 2: ПЛАН
+           ======================================== -->
+      <section>
+        <h2>📋 ПЛАН ПРЕЗЕНТАЦІЇ</h2>
+        <div class="agenda">
+          <div class="agenda-item">🤔 Що таке PHP і навіщо він потрібен? <span>10 хв</span></div>
+          <div class="agenda-item">⚙️ Як PHP працює — загальні принципи <span>15 хв</span></div>
+          <div class="agenda-item">💻 Основи мови — синтаксис та приклади <span>15 хв</span></div>
+          <div class="agenda-item">☕ Перерва <span>5 хв</span></div>
+          <div class="agenda-item">🌐 Де PHP використовують у реальному житті <span>10 хв</span></div>
+          <div class="agenda-item">🎯 Підсумки та Q&A <span>5 хв</span></div>
+        </div>
+        <p style="margin-top: 30px;"><small>РАЗОМ: ~60 хвилин | Питання у будь-який момент! 🙋</small></p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 3: Що таке PHP?
+           ======================================== -->
+      <section>
+        <h2>🤔 ЩО ТАКЕ PHP?</h2>
+        <div class="box" style="max-width: 900px; margin: 20px auto; padding: 30px;">
+          <p style="font-size: 1.5em; margin: 0;">
+            <strong>PHP</strong> — це мова програмування, яка використовується
+            для <span class="highlight">створення динамічних вебсайтів</span>.
+          </p>
+        </div>
+
+        <div class="cards-3" style="max-width: 1000px;">
+          <div class="card accent-php">
+            <span class="card-icon">🌐</span>
+            <h3>Серверна мова</h3>
+            <p>Код виконується на сервері, а не у браузері</p>
+          </div>
+          <div class="card accent-php">
+            <span class="card-icon">📄</span>
+            <h3>Генерує HTML</h3>
+            <p>Відповідь — звичайна вебсторінка для будь-якого браузера</p>
+          </div>
+          <div class="card accent-php">
+            <span class="card-icon">🔗</span>
+            <h3>Інтегрується з БД</h3>
+            <p>Зберігає та отримує дані з баз даних (MySQL тощо)</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; background: #f0f0f8; border-radius: 12px; padding: 16px; max-width: 700px; margin-left: auto; margin-right: auto;">
+          <p style="font-size: 1.15em; margin: 0;">
+            💡 <strong>PHP</strong> розшифровується як<br>
+            <em>PHP: Hypertext Preprocessor</em> (рекурсивна абревіатура 🔄)
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 4: Коротка історія
+           ======================================== -->
+      <section>
+        <h2>📜 КОРОТКА ІСТОРІЯ PHP</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1994</div>
+            <div class="timeline-text">
+              🇩🇰 <strong>Расмус Лердорф</strong> (Rasmus Lerdorf) створює набір CGI-скриптів
+              для відстеження відвідувань свого резюме — назвав його <em>«Personal Home Page»</em>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">1997</div>
+            <div class="timeline-text">
+              🚀 PHP 3 — перша широко вживана версія, яку підхопила спільнота. Перейменовано
+              на <em>PHP: Hypertext Preprocessor</em>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2004</div>
+            <div class="timeline-text">
+              ⚡ PHP 5 — підтримка об'єктно-орієнтованого програмування, PDO для БД.
+              Поштовх для росту WordPress, Drupal, Joomla
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2015</div>
+            <div class="timeline-text">
+              🏎️ PHP 7 — подвоєння швидкості. PHP набуває промислового рівня
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2020+</div>
+            <div class="timeline-text">
+              🆕 PHP 8 — JIT-компілятор, атрибути, іменовані аргументи. Сучасна мова!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 5: Відомі сайти на PHP
+           ======================================== -->
+      <section>
+        <h2>🌍 ВІДОМІ ПРОЄКТИ НА PHP</h2>
+        <div class="sites-grid">
+          <div class="site-card">
+            <span class="site-icon">📖</span>
+            <strong>Wikipedia</strong>
+            <p style="font-size: 0.95em; color: #555; margin: 5px 0;">Найбільша вільна енциклопедія</p>
+          </div>
+          <div class="site-card">
+            <span class="site-icon">📝</span>
+            <strong>WordPress</strong>
+            <p style="font-size: 0.95em; color: #555; margin: 5px 0;">43% усіх сайтів у світі</p>
+          </div>
+          <div class="site-card">
+            <span class="site-icon">🛒</span>
+            <strong>Magento / WooCommerce</strong>
+            <p style="font-size: 0.95em; color: #555; margin: 5px 0;">Мільйони інтернет-магазинів</p>
+          </div>
+          <div class="site-card">
+            <span class="site-icon">💬</span>
+            <strong>Facebook</strong>
+            <p style="font-size: 0.95em; color: #555; margin: 5px 0;">Починав як PHP-проєкт (HHVM)</p>
+          </div>
+          <div class="site-card">
+            <span class="site-icon">🎮</span>
+            <strong>Slack</strong>
+            <p style="font-size: 0.95em; color: #555; margin: 5px 0;">Бекенд на PHP/Hack</p>
+          </div>
+          <div class="site-card">
+            <span class="site-icon">🐙</span>
+            <strong>Etsy</strong>
+            <p style="font-size: 0.95em; color: #555; margin: 5px 0;">Маркетплейс хендмейд-товарів</p>
+          </div>
+          <div class="site-card">
+            <span class="site-icon">🏢</span>
+            <strong>Tumblr</strong>
+            <p style="font-size: 0.95em; color: #555; margin: 5px 0;">Блог-платформа</p>
+          </div>
+          <div class="site-card" style="background: #EEEEF8; border-color: var(--php-blue);">
+            <span class="site-icon">🐘</span>
+            <strong>≈ 78% сайтів</strong>
+            <p style="font-size: 0.95em; color: #555; margin: 5px 0;">усього Інтернету використовують PHP як серверну мову</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 6: Як PHP працює (схема)
+           ======================================== -->
+      <section>
+        <h2>⚙️ ЯК ПРАЦЮЄ PHP — ЗАГАЛЬНА СХЕМА</h2>
+
+        <div class="flow" style="margin: 30px auto;">
+          <div class="flow-box" style="background: #E3F2FD;">
+            🧑‍💻<br>Користувач<br><small>відкриває сайт</small>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #F3E5F5;">
+            🌐<br>Браузер<br><small>надсилає запит</small>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #EEEEF8; border-color: var(--php-blue);">
+            🐘<br>Сервер + PHP<br><small>виконує код</small>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #E8F5E9;">
+            🗄️<br>База даних<br><small>повертає дані</small>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #FFF9C4;">
+            📄<br>HTML-сторінка<br><small>надходить до браузера</small>
+          </div>
+        </div>
+
+        <div class="compare-2" style="margin-top: 10px;">
+          <div class="compare-col left">
+            <h3>🔴 Статичний HTML (без PHP)</h3>
+            <ul style="font-size: 1.1em;">
+              <li>Один і той самий файл для всіх</li>
+              <li>Вміст не змінюється</li>
+              <li>Не знає, хто ти</li>
+            </ul>
+          </div>
+          <div class="compare-col right">
+            <h3>🟢 Динамічний сайт (з PHP)</h3>
+            <ul style="font-size: 1.1em;">
+              <li>Персоналізований вміст</li>
+              <li>Дані з бази (товари, новини, пости)</li>
+              <li>Авторизація та ролі користувачів</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 7: Перший PHP-скрипт
+           ======================================== -->
+      <section>
+        <h2>💻 ПЕРШИЙ PHP-СКРИПТ</h2>
+        <p style="font-size: 1.2em;">Будь-який PHP-код починається з <code>&lt;?php</code> і закінчується <code>?&gt;</code></p>
+
+        <div class="split-screen" style="max-width: 1300px; margin: 20px auto;">
+          <div class="code-side">
+            <p style="font-size: 1em; font-weight: 700; color: var(--php-blue); margin: 0 0 10px;">📄 index.php</p>
+            <pre><code class="language-php">&lt;?php
+// Виводимо текст на сторінку
+echo "Привіт, світ!";
+
+// Поточна дата
+$today = date("d.m.Y");
+echo "Сьогодні: " . $today;
+?&gt;</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; font-size: 1em; color: #34A853; margin: 0 0 10px;">🌐 Результат у браузері</p>
+            <div style="background: #fff; border: 2px solid #e0e0e0; border-radius: 10px; padding: 20px; font-size: 1.3em;">
+              Привіт, світ!<br>
+              Сьогодні: 06.04.2026
+            </div>
+            <br>
+            <p style="font-size: 1.05em; color: #555;">
+              📌 Браузер бачить лише готовий HTML.<br>
+              PHP-код залишається на сервері — він невидимий для відвідувача.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 8: Змінні та типи даних
+           ======================================== -->
+      <section>
+        <h2>📦 ЗМІННІ ТА ТИПИ ДАНИХ</h2>
+        <p style="font-size: 1.2em;">У PHP змінна починається зі знаку <code>$</code></p>
+
+        <div class="split-screen" style="max-width: 1300px; margin: 20px auto;">
+          <div class="code-side">
+            <pre><code class="language-php">&lt;?php
+// Рядок (текст)
+$name = "Олена";
+
+// Число
+$age = 21;
+
+// Дробове число
+$price = 99.90;
+
+// Логічний тип (так/ні)
+$isStudent = true;
+
+// Масив (список)
+$subjects = ["Економіка", "Маркетинг", "PHP"];
+
+echo "Студентка: " . $name;
+echo "Вік: " . $age;
+echo "Вивчає: " . $subjects[2];
+?&gt;</code></pre>
+          </div>
+          <div class="result-side">
+            <h3 style="margin-top: 0;">Типи даних PHP:</h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 1.05em;">
+              <thead>
+                <tr style="background: var(--php-blue); color: #fff;">
+                  <th style="padding: 10px; text-align: left;">Тип</th>
+                  <th style="padding: 10px; text-align: left;">Приклад</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: #f8f9fa;">
+                  <td style="padding: 10px;">string (рядок)</td>
+                  <td style="padding: 10px;"><code>"Привіт"</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">integer (ціле)</td>
+                  <td style="padding: 10px;"><code>42</code></td>
+                </tr>
+                <tr style="background: #f8f9fa;">
+                  <td style="padding: 10px;">float (дробове)</td>
+                  <td style="padding: 10px;"><code>3.14</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">boolean (логіка)</td>
+                  <td style="padding: 10px;"><code>true / false</code></td>
+                </tr>
+                <tr style="background: #f8f9fa;">
+                  <td style="padding: 10px;">array (масив)</td>
+                  <td style="padding: 10px;"><code>[1, 2, 3]</code></td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">null (нічого)</td>
+                  <td style="padding: 10px;"><code>null</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 9: Умови (if / else)
+           ======================================== -->
+      <section>
+        <h2>🔀 УМОВНІ КОНСТРУКЦІЇ (if / else)</h2>
+        <p style="font-size: 1.2em;">PHP приймає рішення — як людина: <em>"якщо..., то..., інакше..."</em></p>
+
+        <div class="split-screen" style="max-width: 1300px; margin: 20px auto;">
+          <div class="code-side">
+            <p style="font-size: 1em; font-weight: 700; color: var(--php-blue); margin: 0 0 10px;">🔐 Перевірка пароля</p>
+            <pre><code class="language-php">&lt;?php
+$password = "qwerty123";
+$entered  = $_POST['password'];
+
+if ($entered === $password) {
+    echo "✅ Вхід дозволено!";
+} elseif (strlen($entered) < 6) {
+    echo "⚠️ Пароль занадто короткий";
+} else {
+    echo "❌ Невірний пароль";
+}
+?&gt;</code></pre>
+          </div>
+          <div class="result-side">
+            <h3 style="margin-top: 0;">💡 Реальні приклади умов:</h3>
+            <div class="rule-item">🛒 Якщо товар є в наявності — показати кнопку «Купити»</div>
+            <div class="rule-item">👤 Якщо користувач адмін — показати панель управління</div>
+            <div class="rule-item">💳 Якщо оплата пройшла — відправити email-підтвердження</div>
+            <div class="rule-item">📅 Якщо сьогодні п'ятниця — показати спецпропозицію</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 10: Цикли
+           ======================================== -->
+      <section>
+        <h2>🔁 ЦИКЛИ — АВТОМАТИЧНЕ ПОВТОРЕННЯ</h2>
+        <p style="font-size: 1.2em;">Замість того щоб писати 100 рядків — напиши цикл!</p>
+
+        <div class="split-screen" style="max-width: 1300px; margin: 20px auto;">
+          <div class="code-side">
+            <p style="font-size: 1em; font-weight: 700; color: var(--php-blue); margin: 0 0 10px;">🛒 Вивести список товарів</p>
+            <pre><code class="language-php">&lt;?php
+$products = [
+    "Ноутбук - 25 000 грн",
+    "Мишка - 500 грн",
+    "Клавіатура - 1 200 грн",
+    "Монітор - 12 000 грн",
+];
+
+echo "&lt;ul&gt;";
+foreach ($products as $item) {
+    echo "&lt;li&gt;" . $item . "&lt;/li&gt;";
+}
+echo "&lt;/ul&gt;";
+?&gt;</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; color: #34A853; font-size: 1em; margin: 0 0 10px;">🌐 Результат у браузері:</p>
+            <div style="background: #fff; border: 2px solid #e0e0e0; border-radius: 10px; padding: 20px; text-align: left;">
+              <ul style="font-size: 1.2em; margin: 0;">
+                <li>Ноутбук - 25 000 грн</li>
+                <li>Мишка - 500 грн</li>
+                <li>Клавіатура - 1 200 грн</li>
+                <li>Монітор - 12 000 грн</li>
+              </ul>
+            </div>
+            <br>
+            <p style="font-size: 1.05em; color: #555;">
+              📦 На реальному сайті замість масиву — дані з бази даних.<br>
+              Цикл виводить скільки завгодно товарів автоматично!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 11: Функції
+           ======================================== -->
+      <section>
+        <h2>🛠️ ФУНКЦІЇ — ГОТОВІ БЛОКИ КОДУ</h2>
+        <p style="font-size: 1.2em;">Функція — це іменований блок коду, який можна викликати багато разів</p>
+
+        <div class="split-screen" style="max-width: 1300px; margin: 20px auto;">
+          <div class="code-side">
+            <pre><code class="language-php">&lt;?php
+// Оголошення функції
+function greet($name) {
+    return "Привіт, " . $name . "! 👋";
+}
+
+function discount($price, $percent) {
+    $save = $price * $percent / 100;
+    return $price - $save;
+}
+
+// Виклик функцій
+echo greet("Олена");
+echo greet("Іван");
+
+$newPrice = discount(1000, 20);
+echo "Ціна зі знижкою: " . $newPrice . " грн";
+?&gt;</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; color: #34A853; font-size: 1em; margin: 0 0 10px;">🌐 Результат:</p>
+            <div style="background: #fff; border: 2px solid #e0e0e0; border-radius: 10px; padding: 20px; font-size: 1.2em; text-align: left;">
+              Привіт, Олена! 👋<br>
+              Привіт, Іван! 👋<br>
+              Ціна зі знижкою: 800 грн
+            </div>
+            <br>
+            <h3>💡 Чому це зручно?</h3>
+            <div class="rule-item">✏️ Написав один раз — використовуй скрізь</div>
+            <div class="rule-item">🐛 Помилку виправив в одному місці — все працює</div>
+            <div class="rule-item">📚 PHP має тисячі вбудованих функцій (strlen, date, sort, array_map...)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 12: PHP всередині HTML
+           ======================================== -->
+      <section>
+        <h2>🔗 PHP ВСЕРЕДИНІ HTML — ШАБЛОНИ</h2>
+        <p style="font-size: 1.2em;">PHP вставляється прямо у HTML-розмітку — це і є «динамічна сторінка»</p>
+
+        <div class="split-screen" style="max-width: 1400px; margin: 20px auto;">
+          <div class="code-side">
+            <p style="font-size: 1em; font-weight: 700; color: var(--php-blue); margin: 0 0 10px;">📄 profile.php</p>
+            <pre><code class="language-php">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;?php
+  $user = "Марія";
+  $role = "Студентка";
+  $year = 3;
+?&gt;
+
+&lt;h1&gt;Вітаємо, &lt;?= $user ?&gt;!&lt;/h1&gt;
+&lt;p&gt;Роль: &lt;?= $role ?&gt;&lt;/p&gt;
+&lt;p&gt;Курс: &lt;?= $year ?&gt;-й&lt;/p&gt;
+
+&lt;?php if ($year >= 3): ?&gt;
+  &lt;p&gt;✅ Доступ до наукових статей&lt;/p&gt;
+&lt;?php else: ?&gt;
+  &lt;p&gt;🔒 Лише базові матеріали&lt;/p&gt;
+&lt;?php endif; ?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; color: #34A853; font-size: 1em; margin: 0 0 10px;">🌐 Результат:</p>
+            <div style="background: #fff; border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; text-align: left;">
+              <h2 style="margin: 0 0 12px; font-size: 1.5em;">Вітаємо, Марія!</h2>
+              <p style="margin: 6px 0; font-size: 1.1em;">Роль: Студентка</p>
+              <p style="margin: 6px 0; font-size: 1.1em;">Курс: 3-й</p>
+              <p style="margin: 16px 0 0; font-size: 1.15em; color: #34A853;">✅ Доступ до наукових статей</p>
+            </div>
+            <br>
+            <p style="font-size: 1.05em; color: #555; text-align: left;">
+              📌 Для кожного користувача сервер генерує <strong>свою унікальну</strong> HTML-сторінку.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 13: PHP + База даних
+           ======================================== -->
+      <section>
+        <h2>🗄️ PHP + БАЗА ДАНИХ (MySQL)</h2>
+        <p style="font-size: 1.2em;">PHP отримує, зберігає і оновлює дані у базі — серці будь-якого великого сайту</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 16px auto;">
+          <div class="code-side">
+            <p style="font-size: 1em; font-weight: 700; color: var(--php-blue); margin: 0 0 10px;">📰 Вивести новини з БД</p>
+            <pre><code class="language-php">&lt;?php
+// Підключення до бази даних
+$db = new PDO(
+  "mysql:host=localhost;dbname=site",
+  "user", "password"
+);
+
+// SQL-запит: отримати 5 новин
+$stmt = $db->query(
+  "SELECT title, date FROM news
+   ORDER BY date DESC LIMIT 5"
+);
+$news = $stmt->fetchAll();
+
+// Виводимо кожну новину
+foreach ($news as $row) {
+    echo "&lt;h3&gt;" . $row['title'] . "&lt;/h3&gt;";
+    echo "&lt;p&gt;" . $row['date'] . "&lt;/p&gt;";
+}
+?&gt;</code></pre>
+          </div>
+          <div class="result-side">
+            <h3 style="margin-top: 0;">📌 Що зберігається в БД?</h3>
+            <div class="rule-item">👤 Користувачі та паролі</div>
+            <div class="rule-item">🛍️ Товари та ціни інтернет-магазину</div>
+            <div class="rule-item">📰 Статті, новини, пости блогу</div>
+            <div class="rule-item">💬 Коментарі та відгуки</div>
+            <div class="rule-item">📦 Замовлення та оплати</div>
+            <br>
+            <div style="background: #EEEEF8; border-radius: 10px; padding: 14px;">
+              <p style="font-size: 1.05em; margin: 0;">
+                🐘 PHP + MySQL — найпопулярніша пара в веб-розробці.<br>
+                Хостинг LAMP: <strong>L</strong>inux + <strong>A</strong>pache + <strong>M</strong>ySQL + <strong>P</strong>HP
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 14: Вікторина
+           ======================================== -->
+      <section class="quiz-slide">
+        <h2>🎯 ВІКТОРИНА!</h2>
+        <h3 style="font-size: 1.6em; margin: 20px 0;">Що означає абревіатура PHP?</h3>
+        <div class="quiz-options">
+          <div class="quiz-option">A) Personal Home Page</div>
+          <div class="quiz-option">B) PHP: Hypertext Preprocessor</div>
+          <div class="quiz-option">C) Professional Hypertext Program</div>
+          <div class="quiz-option">D) Page Hyperlink Protocol</div>
+        </div>
+        <p style="margin-top: 30px; font-size: 1.1em; color: #555;">🤔 Подумайте 30 секунд...</p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 15: Відповідь на вікторину
+           ======================================== -->
+      <section class="answer-slide">
+        <h2>✅ ПРАВИЛЬНА ВІДПОВІДЬ!</h2>
+        <div class="box" style="max-width: 800px; margin: 20px auto; padding: 30px;">
+          <p style="font-size: 2em; font-weight: 800; color: var(--php-blue); margin: 0;">
+            B) PHP: Hypertext Preprocessor
+          </p>
+        </div>
+        <div style="max-width: 800px; margin: 20px auto;">
+          <p style="font-size: 1.3em;">
+            🔄 Це <strong>рекурсивна абревіатура</strong> — сама абревіатура містить себе.<br>
+            Таким чином жартували програмісти-засновники проєкту!
+          </p>
+          <p style="font-size: 1.2em; margin-top: 20px;">
+            📌 Спочатку PHP означало «<em>Personal Home Page</em>» (1994),<br>
+            але пізніше назву перевигадали як жарт над рекурсивними скороченнями у програмуванні.
+          </p>
+        </div>
+        <p class="emoji">🎉</p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 16: CMS на PHP
+           ======================================== -->
+      <section>
+        <h2>🖥️ CMS — СИСТЕМИ УПРАВЛІННЯ ВМІСТОМ</h2>
+        <p style="font-size: 1.2em;">Більшість популярних CMS написані на PHP — ви керуєте сайтом <strong>без знання коду</strong></p>
+        <div class="cms-grid">
+          <div class="cms-card">
+            <span class="cms-icon">📝</span>
+            <h3>WordPress</h3>
+            <p style="font-size: 1em; color: #555;">
+              43% усіх сайтів у світі.<br>
+              Блоги, портфоліо, новини, інтернет-магазини.<br>
+              Десятки тисяч плагінів та тем.
+            </p>
+          </div>
+          <div class="cms-card">
+            <span class="cms-icon">🏛️</span>
+            <h3>Drupal</h3>
+            <p style="font-size: 1em; color: #555;">
+              Урядові сайти, великі портали.<br>
+              Гнучке управління контентом.<br>
+              Використовує NASA, whitehouse.gov.
+            </p>
+          </div>
+          <div class="cms-card">
+            <span class="cms-icon">🌐</span>
+            <h3>Joomla</h3>
+            <p style="font-size: 1em; color: #555;">
+              Корпоративні сайти, журнали, освіта.<br>
+              Багата система розширень.<br>
+              Легший за Drupal, гнучкіший за WordPress.
+            </p>
+          </div>
+        </div>
+        <div style="background: #EEEEF8; border-radius: 12px; padding: 18px; max-width: 900px; margin: 0 auto;">
+          <p style="font-size: 1.15em; margin: 0;">
+            💡 CMS на PHP дозволяє економісту, маркетологу або журналісту
+            самостійно управляти сайтом — <strong>без програміста</strong>.
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 17: E-commerce на PHP
+           ======================================== -->
+      <section>
+        <h2>🛒 ЕЛЕКТРОННА КОМЕРЦІЯ НА PHP</h2>
+        <div class="cards-3" style="max-width: 1200px; margin: 20px auto;">
+          <div class="card accent-php">
+            <span class="card-icon">🔌</span>
+            <h3>WooCommerce</h3>
+            <p>Плагін до WordPress. 7+ млн магазинів у світі. Безкоштовний старт.</p>
+          </div>
+          <div class="card accent-php">
+            <span class="card-icon">🏪</span>
+            <h3>Magento (Adobe)</h3>
+            <p>Для великих ритейлерів. Nike, Samsung, Ford використовують Magento.</p>
+          </div>
+          <div class="card accent-php">
+            <span class="card-icon">🛍️</span>
+            <h3>OpenCart / PrestaShop</h3>
+            <p>Середній бізнес. Легкі в налаштуванні, готові з коробки.</p>
+          </div>
+        </div>
+
+        <div class="compare-2" style="margin-top: 10px; max-width: 1100px;">
+          <div class="compare-col right">
+            <h3>✅ Що вже є «з коробки»:</h3>
+            <ul style="font-size: 1.05em;">
+              <li>Каталог товарів та фільтри</li>
+              <li>Кошик та оформлення замовлення</li>
+              <li>Прийом оплат (LiqPay, Stripe, PayPal)</li>
+              <li>Управління запасами (склад)</li>
+              <li>Email-сповіщення клієнтам</li>
+            </ul>
+          </div>
+          <div class="compare-col left">
+            <h3>📊 Статистика:</h3>
+            <ul style="font-size: 1.05em;">
+              <li>WooCommerce — <strong>~38%</strong> ринку e-commerce</li>
+              <li>Magento — топ для enterprise</li>
+              <li>Мільйони магазинів у 170+ країнах</li>
+              <li>Мова коду — PHP</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 18: Переваги PHP
+           ======================================== -->
+      <section>
+        <h2>✅ ПЕРЕВАГИ PHP</h2>
+        <div class="pros-list">
+          <div class="pro-item">🆓 <strong>Безкоштовний та відкритий (Open Source)</strong> — жодних ліцензійних платежів</div>
+          <div class="pro-item">🚀 <strong>Легко розпочати</strong> — низький поріг входу, багато навчальних матеріалів</div>
+          <div class="pro-item">🌍 <strong>Величезна спільнота</strong> — мільйони розробників, форуми, Stack Overflow</div>
+          <div class="pro-item">💰 <strong>Дешевий хостинг</strong> — PHP підтримує будь-який доступний хостинг</div>
+          <div class="pro-item">🔌 <strong>Великий екосистем</strong> — пакетний менеджер Composer, тисячі бібліотек</div>
+          <div class="pro-item">⚡ <strong>Сучасний PHP 8</strong> — швидкий, безпечний, з сучасним синтаксисом</div>
+          <div class="pro-item">🏢 <strong>Фреймворки</strong> — Laravel, Symfony для великих проєктів</div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 19: Перерва (таймер)
+           ======================================== -->
+      <section class="break-php">
+        <h2>☕ ПЕРЕРВА!</h2>
+        <p style="font-size: 1.4em;">Розім'яйтеся, налийте кави або води ☕🧃</p>
+
+        <div class="timer-container">
+          <div class="timer" id="timer-display">5:00</div>
+        </div>
+
+        <p style="font-size: 1.3em; margin-top: 20px;">
+          Після перерви: реальні кейси застосування PHP 🌐
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 20: Реальний кейс — Форма зв'язку
+           ======================================== -->
+      <section>
+        <h2>📬 КЕЙС 1: ФОРМА ЗВ'ЯЗКУ</h2>
+        <p style="font-size: 1.2em;">Найпростіший реальний приклад — відправка email з сайту</p>
+
+        <div class="split-screen" style="max-width: 1300px; margin: 20px auto;">
+          <div class="code-side">
+            <pre><code class="language-php">&lt;!-- HTML-форма (contact.html) --&gt;
+&lt;form action="send.php" method="POST"&gt;
+  &lt;input name="email" type="email"
+         placeholder="Ваш email"&gt;
+  &lt;textarea name="message"&gt;&lt;/textarea&gt;
+  &lt;button type="submit"&gt;Надіслати&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;?php
+// send.php — обробник форми
+$email   = $_POST['email'];
+$message = $_POST['message'];
+
+mail(
+  "admin@mysite.com",
+  "Нове повідомлення",
+  "Від: $email\n$message"
+);
+
+echo "✅ Повідомлення надіслано!";
+?&gt;</code></pre>
+          </div>
+          <div class="result-side">
+            <h3 style="margin-top: 0;">🔄 Як це працює:</h3>
+            <div class="step-item">
+              <span class="step-number">1</span>
+              Відвідувач заповнює форму та натискає «Надіслати»
+            </div>
+            <div class="step-item">
+              <span class="step-number">2</span>
+              Браузер відправляє дані на сервер (<code>send.php</code>)
+            </div>
+            <div class="step-item">
+              <span class="step-number">3</span>
+              PHP отримує дані через <code>$_POST</code>
+            </div>
+            <div class="step-item">
+              <span class="step-number">4</span>
+              PHP відправляє email адміністратору
+            </div>
+            <div class="step-item">
+              <span class="step-number">5</span>
+              Користувач бачить підтвердження ✅
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 21: Реальний кейс — Авторизація
+           ======================================== -->
+      <section>
+        <h2>🔐 КЕЙС 2: АВТОРИЗАЦІЯ КОРИСТУВАЧА</h2>
+        <p style="font-size: 1.2em;">Майже кожен сайт потребує системи «логін / пароль» — PHP для цього ідеальний</p>
+
+        <div class="flow" style="margin: 20px auto;">
+          <div class="flow-box" style="background: #E3F2FD; min-width: 140px;">
+            🧑<br>Форма входу<br><small>email + пароль</small>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #EEEEF8; border-color: var(--php-blue); min-width: 140px;">
+            🐘 PHP<br>перевіряє дані<br><small>у базі даних</small>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #E8F5E9; min-width: 140px;">
+            ✅ Успіх<br><small>сесія відкрита</small>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #FFF9C4; min-width: 140px;">
+            🏠 Особистий<br>кабінет<br><small>персоналізована сторінка</small>
+          </div>
+        </div>
+
+        <div class="cards-3" style="margin-top: 10px; max-width: 1100px;">
+          <div class="card">
+            <span class="card-icon">🛒</span>
+            <h3>Інтернет-магазин</h3>
+            <p>Особистий кабінет, замовлення, знижки лояльності</p>
+          </div>
+          <div class="card">
+            <span class="card-icon">🎓</span>
+            <h3>Освітній портал</h3>
+            <p>Студент бачить свої курси, оцінки, домашні завдання</p>
+          </div>
+          <div class="card">
+            <span class="card-icon">🏥</span>
+            <h3>Медична система</h3>
+            <p>Запис до лікаря, особиста медкарта, результати аналізів</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 22: Кар'єра з PHP
+           ======================================== -->
+      <section>
+        <h2>💼 КАР'ЄРА З PHP — КУДИ МОЖНА ВИРОСТИ</h2>
+        <div class="career-grid">
+          <div class="career-card">
+            <span class="career-icon">🌱</span>
+            <h3>Junior PHP Developer</h3>
+            <p>Початок кар'єри. Розробка невеликих сайтів, форм, шаблонів. Оклад: від $600–1000/міс</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">🌿</span>
+            <h3>Middle Developer</h3>
+            <p>Laravel/Symfony, API, оптимізація. Оклад: $1500–3000/міс</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">🌳</span>
+            <h3>Senior / Lead</h3>
+            <p>Архітектура систем, команда, рев'ю коду. Оклад: $3000–6000+/міс</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">🔧</span>
+            <h3>WordPress Developer</h3>
+            <p>Теми, плагіни, клієнтські сайти. Фріланс або агентство. Попит дуже високий.</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">🛒</span>
+            <h3>E-commerce Developer</h3>
+            <p>WooCommerce, Magento. Великий попит у ритейлі та стартапах.</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">⚙️</span>
+            <h3>DevOps / System Admin</h3>
+            <p>LAMP-сервери, хостинг, конфігурація. PHP-скрипти для автоматизації.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 23: Ресурси для навчання
+           ======================================== -->
+      <section>
+        <h2>📚 ДЕ ВИВЧАТИ PHP?</h2>
+        <div class="resources-list">
+          <div class="resource-item">
+            🐘 <strong><a href="https://php.net" target="_blank">php.net</a></strong> — Офіційна документація PHP (є переклад)
+          </div>
+          <div class="resource-item">
+            🎓 <strong><a href="https://www.w3schools.com/php/" target="_blank">w3schools.com/php</a></strong> — Безкоштовний онлайн-підручник з практикою прямо в браузері
+          </div>
+          <div class="resource-item">
+            🎬 <strong>YouTube</strong> — Канали: Traversy Media, The Net Ninja, LaravelDaily (є україномовні!)
+          </div>
+          <div class="resource-item">
+            🚀 <strong><a href="https://laracasts.com" target="_blank">laracasts.com</a></strong> — Laravel і PHP: відео-курси найвищої якості
+          </div>
+          <div class="resource-item">
+            📖 <strong>«PHP &amp; MySQL: Novice to Ninja»</strong> — популярна книга для початківців (SitePoint)
+          </div>
+          <div class="resource-item">
+            💬 <strong>Stack Overflow / Reddit r/PHP</strong> — спільноти, де завжди допоможуть
+          </div>
+          <div class="resource-item">
+            🏗️ <strong>Практика</strong> — Створіть персональний блог або форму зворотного зв'язку. Найкраще навчання — через реальний проєкт!
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 24: Підсумки
+           ======================================== -->
+      <section class="confetti-slide">
+        <h2>🎯 ПІДСУМКИ</h2>
+        <div class="summary-grid" style="max-width: 1200px; margin: 20px auto;">
+          <div class="summary-item" style="border-left-color: #fff; background: rgba(255,255,255,0.15); color: #fff;">
+            🐘 <strong>PHP</strong> — серверна мова для динамічних вебсайтів (виконується на сервері)
+          </div>
+          <div class="summary-item" style="border-left-color: #fff; background: rgba(255,255,255,0.15); color: #fff;">
+            🌍 <strong>78% сайтів</strong> в Інтернеті використовують PHP, включно з Wikipedia та WordPress
+          </div>
+          <div class="summary-item" style="border-left-color: #fff; background: rgba(255,255,255,0.15); color: #fff;">
+            ⚙️ PHP отримує запит → звертається до БД → генерує <strong>HTML-сторінку</strong> для браузера
+          </div>
+          <div class="summary-item" style="border-left-color: #fff; background: rgba(255,255,255,0.15); color: #fff;">
+            💻 Ключові конструкції: <strong>змінні, умови, цикли, функції, шаблони</strong>
+          </div>
+          <div class="summary-item" style="border-left-color: #fff; background: rgba(255,255,255,0.15); color: #fff;">
+            🖥️ CMS (WordPress, Drupal) дозволяють керувати сайтом <strong>без коду</strong>
+          </div>
+          <div class="summary-item" style="border-left-color: #fff; background: rgba(255,255,255,0.15); color: #fff;">
+            💼 PHP — реальна кар'єрна можливість: попит на PHP-розробників <strong>стабільно високий</strong>
+          </div>
+        </div>
+
+        <hr style="border-color: rgba(255,255,255,0.4); margin: 30px 0;">
+        <h1 style="font-size: 3em; margin: 10px 0;">🙌 ДЯКУЮ ЗА УВАГУ!</h1>
+        <h2 style="font-size: 1.8em;">Запитання? — Із задоволенням відповім! 💬</h2>
+        <div style="font-size: 3em; margin-top: 20px;">🐘💙💛</div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+  <!-- Highlight.js plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // Ініціалізація Reveal.js
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'slide',
+      slideNumber: true,
+
+      // Розмір презентації 1920x1080
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+
+      plugins: [RevealHighlight]
+    });
+
+    // ================================================
+    // ТАЙМЕР ДЛЯ ПЕРЕРВИ (Слайд 19, індекс 18)
+    // ================================================
+    let countdown;
+    let timeLeft = 300; // 5 хвилин
+    let timerStarted = false;
+
+    function startTimer() {
+      const display = document.getElementById('timer-display');
+      if (!display) return;
+
+      if (timerStarted) {
+        clearInterval(countdown);
+        timeLeft = 300;
+      }
+      timerStarted = true;
+
+      countdown = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+        if (timeLeft < 30) {
+          display.classList.add('warning');
+        } else {
+          display.classList.remove('warning');
+        }
+
+        if (timeLeft === 0) {
+          clearInterval(countdown);
+          display.textContent = 'Час вийшов! 🎉';
+          playSound();
+          timerStarted = false;
+        }
+        timeLeft--;
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (countdown) clearInterval(countdown);
+      timeLeft = 300;
+      timerStarted = false;
+    }
+
+    function playSound() {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      oscillator.frequency.value = 800;
+      oscillator.type = 'sine';
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.5);
+    }
+
+    function showConfetti() {
+      if (typeof confetti !== 'function') return;
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#4F5B93', '#8892BF', '#FBBC04', '#34A853'] });
+      setTimeout(() => {
+        confetti({ particleCount: 50, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#4F5B93', '#8892BF', '#FBBC04', '#34A853'] });
+      }, 250);
+      setTimeout(() => {
+        confetti({ particleCount: 50, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#4F5B93', '#8892BF', '#FBBC04', '#34A853'] });
+      }, 400);
+    }
+
+    Reveal.on('slidechanged', event => {
+      // Слайд 19 — перерва (індекс 18)
+      if (event.indexh === 18) {
+        setTimeout(() => startTimer(), 500);
+      } else {
+        stopTimer();
+      }
+
+      // Слайд 15 — відповідь на вікторину (індекс 14)
+      if (event.indexh === 14) {
+        setTimeout(() => showConfetti(), 500);
+      }
+
+      // Слайд 24 — завершення (індекс 23)
+      if (event.indexh === 23) {
+        setTimeout(() => showConfetti(), 500);
+      }
+    });
+
+    // Підсвітка коду
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof hljs !== 'undefined') {
+        document.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
+      }
+
+      // Вікторина
+      const quizOptions = document.querySelectorAll('.quiz-option');
+      quizOptions.forEach(option => {
+        option.addEventListener('click', function () {
+          quizOptions.forEach(opt => { opt.style.background = ''; opt.style.color = ''; });
+          this.style.background = '#4F5B93';
+          this.style.color = '#fff';
+        });
+      });
+    });
+
+    console.log('🐘 Презентація PHP завантажена!');
+    console.log('📍 Стрілки ← → для навігації');
+    console.log('⏱️ Таймер автоматично запуститься на слайді перерви (слайд 19)');
+  </script>
+</body>
+</html>
