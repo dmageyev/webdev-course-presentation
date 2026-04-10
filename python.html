@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мова програмування Python | Курс для студентів ВНЗ</title>
+  <meta name="description" content="Інтерактивна презентація 'Мова програмування Python' для студентів ВНЗ не ІТ напрямку">
+  <meta name="author" content="Курс веб-розробки">
+
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css">
+
+  <!-- Highlight.js для підсвітки коду -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- Кастомні стилі -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* Python-специфічні стилі */
+    :root {
+      --py-blue:   #3776AB;
+      --py-yellow: #FFD43B;
+      --py-dark:   #1a1a2e;
+      --py-mid:    #306998;
+    }
+
+    /* ---- Градієнти ---- */
+    .gradient-python {
+      background: linear-gradient(135deg, #3776AB, #1a1a2e) !important;
+      color: #fff !important;
+    }
+    .gradient-python h1,
+    .gradient-python h2,
+    .gradient-python h3,
+    .gradient-python p { color: #fff !important; }
+
+    .gradient-python-warm {
+      background: linear-gradient(135deg, #FFD43B, #3776AB) !important;
+    }
+    .gradient-python-warm h1,
+    .gradient-python-warm h2,
+    .gradient-python-warm h3 { color: #1a1a2e !important; }
+
+    /* ---- Картки 3-в-ряд ---- */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin: 24px auto;
+      max-width: 1400px;
+    }
+
+    .card {
+      background: #F8F9FA;
+      border: 2px solid #e0e0e0;
+      border-radius: 16px;
+      padding: 26px 20px;
+      text-align: center;
+    }
+
+    .card .card-icon { font-size: 2.5em; display: block; margin-bottom: 10px; }
+    .card h3 { font-size: 1.2em; margin: 8px 0; }
+    .card p  { font-size: 1em; color: #555; margin: 0; }
+
+    .card.accent-py {
+      border-color: var(--py-blue);
+      background: #EAF2FF;
+    }
+
+    /* ---- Flow diagram ---- */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      margin: 28px auto;
+    }
+
+    .flow-box {
+      background: #F8F9FA;
+      border: 3px solid var(--py-blue);
+      border-radius: 14px;
+      padding: 18px 22px;
+      text-align: center;
+      min-width: 150px;
+      font-size: 1.05em;
+      font-weight: 600;
+    }
+
+    .flow-arrow { font-size: 2em; color: var(--py-blue); padding: 0 10px; }
+
+    /* ---- 2-колонкове порівняння ---- */
+    .compare-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 1400px;
+      margin: 18px auto;
+      text-align: left;
+    }
+
+    .compare-col {
+      background: #F8F9FA;
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .compare-col.left  { border-left: 6px solid #EA4335; }
+    .compare-col.right { border-left: 6px solid #34A853; }
+    .compare-col.blue  { border-left: 6px solid var(--py-blue); }
+    .compare-col h3 { margin-top: 0; }
+
+    /* ---- Логотипи компаній / проєктів ---- */
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1400px;
+      margin: 24px auto;
+    }
+
+    .company-card {
+      background: #F8F9FA;
+      border: 2px solid #e0e0e0;
+      border-radius: 14px;
+      padding: 22px 14px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .company-card .co-icon { font-size: 2.6em; display: block; margin-bottom: 8px; }
+
+    /* ---- Бібліотеки ---- */
+    .libs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1300px;
+      margin: 20px auto;
+    }
+
+    .lib-card {
+      background: #F8F9FA;
+      border: 2px solid var(--py-blue);
+      border-radius: 14px;
+      padding: 22px 18px;
+      text-align: left;
+    }
+
+    .lib-card .lib-icon { font-size: 2em; display: block; margin-bottom: 8px; }
+    .lib-card h3 { font-size: 1.15em; margin: 0 0 6px; color: var(--py-blue); }
+    .lib-card p  { font-size: 0.95em; color: #555; margin: 0; }
+
+    /* ---- Переваги ---- */
+    .pros-list { text-align: left; max-width: 950px; margin: 0 auto; }
+
+    .pro-item {
+      padding: 15px 20px;
+      margin: 11px 0;
+      background: #E8F5E9;
+      border-radius: 10px;
+      border-left: 5px solid #34A853;
+      font-size: 1.15em;
+    }
+
+    /* ---- Ресурси ---- */
+    .resources-list { text-align: left; max-width: 950px; margin: 0 auto; }
+
+    .resource-item {
+      padding: 15px 20px;
+      margin: 11px 0;
+      background: #EAF2FF;
+      border-radius: 10px;
+      border-left: 5px solid var(--py-blue);
+      font-size: 1.15em;
+    }
+
+    .resource-item a { color: var(--py-blue); font-weight: 700; text-decoration: none; }
+
+    /* ---- Таймер перерви ---- */
+    .break-py {
+      background: linear-gradient(135deg, #3776AB, #FFD43B) !important;
+      color: #1a1a2e !important;
+    }
+    .break-py h2,
+    .break-py h3,
+    .break-py p { color: #1a1a2e !important; }
+
+    /* ---- Кар'єра ---- */
+    .career-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1400px;
+      margin: 18px auto;
+    }
+
+    .career-card {
+      background: #F8F9FA;
+      border: 2px solid var(--py-blue);
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+
+    .career-card .career-icon { font-size: 2.2em; display: block; margin-bottom: 8px; }
+    .career-card h3 { font-size: 1.1em; margin: 8px 0; }
+    .career-card p  { font-size: 0.92em; color: #555; margin: 0; }
+
+    /* ---- Підсумки ---- */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 18px auto;
+      text-align: left;
+    }
+
+    .summary-item {
+      border-left: 5px solid #fff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 1.1em;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    /* ---- Timeline ---- */
+    .timeline { max-width: 900px; margin: 18px auto; text-align: left; }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin: 14px 0;
+    }
+
+    .timeline-year {
+      background: var(--py-blue);
+      color: #fff;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 8px;
+      min-width: 80px;
+      text-align: center;
+      font-size: 1.05em;
+      flex-shrink: 0;
+    }
+
+    .timeline-text {
+      background: #F8F9FA;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 1.05em;
+      flex: 1;
+    }
+
+    /* ---- REPL demo ---- */
+    .repl {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: left;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.05em;
+      line-height: 1.7;
+    }
+
+    .repl .prompt { color: #89b4fa; }
+    .repl .out    { color: #a6e3a1; }
+    .repl .cmt    { color: #585b70; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ========================================
+           СЛАЙД 1: Титульний
+           ======================================== -->
+      <section class="gradient-python">
+        <p style="font-size: 4em; margin: 0;">🐍</p>
+        <h1 style="font-size: 3em; margin: 10px 0;">МОВА ПРОГРАМУВАННЯ</h1>
+        <h1 style="font-size: 4.5em; letter-spacing: 4px; margin: 0; color: #FFD43B !important;">PYTHON</h1>
+        <p style="font-size: 1.4em; margin-top: 28px; color: #a8c7e8 !important;">
+          Від автоматизації рутини до штучного інтелекту
+        </p>
+        <p style="margin-top: 50px; font-size: 1.1em; color: #7ba8cc !important;">
+          Курс "Цифрові інструменти" • Для студентів не-ІТ спеціальностей
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 2: ПЛАН
+           ======================================== -->
+      <section>
+        <h2>📋 ПЛАН ПРЕЗЕНТАЦІЇ</h2>
+        <div class="agenda">
+          <div class="agenda-item">🤔 Що таке Python і навіщо він потрібен? <span>10 хв</span></div>
+          <div class="agenda-item">⚙️ Як Python працює — загальні принципи <span>10 хв</span></div>
+          <div class="agenda-item">💻 Основи мови — синтаксис та приклади <span>15 хв</span></div>
+          <div class="agenda-item">☕ Перерва <span>5 хв</span></div>
+          <div class="agenda-item">🌐 Де Python використовують у реальному житті <span>15 хв</span></div>
+          <div class="agenda-item">🎯 Підсумки та Q&amp;A <span>5 хв</span></div>
+        </div>
+        <p style="margin-top: 28px;"><small>РАЗОМ: ~60 хвилин | Питання у будь-який момент! 🙋</small></p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 3: Що таке Python?
+           ======================================== -->
+      <section>
+        <h2>🤔 ЩО ТАКЕ PYTHON?</h2>
+        <div class="box" style="max-width: 950px; margin: 18px auto; padding: 28px;">
+          <p style="font-size: 1.5em; margin: 0;">
+            <strong>Python</strong> — це мова програмування загального призначення,
+            відома своєю <span class="highlight">простотою і читабельністю</span>.
+            Пишеться майже як звичайна англійська.
+          </p>
+        </div>
+
+        <div class="cards-3" style="max-width: 1050px;">
+          <div class="card accent-py">
+            <span class="card-icon">📖</span>
+            <h3>Легко читати</h3>
+            <p>Код Python зрозумілий навіть без досвіду програмування</p>
+          </div>
+          <div class="card accent-py">
+            <span class="card-icon">🔋</span>
+            <h3>«Батарейки включені»</h3>
+            <p>Тисячі готових бібліотек для будь-якого завдання</p>
+          </div>
+          <div class="card accent-py">
+            <span class="card-icon">🌍</span>
+            <h3>Всюди</h3>
+            <p>Наука, фінанси, медицина, ШІ, вебсайти, автоматизація</p>
+          </div>
+        </div>
+
+        <div style="background: #EAF2FF; border-radius: 12px; padding: 16px; max-width: 750px; margin: 0 auto;">
+          <p style="font-size: 1.15em; margin: 0;">
+            🏆 Python — <strong>№ 1 мова програмування</strong> за більшістю рейтингів
+            (TIOBE, IEEE, Stack Overflow Developer Survey 2024)
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 4: Коротка історія
+           ======================================== -->
+      <section>
+        <h2>📜 КОРОТКА ІСТОРІЯ PYTHON</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">1991</div>
+            <div class="timeline-text">
+              🇳🇱 <strong>Гвідо ван Россум</strong> (Guido van Rossum) публікує Python 0.9.
+              Назва — на честь комедійного шоу <em>«Monty Python's Flying Circus»</em>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2000</div>
+            <div class="timeline-text">
+              🚀 Python 2 — масове поширення в університетах та наукових колах
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2008</div>
+            <div class="timeline-text">
+              ⚡ Python 3 — переписаний з нуля, суворіший і потужніший.
+              Django, NumPy, SciPy набирають популярність
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2012+</div>
+            <div class="timeline-text">
+              🤖 Бум Data Science та ML: TensorFlow, PyTorch, scikit-learn.
+              Python стає мовою науки про дані
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2023+</div>
+            <div class="timeline-text">
+              🏅 Python — <strong>мова №1</strong> у світі. ChatGPT, Copilot та більшість
+              ШІ-інструментів написані або навчаються на Python
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 5: Хто використовує Python?
+           ======================================== -->
+      <section>
+        <h2>🌍 ХТО ВИКОРИСТОВУЄ PYTHON?</h2>
+        <div class="companies-grid">
+          <div class="company-card">
+            <span class="co-icon">🔍</span>
+            <strong>Google</strong>
+            <p style="font-size: 0.9em; color: #555; margin: 5px 0;">Пошукові алгоритми, YouTube, Maps</p>
+          </div>
+          <div class="company-card">
+            <span class="co-icon">🎬</span>
+            <strong>Netflix</strong>
+            <p style="font-size: 0.9em; color: #555; margin: 5px 0;">Рекомендаційні системи, аналіз даних</p>
+          </div>
+          <div class="company-card">
+            <span class="co-icon">🚀</span>
+            <strong>NASA / SpaceX</strong>
+            <p style="font-size: 0.9em; color: #555; margin: 5px 0;">Управління ракетами, обробка телеметрії</p>
+          </div>
+          <div class="company-card">
+            <span class="co-icon">🏦</span>
+            <strong>JP Morgan / Goldman</strong>
+            <p style="font-size: 0.9em; color: #555; margin: 5px 0;">Фінансовий аналіз, алго-трейдинг</p>
+          </div>
+          <div class="company-card">
+            <span class="co-icon">🛒</span>
+            <strong>Instagram / Meta</strong>
+            <p style="font-size: 0.9em; color: #555; margin: 5px 0;">Django-сервер Instagram (100М+ users)</p>
+          </div>
+          <div class="company-card">
+            <span class="co-icon">🏥</span>
+            <strong>Медицина</strong>
+            <p style="font-size: 0.9em; color: #555; margin: 5px 0;">Аналіз знімків МРТ, геноміка</p>
+          </div>
+          <div class="company-card">
+            <span class="co-icon">🎓</span>
+            <strong>Університети</strong>
+            <p style="font-size: 0.9em; color: #555; margin: 5px 0;">MIT, Stanford, КНУ: перша мова курсів CS</p>
+          </div>
+          <div class="company-card" style="background: #EAF2FF; border-color: var(--py-blue);">
+            <span class="co-icon">📊</span>
+            <strong>51% розробників</strong>
+            <p style="font-size: 0.9em; color: #555; margin: 5px 0;">Stack Overflow 2024: Python — найпопулярніша мова 12 років поспіль</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 6: Як Python працює
+           ======================================== -->
+      <section>
+        <h2>⚙️ ЯК ПРАЦЮЄ PYTHON — ЗАГАЛЬНА СХЕМА</h2>
+
+        <div class="flow">
+          <div class="flow-box" style="background: #EAF2FF;">
+            📝<br>Ви пишете<br><code>.py</code> файл
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #FFF9C4;">
+            🐍<br>Інтерпретатор<br>Python читає код
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #EAF2FF; border-color: var(--py-blue);">
+            ⚙️<br>Байт-код<br>(.pyc)
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="background: #E8F5E9;">
+            🖥️<br>Результат<br>на екрані
+          </div>
+        </div>
+
+        <div class="compare-2" style="margin-top: 14px;">
+          <div class="compare-col blue">
+            <h3>🐍 Python — інтерпретована мова</h3>
+            <ul style="font-size: 1.05em;">
+              <li>Не треба компілювати — запустив і одразу бачиш результат</li>
+              <li>Інтерактивний режим REPL: пишете команди рядок за рядком</li>
+              <li>Один код — Windows, Mac, Linux</li>
+              <li>Ідеально для швидкого прототипування</li>
+            </ul>
+          </div>
+          <div class="compare-col right">
+            <h3>💡 Інтерактивний REPL</h3>
+            <div class="repl">
+              <span class="cmt"># Просто відкрий термінал і пиши!</span><br>
+              <span class="prompt">&gt;&gt;&gt; </span>2 + 2<br>
+              <span class="out">4</span><br>
+              <span class="prompt">&gt;&gt;&gt; </span>print("Привіт!")<br>
+              <span class="out">Привіт!</span><br>
+              <span class="prompt">&gt;&gt;&gt; </span>len("Python")<br>
+              <span class="out">6</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 7: Перший Python-скрипт
+           ======================================== -->
+      <section>
+        <h2>💻 ПЕРШИЙ PYTHON-СКРИПТ</h2>
+        <p style="font-size: 1.2em;">Python читається майже як звичайна мова — порівняйте самі!</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 18px auto;">
+          <div class="code-side">
+            <p style="font-size: 1em; font-weight: 700; color: var(--py-blue); margin: 0 0 10px;">📄 hello.py</p>
+            <pre><code class="language-python"># Виводимо привітання
+print("Привіт, світ!")
+
+# Змінні — без ключових слів
+name = "Олена"
+year = 2026
+
+# Рядки форматуємо через f-рядок
+print(f"Студентка: {name}")
+print(f"Рік: {year}")
+
+# Підрахунок
+hours_per_week = 4
+weeks = 10
+total = hours_per_week * weeks
+print(f"Годин Python: {total}")</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; font-size: 1em; color: #34A853; margin: 0 0 10px;">🖥️ Результат у терміналі:</p>
+            <div class="repl">
+              <span class="out">Привіт, світ!</span><br>
+              <span class="out">Студентка: Олена</span><br>
+              <span class="out">Рік: 2026</span><br>
+              <span class="out">Годин Python: 40</span>
+            </div>
+            <br>
+            <div style="background: #EAF2FF; border-radius: 10px; padding: 14px;">
+              <p style="font-size: 1.05em; margin: 0;">
+                ✅ <strong>Відступи замість дужок</strong> — Python структурує код пробілами.<br>
+                ✅ <strong>Без крапки з комою</strong> — кожна команда на своєму рядку.<br>
+                ✅ <strong>Без оголошення типів</strong> — Python сам визначає тип змінної.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 8: Змінні та типи даних
+           ======================================== -->
+      <section>
+        <h2>📦 ЗМІННІ ТА ТИПИ ДАНИХ</h2>
+        <p style="font-size: 1.15em;">Python сам визначає тип — просто присвоюєте значення!</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 18px auto;">
+          <div class="code-side">
+            <pre><code class="language-python"># Рядок (str)
+name = "Марія Шевченко"
+
+# Цілі числа (int)
+age = 21
+students = 150
+
+# Дробове (float)
+gpa = 3.75
+price = 99.99
+
+# Логічний (bool)
+is_enrolled = True
+passed_exam  = False
+
+# Список (list)
+subjects = ["Економіка", "Маркетинг", "Python"]
+
+# Словник (dict) — ключ: значення
+student = {
+    "name": "Марія",
+    "age": 21,
+    "gpa": 3.75
+}
+
+print(subjects[2])          # Python
+print(student["name"])      # Марія</code></pre>
+          </div>
+          <div class="result-side">
+            <h3 style="margin-top: 0;">Основні типи Python:</h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 1.0em;">
+              <thead>
+                <tr style="background: var(--py-blue); color: #fff;">
+                  <th style="padding: 10px; text-align: left;">Тип</th>
+                  <th style="padding: 10px; text-align: left;">Приклад</th>
+                  <th style="padding: 10px; text-align: left;">Де використовується</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: #f8f9fa;">
+                  <td style="padding: 9px;">str</td>
+                  <td style="padding: 9px;"><code>"Привіт"</code></td>
+                  <td style="padding: 9px;">Текст, імена, повідомлення</td>
+                </tr>
+                <tr>
+                  <td style="padding: 9px;">int</td>
+                  <td style="padding: 9px;"><code>42</code></td>
+                  <td style="padding: 9px;">Підрахунки, індекси</td>
+                </tr>
+                <tr style="background: #f8f9fa;">
+                  <td style="padding: 9px;">float</td>
+                  <td style="padding: 9px;"><code>3.14</code></td>
+                  <td style="padding: 9px;">Ціни, оцінки, координати</td>
+                </tr>
+                <tr>
+                  <td style="padding: 9px;">bool</td>
+                  <td style="padding: 9px;"><code>True/False</code></td>
+                  <td style="padding: 9px;">Умови, прапорці</td>
+                </tr>
+                <tr style="background: #f8f9fa;">
+                  <td style="padding: 9px;">list</td>
+                  <td style="padding: 9px;"><code>[1, 2, 3]</code></td>
+                  <td style="padding: 9px;">Набори даних, колекції</td>
+                </tr>
+                <tr>
+                  <td style="padding: 9px;">dict</td>
+                  <td style="padding: 9px;"><code>{"k": "v"}</code></td>
+                  <td style="padding: 9px;">Запис, JSON, профілі</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 9: Умови (if / elif / else)
+           ======================================== -->
+      <section>
+        <h2>🔀 УМОВНІ КОНСТРУКЦІЇ (if / elif / else)</h2>
+        <p style="font-size: 1.2em;">Python приймає рішення так само, як людина думає</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 18px auto;">
+          <div class="code-side">
+            <p style="font-size: 1em; font-weight: 700; color: var(--py-blue); margin: 0 0 10px;">🎓 Система оцінок</p>
+            <pre><code class="language-python">score = 78
+
+if score >= 90:
+    grade = "Відмінно (A)"
+elif score >= 75:
+    grade = "Добре (B)"
+elif score >= 60:
+    grade = "Задовільно (C)"
+else:
+    grade = "Незадовільно (F)"
+
+print(f"Оцінка: {grade}")
+
+# ---
+# Перевірка доступу до матеріалів
+year = 3
+role = "student"
+
+if role == "admin":
+    print("Доступ до всього")
+elif year >= 3:
+    print("Доступ до наукових статей")
+else:
+    print("Лише базові матеріали")</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; color: #34A853; font-size: 1em; margin: 0 0 10px;">🖥️ Результат:</p>
+            <div class="repl">
+              <span class="out">Оцінка: Добре (B)</span><br>
+              <span class="out">Доступ до наукових статей</span>
+            </div>
+            <br>
+            <h3>💡 Реальні кейси:</h3>
+            <div class="rule-item">🏦 Якщо баланс &lt; 0 — сповістити клієнта</div>
+            <div class="rule-item">🛒 Якщо товару немає — показати «Немає в наявності»</div>
+            <div class="rule-item">🌡️ Якщо температура &gt; 38 — відзначити як «гарячковий»</div>
+            <div class="rule-item">📧 Якщо email не валідний — показати помилку</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 10: Цикли (for / while)
+           ======================================== -->
+      <section>
+        <h2>🔁 ЦИКЛИ — АВТОМАТИЧНЕ ПОВТОРЕННЯ</h2>
+        <p style="font-size: 1.2em;">Замість того щоб робити 1000 дій вручну — один цикл!</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 18px auto;">
+          <div class="code-side">
+            <pre><code class="language-python"># Цикл for — перебираємо список
+students = ["Іван", "Марія", "Олег", "Анна"]
+
+for name in students:
+    print(f"Привіт, {name}!")
+
+# ---
+# range() — числовий діапазон
+total = 0
+for i in range(1, 11):   # від 1 до 10
+    total += i
+print(f"Сума 1..10 = {total}")
+
+# ---
+# Цикл while — поки умова True
+count = 3
+while count > 0:
+    print(f"Залишилось спроб: {count}")
+    count -= 1
+print("Доступ закрито")</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; color: #34A853; font-size: 1em; margin: 0 0 10px;">🖥️ Результат:</p>
+            <div class="repl">
+              <span class="out">Привіт, Іван!</span><br>
+              <span class="out">Привіт, Марія!</span><br>
+              <span class="out">Привіт, Олег!</span><br>
+              <span class="out">Привіт, Анна!</span><br>
+              <span class="out">Сума 1..10 = 55</span><br>
+              <span class="out">Залишилось спроб: 3</span><br>
+              <span class="out">Залишилось спроб: 2</span><br>
+              <span class="out">Залишилось спроб: 1</span><br>
+              <span class="out">Доступ закрито</span>
+            </div>
+            <br>
+            <p style="font-size: 1.05em; color: #555; text-align: left;">
+              📦 На практиці замість списку — тисячі рядків Excel або записів з бази даних.
+              Python обробить усі автоматично!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 11: Функції
+           ======================================== -->
+      <section>
+        <h2>🛠️ ФУНКЦІЇ — ГОТОВІ БЛОКИ КОДУ</h2>
+        <p style="font-size: 1.2em;">Функція — іменований блок, який вирішує одне конкретне завдання</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 18px auto;">
+          <div class="code-side">
+            <pre><code class="language-python">def greet(name):
+    """Повертає привітальний рядок."""
+    return f"Привіт, {name}! 👋"
+
+def calculate_discount(price, percent):
+    """Рахує ціну зі знижкою."""
+    saving = price * percent / 100
+    return round(price - saving, 2)
+
+def letter_grade(score):
+    """Конвертує бал у літерну оцінку."""
+    if   score >= 90: return "A"
+    elif score >= 75: return "B"
+    elif score >= 60: return "C"
+    else:             return "F"
+
+# Виклик функцій
+print(greet("Олена"))
+print(calculate_discount(1500, 20))
+
+scores = [88, 72, 95, 54, 61]
+for s in scores:
+    print(f"{s} → {letter_grade(s)}")</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; color: #34A853; font-size: 1em; margin: 0 0 10px;">🖥️ Результат:</p>
+            <div class="repl">
+              <span class="out">Привіт, Олена! 👋</span><br>
+              <span class="out">1200.0</span><br>
+              <span class="out">88 → B</span><br>
+              <span class="out">72 → C</span><br>
+              <span class="out">95 → A</span><br>
+              <span class="out">54 → F</span><br>
+              <span class="out">61 → C</span>
+            </div>
+            <br>
+            <h3>💡 Переваги функцій:</h3>
+            <div class="rule-item">✏️ Написав один раз — використовуй скрізь</div>
+            <div class="rule-item">🐛 Виправив один раз — все працює</div>
+            <div class="rule-item">📦 Python має тисячі вбудованих: len, sum, sorted, round…</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 12: Бібліотеки та екосистема
+           ======================================== -->
+      <section>
+        <h2>📦 БІБЛІОТЕКИ — СУПЕРСИЛА PYTHON</h2>
+        <p style="font-size: 1.2em;">Не треба писати з нуля — встанови готову бібліотеку одною командою: <code>pip install назва</code></p>
+
+        <div class="libs-grid">
+          <div class="lib-card">
+            <span class="lib-icon">🔢</span>
+            <h3>NumPy</h3>
+            <p>Математика та матриці. Основа для всього наукового Python</p>
+          </div>
+          <div class="lib-card">
+            <span class="lib-icon">📊</span>
+            <h3>Pandas</h3>
+            <p>Обробка таблиць, CSV, Excel. «Excel на стероїдах» для програмістів</p>
+          </div>
+          <div class="lib-card">
+            <span class="lib-icon">📈</span>
+            <h3>Matplotlib / Seaborn</h3>
+            <p>Графіки, діаграми, теплові карти. Візуалізація даних</p>
+          </div>
+          <div class="lib-card">
+            <span class="lib-icon">🤖</span>
+            <h3>scikit-learn</h3>
+            <p>Машинне навчання: класифікація, регресія, кластеризація</p>
+          </div>
+          <div class="lib-card">
+            <span class="lib-icon">🔥</span>
+            <h3>TensorFlow / PyTorch</h3>
+            <p>Нейронні мережі та глибоке навчання (Deep Learning)</p>
+          </div>
+          <div class="lib-card">
+            <span class="lib-icon">🌐</span>
+            <h3>Django / Flask</h3>
+            <p>Веб-сайти та API. Instagram побудований на Django</p>
+          </div>
+          <div class="lib-card">
+            <span class="lib-icon">🕷️</span>
+            <h3>BeautifulSoup / Scrapy</h3>
+            <p>Веб-скрейпінг: автоматичний збір даних зі сторінок</p>
+          </div>
+          <div class="lib-card">
+            <span class="lib-icon">🤖</span>
+            <h3>Selenium / Playwright</h3>
+            <p>Автоматизація браузера: тести, заповнення форм, боти</p>
+          </div>
+          <div class="lib-card">
+            <span class="lib-icon">📧</span>
+            <h3>smtplib / requests</h3>
+            <p>Email-розсилки, HTTP-запити до API (погода, курс валют)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 13: Python для аналізу даних
+           ======================================== -->
+      <section>
+        <h2>📊 PYTHON ДЛЯ АНАЛІЗУ ДАНИХ (Pandas)</h2>
+        <p style="font-size: 1.2em;">Pandas дозволяє читати, фільтрувати та аналізувати таблиці як у Excel — але в 100 разів швидше</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 16px auto;">
+          <div class="code-side">
+            <pre><code class="language-python">import pandas as pd
+
+# Читаємо Excel / CSV
+df = pd.read_excel("students.xlsx")
+
+# Перші 5 рядків
+print(df.head())
+
+# Скільки студентів
+print(f"Всього: {len(df)}")
+
+# Фільтрація: лише студенти 3 курсу
+third_year = df[df["year"] == 3]
+
+# Середній бал по курсах
+avg = df.groupby("year")["gpa"].mean()
+print(avg)
+
+# Зберегти відфільтровані дані
+third_year.to_csv("3rd_year.csv",
+                  index=False)</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; color: #34A853; font-size: 1em; margin: 0 0 10px;">🖥️ Результат:</p>
+            <div class="repl" style="font-size: 0.9em;">
+              <span class="out">   name        year  gpa</span><br>
+              <span class="out">0  Іван Петров    1   3.2</span><br>
+              <span class="out">1  Марія Коваль   3   3.8</span><br>
+              <span class="out">2  Олег Мороз     2   3.5</span><br>
+              <span class="out">Всього: 120</span><br>
+              <span class="out">year</span><br>
+              <span class="out">1    3.21</span><br>
+              <span class="out">2    3.45</span><br>
+              <span class="out">3    3.67</span>
+            </div>
+            <br>
+            <div style="background: #EAF2FF; border-radius: 10px; padding: 14px;">
+              <p style="font-size: 1.05em; margin: 0;">
+                💡 Pandas читає <strong>Excel, CSV, JSON, SQL</strong> — будь-які дані.<br>
+                Замість 1 день роботи в Excel — <strong>10 рядків коду</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 14: Вікторина
+           ======================================== -->
+      <section class="quiz-slide">
+        <h2>🎯 ВІКТОРИНА!</h2>
+        <h3 style="font-size: 1.6em; margin: 20px 0;">На честь чого названо Python?</h3>
+        <div class="quiz-options">
+          <div class="quiz-option">A) На честь змії пітон 🐍</div>
+          <div class="quiz-option">B) На честь комедійного шоу «Monty Python's Flying Circus» 🎭</div>
+          <div class="quiz-option">C) На честь засновника Піта Тона (Pete Thon)</div>
+          <div class="quiz-option">D) Абревіатура: Powerful Yet Transformational Heuristic Object Notation</div>
+        </div>
+        <p style="margin-top: 28px; font-size: 1.1em; color: #555;">🤔 Подумайте 30 секунд...</p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 15: Відповідь
+           ======================================== -->
+      <section class="answer-slide">
+        <h2>✅ ПРАВИЛЬНА ВІДПОВІДЬ!</h2>
+        <div class="box" style="max-width: 900px; margin: 20px auto; padding: 28px;">
+          <p style="font-size: 1.8em; font-weight: 800; color: var(--py-blue); margin: 0;">
+            B) Monty Python's Flying Circus 🎭
+          </p>
+        </div>
+        <div style="max-width: 850px; margin: 20px auto;">
+          <p style="font-size: 1.3em;">
+            🇳🇱 Гвідо ван Россум був великим фанатом британського
+            комедійного гурту <strong>Monty Python</strong>.
+            Коли він шукав коротку, унікальну та трохи таємничу назву — обрав <em>Python</em>.
+          </p>
+          <p style="font-size: 1.2em; margin-top: 18px;">
+            🐍 Змія у логотипі — лише наслідок назви, але не першопричина!
+          </p>
+        </div>
+        <p class="emoji">🎉</p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 16: Python для веб
+           ======================================== -->
+      <section>
+        <h2>🌐 PYTHON ДЛЯ ВЕБ-РОЗРОБКИ</h2>
+        <div class="compare-2" style="max-width: 1300px;">
+          <div class="compare-col blue">
+            <h3>🏗️ Django — «батарейки включені»</h3>
+            <ul style="font-size: 1.05em;">
+              <li>Повноцінний фреймворк: ORM, авторизація, адмін-панель</li>
+              <li>Instagram, Pinterest, Disqus — на Django</li>
+              <li>«Convention over configuration»</li>
+              <li>Ідеальний для великих проєктів</li>
+            </ul>
+            <br>
+            <pre><code class="language-python"># Django view
+def homepage(request):
+    posts = Post.objects.all()[:10]
+    return render(request,
+        "home.html", {"posts": posts})</code></pre>
+          </div>
+          <div class="compare-col right">
+            <h3>⚡ Flask — мінімалістичний</h3>
+            <ul style="font-size: 1.05em;">
+              <li>Мікрофреймворк: лише те, що потрібно</li>
+              <li>Ідеальний для API та мікросервісів</li>
+              <li>LinkedIn, Airbnb використовували Flask</li>
+              <li>Легко навчитися — ідеально для старту</li>
+            </ul>
+            <br>
+            <pre><code class="language-python"># Flask API (3 рядки!)
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Привіт, Flask!"</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 17: Python для автоматизації
+           ======================================== -->
+      <section>
+        <h2>🤖 PYTHON ДЛЯ АВТОМАТИЗАЦІЇ</h2>
+        <p style="font-size: 1.2em;">Автоматизуйте нудну роботу — Python зробить це за секунди!</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 18px auto;">
+          <div class="code-side">
+            <p style="font-size: 1em; font-weight: 700; color: var(--py-blue); margin: 0 0 10px;">📧 Автоматична email-розсилка</p>
+            <pre><code class="language-python">import smtplib, pandas as pd
+
+# Читаємо список студентів
+df = pd.read_excel("students.xlsx")
+
+server = smtplib.SMTP("smtp.gmail.com", 587)
+server.starttls()
+server.login("you@gmail.com", "pass")
+
+for _, row in df.iterrows():
+    msg = f"""
+    Привіт, {row['name']}!
+    Ваша оцінка: {row['grade']}
+    """
+    server.sendmail(
+        "you@gmail.com",
+        row['email'],
+        msg
+    )
+
+server.quit()
+print("Розсилку завершено ✅")</code></pre>
+          </div>
+          <div class="result-side">
+            <h3 style="margin-top: 0;">💡 Що можна автоматизувати:</h3>
+            <div class="step-item">
+              <span class="step-number">1</span>
+              <strong>Excel-звіти</strong> — автоматично генерувати та надсилати щотижня
+            </div>
+            <div class="step-item">
+              <span class="step-number">2</span>
+              <strong>Веб-скрейпінг</strong> — збирати ціни конкурентів або курс валют
+            </div>
+            <div class="step-item">
+              <span class="step-number">3</span>
+              <strong>Файли</strong> — перейменовувати, переміщати, архівувати сотні файлів
+            </div>
+            <div class="step-item">
+              <span class="step-number">4</span>
+              <strong>Telegram-бот</strong> — відповідати на повідомлення, надсилати сповіщення
+            </div>
+            <div class="step-item">
+              <span class="step-number">5</span>
+              <strong>API</strong> — отримувати погоду, курс криптовалют, дані з Google Sheets
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 18: Python для AI / ML
+           ======================================== -->
+      <section>
+        <h2>🤖 PYTHON ДЛЯ ШТУЧНОГО ІНТЕЛЕКТУ</h2>
+        <p style="font-size: 1.2em;">Python — <strong>мова ШІ №1</strong>. 95%+ наукових статей про ML написані на Python</p>
+
+        <div class="cards-3" style="max-width: 1200px; margin: 18px auto;">
+          <div class="card accent-py">
+            <span class="card-icon">🔍</span>
+            <h3>Машинне навчання</h3>
+            <p>scikit-learn: класифікація спаму, прогноз продажів, виявлення аномалій</p>
+          </div>
+          <div class="card accent-py">
+            <span class="card-icon">🧠</span>
+            <h3>Нейронні мережі</h3>
+            <p>TensorFlow / PyTorch: розпізнавання обличь, медичні знімки, переклад</p>
+          </div>
+          <div class="card accent-py">
+            <span class="card-icon">💬</span>
+            <h3>NLP / Генеративний ШІ</h3>
+            <p>ChatGPT, Gemini, BERT — побудовані та навчені на Python</p>
+          </div>
+        </div>
+
+        <div class="compare-2" style="margin-top: 10px; max-width: 1200px;">
+          <div class="compare-col blue">
+            <h3>📌 Реальні кейси ML без ІТ-освіти:</h3>
+            <ul style="font-size: 1.05em;">
+              <li>🏥 <strong>Медицина</strong>: передбачення діабету за аналізами</li>
+              <li>🏦 <strong>Банки</strong>: виявлення шахрайських транзакцій</li>
+              <li>🛒 <strong>Ритейл</strong>: персональні рекомендації товарів</li>
+              <li>🌾 <strong>Агро</strong>: прогноз врожайності за погодою</li>
+            </ul>
+          </div>
+          <div class="compare-col right">
+            <h3>🚀 Простий ML-приклад:</h3>
+            <pre><code class="language-python">from sklearn.linear_model import (
+    LinearRegression
+)
+import numpy as np
+
+# Навчальні дані: площа → ціна
+X = np.array([[30],[50],[70],[90]])
+y = np.array([1500,2400,3200,4100])
+
+model = LinearRegression()
+model.fit(X, y)
+
+# Прогноз для 80 м²
+pred = model.predict([[80]])
+print(f"{pred[0]:.0f} USD")</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 19: Перерва (таймер)
+           ======================================== -->
+      <section class="break-py">
+        <h2>☕ ПЕРЕРВА!</h2>
+        <p style="font-size: 1.4em;">Розім'яйтеся, налийте чаю або кави ☕🧃</p>
+
+        <div class="timer-container">
+          <div class="timer" id="timer-display">5:00</div>
+        </div>
+
+        <p style="font-size: 1.3em; margin-top: 20px;">
+          Після перерви: реальні кейси Python у вашій галузі 🌐
+        </p>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 20: Кейс 1 — Автоматизація звіту
+           ======================================== -->
+      <section>
+        <h2>📈 КЕЙС 1: АВТОМАТИЧНИЙ ЗВІТ ПО ПРОДАЖАХ</h2>
+        <p style="font-size: 1.2em;">Завдання: щотижня обробляти Excel з продажами та надсилати зведення керівнику</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 18px auto;">
+          <div class="code-side">
+            <pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Читаємо дані
+df = pd.read_excel("sales_2026.xlsx")
+
+# 2. Зводимо по місяцях
+monthly = df.groupby("month")["revenue"].sum()
+
+# 3. Будуємо графік
+plt.figure(figsize=(10, 5))
+plt.bar(monthly.index,
+        monthly.values,
+        color="#3776AB")
+plt.title("Продажі 2026 по місяцях")
+plt.ylabel("Дохід, грн")
+plt.savefig("report.png", dpi=150)
+
+# 4. Виводимо топ-3 товари
+top3 = (df.groupby("product")["revenue"]
+          .sum()
+          .nlargest(3))
+print("ТОП-3 товари:")
+print(top3)</code></pre>
+          </div>
+          <div class="result-side">
+            <h3 style="margin-top: 0;">🔄 Пайплайн роботи:</h3>
+            <div class="flow" style="flex-direction: column; gap: 8px; margin: 0;">
+              <div class="flow-box" style="min-width: 380px; background: #EAF2FF;">📥 Менеджер вивантажує Excel з CRM</div>
+              <div class="flow-arrow" style="transform: rotate(90deg);">→</div>
+              <div class="flow-box" style="min-width: 380px; background: #FFF9C4;">🐍 Python читає, агрегує, будує графік</div>
+              <div class="flow-arrow" style="transform: rotate(90deg);">→</div>
+              <div class="flow-box" style="min-width: 380px; background: #E8F5E9;">📊 Готовий PDF-звіт з діаграмами</div>
+              <div class="flow-arrow" style="transform: rotate(90deg);">→</div>
+              <div class="flow-box" style="min-width: 380px; background: #F3E5F5;">📧 Автоматично надсилається на email</div>
+            </div>
+            <br>
+            <div style="background: #EAF2FF; border-radius: 10px; padding: 14px;">
+              <p style="font-size: 1.05em; margin: 0;">
+                ⏱️ <strong>Вручну:</strong> 3–4 години на тиждень<br>
+                🐍 <strong>З Python:</strong> 30 секунд
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 21: Кейс 2 — Моніторинг цін
+           ======================================== -->
+      <section>
+        <h2>🕷️ КЕЙС 2: МОНІТОРИНГ ЦІН КОНКУРЕНТІВ</h2>
+        <p style="font-size: 1.2em;">Завдання: щодня автоматично перевіряти ціни на товари у 5 інтернет-магазинах</p>
+
+        <div class="split-screen" style="max-width: 1350px; margin: 18px auto;">
+          <div class="code-side">
+            <pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+from datetime import date
+
+urls = {
+    "Shop A": "https://shop-a.ua/product/123",
+    "Shop B": "https://shop-b.ua/product/456",
+}
+
+results = []
+
+for shop, url in urls.items():
+    response = requests.get(url)
+    soup = BeautifulSoup(
+        response.text, "html.parser"
+    )
+    price = soup.find(
+        "span", class_="price"
+    ).text.strip()
+
+    results.append({
+        "Магазин": shop,
+        "Ціна": price,
+        "Дата": date.today()
+    })
+
+df = pd.DataFrame(results)
+df.to_excel("prices.xlsx", index=False)
+print(df)</code></pre>
+          </div>
+          <div class="result-side">
+            <p style="font-weight: 700; color: #34A853; font-size: 1em; margin: 0 0 10px;">📊 Результат prices.xlsx:</p>
+            <table style="width: 100%; border-collapse: collapse; font-size: 1.05em;">
+              <thead>
+                <tr style="background: var(--py-blue); color: #fff;">
+                  <th style="padding: 10px;">Магазин</th>
+                  <th style="padding: 10px;">Ціна</th>
+                  <th style="padding: 10px;">Дата</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: #f8f9fa;">
+                  <td style="padding: 10px;">Shop A</td>
+                  <td style="padding: 10px;">4 999 грн</td>
+                  <td style="padding: 10px;">2026-04-10</td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Shop B</td>
+                  <td style="padding: 10px;">5 299 грн</td>
+                  <td style="padding: 10px;">2026-04-10</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <div style="background: #EAF2FF; border-radius: 10px; padding: 14px;">
+              <p style="font-size: 1.05em; margin: 0;">
+                ⏰ Запускаємо скрипт щодня через планувальник — <strong>жодного ручного збору!</strong><br>
+                📲 Можна налаштувати Telegram-сповіщення при зміні ціни.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 22: Кар'єра з Python
+           ======================================== -->
+      <section>
+        <h2>💼 КАР'ЄРА З PYTHON — НАВІТЬ БЕЗ ІТ-ОСВІТИ</h2>
+        <div class="career-grid">
+          <div class="career-card">
+            <span class="career-icon">📊</span>
+            <h3>Data Analyst</h3>
+            <p>Pandas, Matplotlib, SQL. Аналіз бізнес-даних. Оклад: $1000–2500/міс</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">🤖</span>
+            <h3>ML Engineer</h3>
+            <p>scikit-learn, TensorFlow. Моделі прогнозування. Оклад: $2500–5000+/міс</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">⚙️</span>
+            <h3>Automation Engineer / QA</h3>
+            <p>Selenium, Playwright. Автотести та скрипти. Оклад: $1200–2500/міс</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">🌐</span>
+            <h3>Backend Developer</h3>
+            <p>Django/FastAPI. Розробка API та вебсервісів. Оклад: $1500–4000/міс</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">🔬</span>
+            <h3>Data Scientist</h3>
+            <p>Статистика + ML. Прогнози та рекомендаційні системи. Оклад: $2000–5000+/міс</p>
+          </div>
+          <div class="career-card">
+            <span class="career-icon">💡</span>
+            <h3>Python у вашій галузі</h3>
+            <p>Фінанси, медицина, агро, маркетинг — Python потрібен скрізь!</p>
+          </div>
+        </div>
+        <div style="background: #EAF2FF; border-radius: 12px; padding: 16px; max-width: 900px; margin: 14px auto;">
+          <p style="font-size: 1.15em; margin: 0;">
+            📌 Python — найнижчий поріг входу в ІТ серед всіх мов. Перший результат можна отримати вже через <strong>тиждень навчання</strong>!
+          </p>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 23: Ресурси для навчання
+           ======================================== -->
+      <section>
+        <h2>📚 ДЕ ВИВЧАТИ PYTHON?</h2>
+        <div class="resources-list">
+          <div class="resource-item">
+            🐍 <strong><a href="https://python.org" target="_blank">python.org</a></strong> — Офіційний сайт: документація, підручники, завантаження
+          </div>
+          <div class="resource-item">
+            🎓 <strong><a href="https://www.kaggle.com/learn" target="_blank">kaggle.com/learn</a></strong> — Безкоштовні мікрокурси: Python, Pandas, ML. Практика на реальних даних
+          </div>
+          <div class="resource-item">
+            🎬 <strong>YouTube</strong> — Канали: CS Dojo, Corey Schafer, Tech With Tim. Україномовні: «Python UA», «Mate Academy»
+          </div>
+          <div class="resource-item">
+            💻 <strong><a href="https://replit.com" target="_blank">replit.com</a></strong> — Пишіть і запускайте Python прямо в браузері — без встановлення
+          </div>
+          <div class="resource-item">
+            📖 <strong>«Automate the Boring Stuff with Python»</strong> — Ел Свейгарт. Безкоштовна онлайн-книга для не-програмістів
+          </div>
+          <div class="resource-item">
+            🏋️ <strong><a href="https://leetcode.com" target="_blank">leetcode.com</a></strong> / <strong><a href="https://codewars.com" target="_blank">codewars.com</a></strong> — Практичні задачі від простих до складних
+          </div>
+          <div class="resource-item">
+            🏗️ <strong>Власний проєкт!</strong> — Автоматизуйте щось зі свого щоденного навчання або роботи. Найкращий спосіб навчитися — зробити щось корисне для себе
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           СЛАЙД 24: Підсумки
+           ======================================== -->
+      <section class="confetti-slide">
+        <h2>🎯 ПІДСУМКИ</h2>
+        <div class="summary-grid" style="max-width: 1200px; margin: 18px auto;">
+          <div class="summary-item">
+            🐍 <strong>Python</strong> — читабельна мова загального призначення. Пишеться майже як англійська
+          </div>
+          <div class="summary-item">
+            🏆 <strong>№1 у світі</strong> — найпопулярніша мова програмування, 51% розробників
+          </div>
+          <div class="summary-item">
+            ⚙️ <strong>Інтерпретована</strong> — написав і одразу запустив. Жодної компіляції
+          </div>
+          <div class="summary-item">
+            📦 <strong>Екосистема</strong> — тисячі бібліотек: Pandas, NumPy, Django, TensorFlow
+          </div>
+          <div class="summary-item">
+            🤖 <strong>Мова ШІ</strong> — 95%+ статей з ML та всі великі моделі — на Python
+          </div>
+          <div class="summary-item">
+            💼 <strong>Кар'єра</strong> — Data Analyst, ML Engineer, Backend — без ІТ-диплому!
+          </div>
+        </div>
+
+        <hr style="border-color: rgba(255,255,255,0.4); margin: 24px 0;">
+        <h1 style="font-size: 3em; margin: 10px 0;">🙌 ДЯКУЮ ЗА УВАГУ!</h1>
+        <h2 style="font-size: 1.8em;">Запитання? — Із задоволенням відповім! 💬</h2>
+        <div style="font-size: 3em; margin-top: 18px;">🐍💙💛</div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+  <!-- Highlight.js plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // Ініціалізація Reveal.js
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'slide',
+      slideNumber: true,
+
+      // Розмір 1920x1080
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+
+      plugins: [RevealHighlight]
+    });
+
+    // ================================================
+    // ТАЙМЕР ДЛЯ ПЕРЕРВИ (Слайд 19, індекс 18)
+    // ================================================
+    let countdown;
+    let timeLeft = 300; // 5 хвилин
+    let timerStarted = false;
+
+    function startTimer() {
+      const display = document.getElementById('timer-display');
+      if (!display) return;
+      if (timerStarted) {
+        clearInterval(countdown);
+        timeLeft = 300;
+      }
+      timerStarted = true;
+      countdown = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        if (timeLeft < 30) {
+          display.classList.add('warning');
+        } else {
+          display.classList.remove('warning');
+        }
+        if (timeLeft === 0) {
+          clearInterval(countdown);
+          display.textContent = 'Час вийшов! 🎉';
+          playSound();
+          timerStarted = false;
+        }
+        timeLeft--;
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (countdown) clearInterval(countdown);
+      timeLeft = 300;
+      timerStarted = false;
+    }
+
+    function playSound() {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      oscillator.frequency.value = 800;
+      oscillator.type = 'sine';
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.5);
+    }
+
+    function showConfetti() {
+      if (typeof confetti !== 'function') return;
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#3776AB', '#FFD43B', '#34A853', '#EA4335']
+      });
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#3776AB', '#FFD43B', '#34A853', '#EA4335']
+        });
+      }, 250);
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#3776AB', '#FFD43B', '#34A853', '#EA4335']
+        });
+      }, 400);
+    }
+
+    Reveal.on('slidechanged', event => {
+      // Слайд 19 — перерва (індекс 18)
+      if (event.indexh === 18) {
+        setTimeout(() => startTimer(), 500);
+      } else {
+        stopTimer();
+      }
+      // Слайд 15 — відповідь на вікторину (індекс 14)
+      if (event.indexh === 14) {
+        setTimeout(() => showConfetti(), 500);
+      }
+      // Слайд 24 — завершення (індекс 23)
+      if (event.indexh === 23) {
+        setTimeout(() => showConfetti(), 500);
+      }
+    });
+
+    // Підсвітка коду
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof hljs !== 'undefined') {
+        document.querySelectorAll('pre code').forEach(block => {
+          hljs.highlightElement(block);
+        });
+      }
+
+      // Вікторина
+      const quizOptions = document.querySelectorAll('.quiz-option');
+      quizOptions.forEach(option => {
+        option.addEventListener('click', function () {
+          quizOptions.forEach(opt => {
+            opt.style.background = '';
+            opt.style.color = '';
+          });
+          this.style.background = '#3776AB';
+          this.style.color = '#fff';
+        });
+      });
+    });
+
+    console.log('🐍 Презентація Python завантажена!');
+    console.log('📍 Стрілки ← → для навігації');
+    console.log('⏱️ Таймер автоматично запуститься на слайді перерви (слайд 19)');
+  </script>
+</body>
+</html>
